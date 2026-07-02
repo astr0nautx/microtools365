@@ -1,0 +1,21 @@
+{
+  "name": "microtools365",
+  "version": "1.0.0",
+  "description": "Free, no-signup, multi-purpose online tools",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static site - no build step required'"
+  },
+  "keywords": [
+    "tools",
+    "calculator",
+    "converter",
+    "utilities"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
