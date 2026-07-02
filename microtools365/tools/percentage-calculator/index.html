@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Percentage Calculator — Free Online Tool | microtools365</title>
+  <meta name="description" content="Free percentage calculator. Find what X% of a number is, what percent one number is of another, or the percent increase or decrease between two numbers.">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <a href="../../tools/word-counter/index.html">Word Counter</a>
+        <a href="../../tools/percentage-calculator/index.html" class="active">Percentage Calculator</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Percentage Calculator</p>
+      <span class="catalog-tag">CALC&nbsp;01</span>
+      <h1 style="margin-top:10px;">Percentage Calculator</h1>
+      <p class="muted" style="max-width:60ch;">Pick the kind of percentage question you have. Results update as you type.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="of">X% of Y</button>
+        <button class="tab-btn" data-tab="what">X is what % of Y</button>
+        <button class="tab-btn" data-tab="change">% change from X to Y</button>
+      </div>
+
+      <!-- Mode 1: X% of Y -->
+      <div class="tab-panel active" id="panel-of">
+        <div class="field">
+          <label for="of-x">Percentage</label>
+          <input type="number" id="of-x" placeholder="e.g. 20">
+        </div>
+        <div class="field">
+          <label for="of-y">Of this number</label>
+          <input type="number" id="of-y" placeholder="e.g. 150">
+        </div>
+        <div class="result-box" id="of-result">Enter both numbers above</div>
+      </div>
+
+      <!-- Mode 2: X is what % of Y -->
+      <div class="tab-panel" id="panel-what">
+        <div class="field">
+          <label for="what-x">This number</label>
+          <input type="number" id="what-x" placeholder="e.g. 30">
+        </div>
+        <div class="field">
+          <label for="what-y">Is what percent of this number</label>
+          <input type="number" id="what-y" placeholder="e.g. 150">
+        </div>
+        <div class="result-box" id="what-result">Enter both numbers above</div>
+      </div>
+
+      <!-- Mode 3: % change -->
+      <div class="tab-panel" id="panel-change">
+        <div class="field">
+          <label for="change-x">From</label>
+          <input type="number" id="change-x" placeholder="e.g. 80">
+        </div>
+        <div class="field">
+          <label for="change-y">To</label>
+          <input type="number" id="change-y" placeholder="e.g. 100">
+        </div>
+        <div class="result-box" id="change-result">Enter both numbers above</div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    // ---- Tab switching ----
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    function fmt(n) {
+      if (!isFinite(n)) return '—';
+      return Number(n.toFixed(2)).toLocaleString();
+    }
+
+    // ---- Mode 1: X% of Y ----
+    function calcOf() {
+      const x = parseFloat(document.getElementById('of-x').value);
+      const y = parseFloat(document.getElementById('of-y').value);
+      const box = document.getElementById('of-result');
+      if (isNaN(x) || isNaN(y)) { box.textContent = 'Enter both numbers above'; return; }
+      const result = (x / 100) * y;
+      box.textContent = `${fmt(x)}% of ${fmt(y)} = ${fmt(result)}`;
+    }
+
+    // ---- Mode 2: X is what % of Y ----
+    function calcWhat() {
+      const x = parseFloat(document.getElementById('what-x').value);
+      const y = parseFloat(document.getElementById('what-y').value);
+      const box = document.getElementById('what-result');
+      if (isNaN(x) || isNaN(y) || y === 0) { box.textContent = y === 0 ? 'Second number can’t be zero' : 'Enter both numbers above'; return; }
+      const result = (x / y) * 100;
+      box.textContent = `${fmt(x)} is ${fmt(result)}% of ${fmt(y)}`;
+    }
+
+    // ---- Mode 3: % change from X to Y ----
+    function calcChange() {
+      const x = parseFloat(document.getElementById('change-x').value);
+      const y = parseFloat(document.getElementById('change-y').value);
+      const box = document.getElementById('change-result');
+      if (isNaN(x) || isNaN(y) || x === 0) { box.textContent = x === 0 ? 'Starting number can’t be zero' : 'Enter both numbers above'; return; }
+      const result = ((y - x) / x) * 100;
+      const direction = result >= 0 ? 'increase' : 'decrease';
+      box.textContent = `${fmt(Math.abs(result))}% ${direction} (from ${fmt(x)} to ${fmt(y)})`;
+    }
+
+    ['of-x', 'of-y'].forEach(id => document.getElementById(id).addEventListener('input', calcOf));
+    ['what-x', 'what-y'].forEach(id => document.getElementById(id).addEventListener('input', calcWhat));
+    ['change-x', 'change-y'].forEach(id => document.getElementById(id).addEventListener('input', calcChange));
+  </script>
+</body>
+</html>

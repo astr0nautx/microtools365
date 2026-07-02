@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word & Character Counter — Free Online Tool | microtools365</title>
+  <meta name="description" content="Free word counter and character counter. See live word count, character count, sentence count and reading time, plus limits for Twitter/X, Instagram, YouTube and SMS.">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <a href="../../tools/word-counter/index.html" class="active">Word Counter</a>
+        <a href="../../tools/percentage-calculator/index.html">Percentage Calculator</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Word &amp; Character Counter</p>
+      <span class="catalog-tag">TXT&nbsp;01</span>
+      <h1 style="margin-top:10px;">Word &amp; Character Counter</h1>
+      <p class="muted" style="max-width:60ch;">Paste or type your text below. Counts update as you type — nothing is uploaded, it all happens right here in your browser.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="field">
+        <label for="text-input">Your text</label>
+        <textarea id="text-input" placeholder="Start typing or paste your text here…"></textarea>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-bottom:20px;">
+        <button class="btn btn-secondary btn-sm" id="copy-btn">Copy text</button>
+        <button class="btn btn-secondary btn-sm" id="clear-btn">Clear</button>
+      </div>
+
+      <div class="readout">
+        <div class="stat"><span class="n" id="stat-words">0</span><span class="l">Words</span></div>
+        <div class="stat"><span class="n" id="stat-chars">0</span><span class="l">Characters</span></div>
+        <div class="stat"><span class="n" id="stat-chars-ns">0</span><span class="l">No spaces</span></div>
+        <div class="stat"><span class="n" id="stat-sentences">0</span><span class="l">Sentences</span></div>
+        <div class="stat"><span class="n" id="stat-paragraphs">0</span><span class="l">Paragraphs</span></div>
+        <div class="stat"><span class="n" id="stat-reading">0 min</span><span class="l">Read time</span></div>
+      </div>
+
+      <h3 style="margin-top:28px; font-size:1rem;">Platform limits</h3>
+      <div class="limits-list" id="limits-list">
+        <!-- filled by JS -->
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    const textInput = document.getElementById('text-input');
+    const limitsList = document.getElementById('limits-list');
+
+    // Each platform limit this tool checks against
+    const LIMITS = [
+      { label: 'X / Twitter post', max: 280 },
+      { label: 'Instagram caption', max: 2200 },
+      { label: 'Instagram / TikTok bio', max: 150 },
+      { label: 'Meta description (SEO)', max: 160 },
+      { label: 'YouTube title', max: 100 },
+      { label: 'SMS message', max: 160 },
+    ];
+
+    function buildLimitsList() {
+      limitsList.innerHTML = LIMITS.map((l, i) =>
+        `<div class="limit-row" id="limit-${i}">
+           <span>${l.label}</span>
+           <span class="count" id="limit-count-${i}">0 / ${l.max}</span>
+         </div>`
+      ).join('');
+    }
+
+    function update() {
+      const text = textInput.value;
+      const trimmed = text.trim();
+
+      // Words: split on whitespace, ignore empty strings
+      const words = trimmed.length ? trimmed.split(/\s+/).length : 0;
+
+      // Characters
+      const chars = text.length;
+      const charsNoSpaces = text.replace(/\s/g, '').length;
+
+      // Sentences: split on ./!/? followed by space or end
+      const sentences = trimmed.length
+        ? (trimmed.match(/[^.!?]+[.!?]+/g) || (trimmed ? [trimmed] : [])).length
+        : 0;
+
+      // Paragraphs: blocks of text separated by one or more blank lines
+      const paragraphs = trimmed.length
+        ? trimmed.split(/\n\s*\n/).filter(p => p.trim().length > 0).length
+        : 0;
+
+      // Reading time at 200 words per minute
+      const readMins = words === 0 ? 0 : Math.max(1, Math.round(words / 200));
+
+      document.getElementById('stat-words').textContent = words;
+      document.getElementById('stat-chars').textContent = chars;
+      document.getElementById('stat-chars-ns').textContent = charsNoSpaces;
+      document.getElementById('stat-sentences').textContent = sentences;
+      document.getElementById('stat-paragraphs').textContent = paragraphs;
+      document.getElementById('stat-reading').textContent = readMins + ' min';
+
+      LIMITS.forEach((l, i) => {
+        const row = document.getElementById(`limit-${i}`);
+        const countEl = document.getElementById(`limit-count-${i}`);
+        countEl.textContent = `${chars} / ${l.max}`;
+        row.classList.toggle('over', chars > l.max);
+      });
+    }
+
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      if (!textInput.value) return;
+      navigator.clipboard.writeText(textInput.value).then(() => showToast('Text copied'));
+    });
+
+    document.getElementById('clear-btn').addEventListener('click', () => {
+      textInput.value = '';
+      update();
+      textInput.focus();
+    });
+
+    textInput.addEventListener('input', update);
+
+    buildLimitsList();
+    update();
+  </script>
+</body>
+</html>

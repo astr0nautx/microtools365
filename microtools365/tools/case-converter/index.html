@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Converter — UPPERCASE, lowercase, Title Case & More | microtools365</title>
+  <meta name="description" content="Free online case converter. Instantly convert text to UPPERCASE, lowercase, Title Case, Sentence case, camelCase or snake_case. One click to copy.">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <a href="../word-counter/index.html">Word Counter</a>
+        <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+        <a href="../age-calculator/index.html">Age Calculator</a>
+        <a href="../case-converter/index.html" class="active">Case Converter</a>
+        <a href="../gst-calculator/index.html">GST Calculator</a>
+        <a href="../emi-calculator/index.html">EMI Calculator</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Case Converter</p>
+      <span class="catalog-tag">TXT&nbsp;02</span>
+      <h1 style="margin-top:10px;">Case Converter</h1>
+      <p class="muted" style="max-width:60ch;">Type or paste your text, pick a case style, and click copy. That's it.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="field">
+        <label for="case-input">Your text</label>
+        <textarea id="case-input" placeholder="Paste or type your text here…"></textarea>
+      </div>
+
+      <div class="tabs" style="flex-wrap:wrap;">
+        <button class="tab-btn active" data-mode="upper">UPPERCASE</button>
+        <button class="tab-btn" data-mode="lower">lowercase</button>
+        <button class="tab-btn" data-mode="title">Title Case</button>
+        <button class="tab-btn" data-mode="sentence">Sentence case</button>
+        <button class="tab-btn" data-mode="camel">camelCase</button>
+        <button class="tab-btn" data-mode="snake">snake_case</button>
+        <button class="tab-btn" data-mode="kebab">kebab-case</button>
+        <button class="tab-btn" data-mode="pascal">PascalCase</button>
+        <button class="tab-btn" data-mode="alternate">aLtErNaTe</button>
+      </div>
+
+      <div class="field" style="margin-bottom:12px;">
+        <label>Result</label>
+        <textarea id="case-output" readonly placeholder="Result will appear here…" style="background:var(--surface);"></textarea>
+      </div>
+
+      <button class="btn btn-primary" id="copy-btn">Copy result</button>
+      <button class="btn btn-secondary" id="swap-btn" style="margin-left:8px;">Use result as input</button>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    let currentMode = 'upper';
+    const input  = document.getElementById('case-input');
+    const output = document.getElementById('case-output');
+
+    const converters = {
+      upper:     t => t.toUpperCase(),
+      lower:     t => t.toLowerCase(),
+      title:     t => t.toLowerCase().replace(/(?:^|\s|-)\S/g, c => c.toUpperCase()),
+      sentence:  t => t.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase()),
+      camel:     t => t.toLowerCase()
+                       .replace(/[^a-zA-Z0-9]+(.)/g, (_, c) => c.toUpperCase()),
+      snake:     t => t.trim().toLowerCase()
+                       .replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, ''),
+      kebab:     t => t.trim().toLowerCase()
+                       .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+      pascal:    t => t.toLowerCase()
+                       .replace(/(?:^|\s|-|_)+(.)/g, (_, c) => c.toUpperCase()),
+      alternate: t => t.split('').map((c, i) =>
+                       i % 2 === 0 ? c.toLowerCase() : c.toUpperCase()).join(''),
+    };
+
+    function convert() {
+      output.value = input.value ? converters[currentMode](input.value) : '';
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentMode = btn.dataset.mode;
+        convert();
+      });
+    });
+
+    input.addEventListener('input', convert);
+
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      if (!output.value) return;
+      navigator.clipboard.writeText(output.value).then(() => showToast('Copied!'));
+    });
+
+    document.getElementById('swap-btn').addEventListener('click', () => {
+      if (!output.value) return;
+      input.value = output.value;
+      convert();
+    });
+  </script>
+</body>
+</html>

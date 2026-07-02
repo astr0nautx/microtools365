@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Calculator — How Old Am I? | microtools365</title>
+  <meta name="description" content="Free age calculator. Enter your date of birth and instantly find out your exact age in years, months and days — plus days until your next birthday.">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <a href="../word-counter/index.html">Word Counter</a>
+        <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+        <a href="../age-calculator/index.html" class="active">Age Calculator</a>
+        <a href="../case-converter/index.html">Case Converter</a>
+        <a href="../gst-calculator/index.html">GST Calculator</a>
+        <a href="../emi-calculator/index.html">EMI Calculator</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Age Calculator</p>
+      <span class="catalog-tag">CALC&nbsp;02</span>
+      <h1 style="margin-top:10px;">Age Calculator</h1>
+      <p class="muted" style="max-width:60ch;">Enter your date of birth to find your exact age in years, months and days — and see how long until your next birthday.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div style="display:grid; gap:18px; grid-template-columns: 1fr 1fr;">
+        <div class="field">
+          <label for="dob">Date of birth</label>
+          <input type="date" id="dob" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-body); font-size:1rem; color:var(--ink); background:var(--bg);">
+        </div>
+        <div class="field">
+          <label for="ref-date">Age as of</label>
+          <input type="date" id="ref-date" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-body); font-size:1rem; color:var(--ink); background:var(--bg);">
+        </div>
+      </div>
+
+      <div class="readout" id="main-readout" style="margin-top:8px;">
+        <div class="stat"><span class="n" id="r-years">—</span><span class="l">Years</span></div>
+        <div class="stat"><span class="n" id="r-months">—</span><span class="l">Months</span></div>
+        <div class="stat"><span class="n" id="r-days">—</span><span class="l">Days</span></div>
+        <div class="stat"><span class="n" id="r-total-days">—</span><span class="l">Total days lived</span></div>
+        <div class="stat"><span class="n" id="r-bday">—</span><span class="l">Days to birthday</span></div>
+      </div>
+
+      <div id="bday-msg" style="margin-top:16px; font-size:.95rem; color:var(--muted);"></div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    const dobInput   = document.getElementById('dob');
+    const refInput   = document.getElementById('ref-date');
+    const bdayMsg    = document.getElementById('bday-msg');
+
+    // Default ref date = today
+    const todayStr = new Date().toISOString().split('T')[0];
+    refInput.value = todayStr;
+
+    function calculate() {
+      const dob = new Date(dobInput.value);
+      const ref = new Date(refInput.value);
+
+      if (!dobInput.value || isNaN(dob) || isNaN(ref) || dob > ref) {
+        ['r-years','r-months','r-days','r-total-days','r-bday'].forEach(id =>
+          document.getElementById(id).textContent = '—'
+        );
+        bdayMsg.textContent = '';
+        return;
+      }
+
+      let years  = ref.getFullYear() - dob.getFullYear();
+      let months = ref.getMonth()    - dob.getMonth();
+      let days   = ref.getDate()     - dob.getDate();
+
+      if (days < 0) {
+        months--;
+        const prevMonth = new Date(ref.getFullYear(), ref.getMonth(), 0);
+        days += prevMonth.getDate();
+      }
+      if (months < 0) { years--; months += 12; }
+
+      const totalDays = Math.floor((ref - dob) / 86400000);
+
+      // Next birthday
+      let nextBday = new Date(ref.getFullYear(), dob.getMonth(), dob.getDate());
+      if (nextBday <= ref) nextBday.setFullYear(ref.getFullYear() + 1);
+      const daysUntilBday = Math.round((nextBday - ref) / 86400000);
+
+      document.getElementById('r-years').textContent       = years;
+      document.getElementById('r-months').textContent      = months;
+      document.getElementById('r-days').textContent        = days;
+      document.getElementById('r-total-days').textContent  = totalDays.toLocaleString();
+      document.getElementById('r-bday').textContent        = daysUntilBday === 0 ? '🎂 Today!' : daysUntilBday;
+
+      bdayMsg.textContent = daysUntilBday === 0
+        ? '🎉 Happy Birthday!'
+        : `Next birthday is on ${nextBday.toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })}.`;
+    }
+
+    dobInput.addEventListener('change', calculate);
+    refInput.addEventListener('change', calculate);
+    calculate();
+  </script>
+</body>
+</html>

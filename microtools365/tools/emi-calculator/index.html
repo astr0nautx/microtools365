@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMI Calculator — Loan EMI Calculator India | microtools365</title>
+  <meta name="description" content="Free EMI calculator for home loans, car loans, and personal loans. Enter loan amount, interest rate and tenure to instantly get your monthly EMI, total interest and total payment.">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .slider-wrap { margin-bottom:20px; }
+    .slider-wrap label { font-size:.85rem; font-weight:600; display:flex; justify-content:space-between; margin-bottom:6px; }
+    .slider-wrap label span { font-family:var(--font-mono); font-weight:700; color:var(--accent); }
+    input[type="range"] {
+      width:100%; accent-color:var(--accent);
+      height:6px; cursor:pointer;
+    }
+    .slider-hints { display:flex; justify-content:space-between; font-size:.75rem; color:var(--muted); margin-top:2px; }
+
+    .summary-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px; }
+    .summary-card { border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px; text-align:center; }
+    .summary-card .sc-n { font-family:var(--font-mono); font-size:1.35rem; font-weight:700; color:var(--ink); }
+    .summary-card .sc-l { font-size:.75rem; color:var(--muted); margin-top:4px; }
+    .summary-card.highlight { background:var(--accent); border-color:var(--accent); }
+    .summary-card.highlight .sc-n, .summary-card.highlight .sc-l { color:#fff; }
+
+    .amort-table { width:100%; border-collapse:collapse; font-size:.85rem; margin-top:16px; }
+    .amort-table th { text-align:left; padding:8px 10px; border-bottom:2px solid var(--border); font-weight:600; color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.04em; }
+    .amort-table td { padding:8px 10px; border-bottom:1px solid var(--border); font-family:var(--font-mono); }
+    .amort-table tr:last-child td { border-bottom:none; font-weight:700; }
+    .show-amort-btn { margin-top:16px; }
+    #amort-wrap { display:none; margin-top:8px; max-height:320px; overflow-y:auto; border:1px solid var(--border); border-radius:var(--radius-sm); }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <a href="../word-counter/index.html">Word Counter</a>
+        <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+        <a href="../age-calculator/index.html">Age Calculator</a>
+        <a href="../case-converter/index.html">Case Converter</a>
+        <a href="../gst-calculator/index.html">GST Calculator</a>
+        <a href="../emi-calculator/index.html" class="active">EMI Calculator</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / EMI Calculator</p>
+      <span class="catalog-tag">CALC&nbsp;04</span>
+      <h1 style="margin-top:10px;">EMI Calculator</h1>
+      <p class="muted" style="max-width:60ch;">Calculate your monthly EMI for any loan — home, car, or personal. Drag the sliders or type the numbers.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <!-- Loan Amount -->
+      <div class="slider-wrap">
+        <label>Loan amount <span id="lbl-amount">₹10,00,000</span></label>
+        <input type="range" id="sl-amount" min="50000" max="10000000" step="50000" value="1000000">
+        <div class="slider-hints"><span>₹50K</span><span>₹1 Cr</span></div>
+      </div>
+
+      <!-- Interest Rate -->
+      <div class="slider-wrap">
+        <label>Annual interest rate <span id="lbl-rate">8.5%</span></label>
+        <input type="range" id="sl-rate" min="1" max="30" step="0.1" value="8.5">
+        <div class="slider-hints"><span>1%</span><span>30%</span></div>
+      </div>
+
+      <!-- Tenure -->
+      <div class="slider-wrap">
+        <label>Loan tenure <span id="lbl-tenure">20 years</span></label>
+        <input type="range" id="sl-tenure" min="1" max="30" step="1" value="20">
+        <div class="slider-hints"><span>1 yr</span><span>30 yrs</span></div>
+      </div>
+
+      <!-- Results -->
+      <div class="readout" id="emi-readout">
+        <div class="stat"><span class="n" id="r-emi">—</span><span class="l">Monthly EMI</span></div>
+        <div class="stat"><span class="n" id="r-interest">—</span><span class="l">Total interest</span></div>
+        <div class="stat"><span class="n" id="r-total">—</span><span class="l">Total payment</span></div>
+      </div>
+
+      <!-- Amortisation toggle -->
+      <button class="btn btn-secondary btn-sm show-amort-btn" id="show-amort">Show year-by-year breakdown ↓</button>
+      <div id="amort-wrap">
+        <table class="amort-table">
+          <thead>
+            <tr>
+              <th>Year</th><th>Principal paid</th><th>Interest paid</th><th>Balance</th>
+            </tr>
+          </thead>
+          <tbody id="amort-body"></tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    const slAmount = document.getElementById('sl-amount');
+    const slRate   = document.getElementById('sl-rate');
+    const slTenure = document.getElementById('sl-tenure');
+
+    function fmtINR(n) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
+
+    function calculate() {
+      const P = parseFloat(slAmount.value);
+      const annualRate = parseFloat(slRate.value);
+      const years = parseInt(slTenure.value);
+
+      document.getElementById('lbl-amount').textContent = fmtINR(P);
+      document.getElementById('lbl-rate').textContent   = annualRate.toFixed(1) + '%';
+      document.getElementById('lbl-tenure').textContent = years + (years === 1 ? ' year' : ' years');
+
+      const r  = annualRate / 100 / 12;
+      const n  = years * 12;
+      const emi = r === 0 ? P / n : (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+      const totalPayment  = emi * n;
+      const totalInterest = totalPayment - P;
+
+      document.getElementById('r-emi').textContent      = fmtINR(emi);
+      document.getElementById('r-interest').textContent = fmtINR(totalInterest);
+      document.getElementById('r-total').textContent    = fmtINR(totalPayment);
+
+      // Amortisation table (yearly)
+      let balance = P;
+      let rows = '';
+      for (let yr = 1; yr <= years; yr++) {
+        let yearPrincipal = 0, yearInterest = 0;
+        for (let m = 0; m < 12; m++) {
+          const intPart = balance * r;
+          const prinPart = emi - intPart;
+          yearInterest  += intPart;
+          yearPrincipal += prinPart;
+          balance       -= prinPart;
+        }
+        rows += `<tr>
+          <td>${yr}</td>
+          <td>${fmtINR(yearPrincipal)}</td>
+          <td>${fmtINR(yearInterest)}</td>
+          <td>${fmtINR(Math.max(0, balance))}</td>
+        </tr>`;
+      }
+      document.getElementById('amort-body').innerHTML = rows;
+    }
+
+    [slAmount, slRate, slTenure].forEach(sl => sl.addEventListener('input', calculate));
+
+    const amortWrap = document.getElementById('amort-wrap');
+    const showBtn   = document.getElementById('show-amort');
+    showBtn.addEventListener('click', () => {
+      const open = amortWrap.style.display === 'block';
+      amortWrap.style.display = open ? 'none' : 'block';
+      showBtn.textContent = open ? 'Show year-by-year breakdown ↓' : 'Hide breakdown ↑';
+    });
+
+    calculate();
+  </script>
+</body>
+</html>
