@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Name Picker — Free Online Wheel Picker | microtools365</title>
+  <meta name="description" content="Free random name picker. Enter a list of names and pick a random winner — perfect for giveaways, classroom selection, raffles and team assignments.">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .winner-display {
+      text-align:center; padding:40px 20px; border:2px dashed var(--border);
+      border-radius:var(--radius); margin-bottom:20px; background:var(--bg);
+    }
+    .winner-display .name {
+      font-family:var(--font-display); font-size:2rem; font-weight:700; color:var(--accent);
+      min-height:2.4em; display:flex; align-items:center; justify-content:center;
+    }
+    .winner-display .name.spinning { color:var(--muted); }
+    .name-chip-list { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .name-chip {
+      background:var(--accent-soft); color:var(--accent); font-size:.82rem; font-weight:600;
+      padding:5px 12px; border-radius:999px;
+    }
+    .name-chip.used { background:var(--border); color:var(--muted); text-decoration:line-through; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <a href="../word-counter/index.html">Word Counter</a>
+        <a href="../percentage-calculator/index.html">% Calculator</a>
+        <a href="../age-calculator/index.html">Age Calculator</a>
+        <a href="../case-converter/index.html">Case Converter</a>
+        <a href="../gst-calculator/index.html">GST Calculator</a>
+        <a href="../emi-calculator/index.html">EMI Calculator</a>
+        <a href="../number-to-words/index.html">Number to Words</a>
+        <a href="../bmi-calculator/index.html">BMI Calculator</a>
+        <a href="../random-name-picker/index.html" class="active">Name Picker</a>
+        <a href="../password-generator/index.html">Password Generator</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Random Name Picker</p>
+      <span class="catalog-tag">GEN&nbsp;01</span>
+      <h1 style="margin-top:10px;">Random Name Picker</h1>
+      <p class="muted" style="max-width:60ch;">Enter one name per line, then hit pick — great for giveaways, classroom selection, raffles or splitting up teams.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="field">
+        <label for="names-input">Names (one per line)</label>
+        <textarea id="names-input" placeholder="Priya&#10;Rahul&#10;Ananya&#10;Vikram&#10;..." style="min-height:160px;"></textarea>
+      </div>
+
+      <div style="display:flex; gap:10px; align-items:center; margin-bottom:20px; flex-wrap:wrap;">
+        <label style="display:flex; align-items:center; gap:6px; font-size:.9rem; font-weight:500;">
+          <input type="checkbox" id="remove-winner"> Remove winner after picking
+        </label>
+      </div>
+
+      <div class="winner-display">
+        <div class="name" id="winner-name">Ready when you are</div>
+      </div>
+
+      <button class="btn btn-primary" id="pick-btn">🎉 Pick a random name</button>
+      <button class="btn btn-secondary" id="reset-btn" style="margin-left:8px;">Reset list</button>
+
+      <div class="name-chip-list" id="chip-list"></div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    const namesInput   = document.getElementById('names-input');
+    const winnerName   = document.getElementById('winner-name');
+    const chipList     = document.getElementById('chip-list');
+    const removeWinner = document.getElementById('remove-winner');
+
+    let usedNames = new Set();
+
+    function getNames() {
+      return namesInput.value.split('\n').map(n => n.trim()).filter(Boolean);
+    }
+
+    function renderChips() {
+      const names = getNames();
+      chipList.innerHTML = names.map(n =>
+        `<span class="name-chip ${usedNames.has(n) ? 'used' : ''}">${n}</span>`
+      ).join('');
+    }
+
+    namesInput.addEventListener('input', renderChips);
+
+    document.getElementById('pick-btn').addEventListener('click', () => {
+      const allNames = getNames();
+      const available = removeWinner.checked
+        ? allNames.filter(n => !usedNames.has(n))
+        : allNames;
+
+      if (available.length === 0) {
+        winnerName.textContent = allNames.length === 0 ? 'Add some names first' : 'Everyone has won!';
+        return;
+      }
+
+      // Spin animation: rapidly cycle random names before landing on the real pick
+      winnerName.classList.add('spinning');
+      let ticks = 0;
+      const maxTicks = 16;
+      const finalPick = available[Math.floor(Math.random() * available.length)];
+
+      const spin = setInterval(() => {
+        winnerName.textContent = available[Math.floor(Math.random() * available.length)];
+        ticks++;
+        if (ticks >= maxTicks) {
+          clearInterval(spin);
+          winnerName.textContent = finalPick;
+          winnerName.classList.remove('spinning');
+          if (removeWinner.checked) {
+            usedNames.add(finalPick);
+            renderChips();
+          }
+        }
+      }, 80);
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      usedNames.clear();
+      winnerName.textContent = 'Ready when you are';
+      renderChips();
+    });
+
+    renderChips();
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
