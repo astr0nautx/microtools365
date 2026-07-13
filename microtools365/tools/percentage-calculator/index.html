@@ -89,6 +89,7 @@
   </footer>
 
   <script src="../../js/main.js"></script>
+  <script type="module" src="../../js/analytics.js"></script>
   <script>
     // ---- Tab switching ----
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -140,5 +141,9 @@
     ['what-x', 'what-y'].forEach(id => document.getElementById(id).addEventListener('input', calcWhat));
     ['change-x', 'change-y'].forEach(id => document.getElementById(id).addEventListener('input', calcChange));
   </script>
+  <script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
