@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Excel to PDF Converter — XLS, XLSX, CSV to PDF | microtools365</title>
-  <meta name="description" content="Convert Excel (.xls, .xlsx) or CSV files to PDF for free. Preview your data and download a clean table PDF — everything happens in your browser.">
+  <meta name="description" content="Convert Excel (.xls, .xlsx) or CSV files to PDF for free. Preview your data, then see the file size before you download — everything in your browser.">
   <link rel="stylesheet" href="../../css/style.css">
   <style>
     .dropzone {
@@ -27,6 +27,27 @@
     .preview-table th, .preview-table td { border:1px solid var(--border); padding:6px 10px; white-space:nowrap; }
     .preview-table th { background:var(--bg); font-weight:600; position:sticky; top:0; }
     .preview-note { font-size:.78rem; color:var(--muted); margin-top:8px; }
+
+    .step { display:none; }
+    .step.active { display:block; }
+    .step-heading { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+    .step-num {
+      width:26px; height:26px; border-radius:50%; background:var(--ink); color:#fff;
+      display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; flex-shrink:0;
+    }
+    .step-heading h3 { margin:0; font-size:1.05rem; }
+
+    .result-panel { text-align:center; padding:32px 20px; border:1px solid var(--border); border-radius:var(--radius); background:var(--bg); }
+    .result-panel .checkmark { font-size:2.2rem; margin-bottom:8px; }
+    .result-stats { display:flex; justify-content:center; gap:32px; margin:18px 0; flex-wrap:wrap; }
+    .result-stats .stat-n { font-family:var(--font-mono); font-size:1.4rem; font-weight:700; color:var(--ink); }
+    .result-stats .stat-l { font-size:.75rem; color:var(--muted); margin-top:2px; }
+
+    .spinner {
+      width:32px; height:32px; border:3px solid var(--border); border-top-color:var(--accent);
+      border-radius:50%; margin:20px auto; animation:spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -91,22 +112,51 @@
   <main class="container">
     <div class="panel">
 
-      <div class="dropzone" id="dropzone">
-        <div class="icon">📊</div>
-        <p><strong>Click to choose a file</strong> or drag and drop here</p>
-        <p style="font-size:.8rem; margin-top:4px;">.xlsx, .xls or .csv supported</p>
+      <!-- STEP 1: upload & preview -->
+      <div class="step active" id="step-1">
+        <div class="step-heading"><span class="step-num">1</span><h3>Upload your file</h3></div>
+
+        <div class="dropzone" id="dropzone">
+          <div class="icon">📊</div>
+          <p><strong>Click to choose a file</strong> or drag and drop here</p>
+          <p style="font-size:.8rem; margin-top:4px;">.xlsx, .xls or .csv supported</p>
+        </div>
+        <input type="file" id="file-input" accept=".xlsx,.xls,.csv" style="display:none;">
+
+        <div class="sheet-select-wrap" id="sheet-select-wrap">
+          <label style="font-size:.85rem; font-weight:600; display:block; margin-bottom:6px;">Sheet</label>
+          <select id="sheet-select"></select>
+        </div>
+
+        <div class="preview-wrap" id="preview-wrap" style="display:none;"></div>
+        <p class="preview-note" id="preview-note" style="display:none;">Showing a preview — the full sheet will be included in the PDF.</p>
+
+        <button class="btn btn-primary" id="generate-btn" style="margin-top:20px;" disabled>Generate PDF</button>
       </div>
-      <input type="file" id="file-input" accept=".xlsx,.xls,.csv" style="display:none;">
 
-      <div class="sheet-select-wrap" id="sheet-select-wrap">
-        <label style="font-size:.85rem; font-weight:600; display:block; margin-bottom:6px;">Sheet</label>
-        <select id="sheet-select"></select>
+      <!-- STEP 2: processing -->
+      <div class="step" id="step-processing">
+        <div class="result-panel">
+          <div class="spinner"></div>
+          <p class="muted">Building your PDF…</p>
+        </div>
       </div>
 
-      <div class="preview-wrap" id="preview-wrap" style="display:none;"></div>
-      <p class="preview-note" id="preview-note" style="display:none;">Showing a preview — the full sheet will be included in the PDF.</p>
-
-      <button class="btn btn-primary" id="generate-btn" style="margin-top:20px;" disabled>Convert to PDF</button>
+      <!-- STEP 3: result -->
+      <div class="step" id="step-result">
+        <div class="result-panel">
+          <div class="checkmark">✅</div>
+          <h3 style="margin:0;">Your PDF is ready</h3>
+          <div class="result-stats">
+            <div><div class="stat-n" id="stat-pages">—</div><div class="stat-l">Pages</div></div>
+            <div><div class="stat-n" id="stat-size">—</div><div class="stat-l">File size</div></div>
+          </div>
+          <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+            <button class="btn btn-primary" id="download-btn">⬇ Download PDF</button>
+            <button class="btn btn-secondary" id="start-over-btn">Start over</button>
+          </div>
+        </div>
+      </div>
 
     </div>
   </main>
@@ -132,6 +182,13 @@
     const generateBtn  = document.getElementById('generate-btn');
 
     let workbook = null;
+    let resultBlob = null;
+    let pageCount = 0;
+
+    function showStep(id) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
 
     dropzone.addEventListener('click', () => fileInput.click());
     dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
@@ -171,7 +228,7 @@
       if (!rows.length) { previewWrap.style.display = 'none'; previewNote.style.display = 'none'; return; }
 
       const headerRow = rows[0];
-      const bodyRows = rows.slice(1, 9); // preview first 8 data rows
+      const bodyRows = rows.slice(1, 9);
 
       let html = '<table class="preview-table"><thead><tr>' +
         headerRow.map(c => `<th>${c}</th>`).join('') + '</tr></thead><tbody>';
@@ -187,10 +244,13 @@
 
     sheetSelect.addEventListener('change', renderPreview);
 
-    generateBtn.addEventListener('click', () => {
+    generateBtn.addEventListener('click', async () => {
       if (!workbook) return;
       const rows = getRows();
       if (!rows.length) { showToast('No data found'); return; }
+
+      showStep('step-processing');
+      await new Promise(r => setTimeout(r, 50));
 
       const head = [rows[0]];
       const body = rows.slice(1);
@@ -205,8 +265,39 @@
         margin: { top: 30, left: 20, right: 20 },
       });
 
-      doc.save('microtools365-spreadsheet.pdf');
-      showToast('PDF downloaded');
+      pageCount = doc.internal.getNumberOfPages();
+      resultBlob = doc.output('blob');
+
+      document.getElementById('stat-pages').textContent = pageCount;
+      document.getElementById('stat-size').textContent = formatBytes(resultBlob.size);
+      showStep('step-result');
+    });
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    document.getElementById('download-btn').addEventListener('click', () => {
+      if (!resultBlob) return;
+      const url = URL.createObjectURL(resultBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'microtools365-spreadsheet.pdf';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Download started');
+    });
+
+    document.getElementById('start-over-btn').addEventListener('click', () => {
+      workbook = null;
+      resultBlob = null;
+      generateBtn.disabled = true;
+      previewWrap.style.display = 'none';
+      previewNote.style.display = 'none';
+      sheetWrap.style.display = 'none';
+      showStep('step-1');
     });
   </script>
 
