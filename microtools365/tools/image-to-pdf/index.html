@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Image to PDF Converter — Free, No Upload Needed | microtools365</title>
-  <meta name="description" content="Convert JPG or PNG images into a single PDF file for free. Everything happens in your browser — your images are never uploaded anywhere.">
+  <meta name="description" content="Convert JPG or PNG images into a single PDF file for free. Choose a compression level and see the final file size before you download — all in your browser.">
   <link rel="stylesheet" href="../../css/style.css">
   <style>
     .dropzone {
@@ -29,6 +29,50 @@
       position:absolute; top:4px; left:4px; background:var(--ink); color:#fff;
       font-size:.7rem; font-weight:700; padding:1px 6px; border-radius:4px;
     }
+
+    /* Step sections */
+    .step { display:none; }
+    .step.active { display:block; }
+    .step-heading {
+      display:flex; align-items:center; gap:10px; margin-bottom:16px;
+    }
+    .step-num {
+      width:26px; height:26px; border-radius:50%; background:var(--ink); color:#fff;
+      display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; flex-shrink:0;
+    }
+    .step-heading h3 { margin:0; font-size:1.05rem; }
+    .step-divider { border:none; border-top:1px solid var(--border); margin:28px 0; }
+
+    /* Compression options */
+    .quality-options { display:grid; gap:10px; grid-template-columns:1fr; }
+    @media (min-width:640px) { .quality-options { grid-template-columns:repeat(3,1fr); } }
+    .quality-card {
+      border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px;
+      cursor:pointer; transition:border-color .12s ease, background .12s ease;
+    }
+    .quality-card:hover { border-color:var(--accent); }
+    .quality-card.selected { border-color:var(--accent); background:var(--accent-soft); }
+    .quality-card .qc-title { font-weight:700; font-size:.92rem; margin-bottom:4px; }
+    .quality-card .qc-desc { font-size:.8rem; color:var(--muted); }
+
+    /* Result panel */
+    .result-panel {
+      text-align:center; padding:32px 20px; border:1px solid var(--border);
+      border-radius:var(--radius); background:var(--bg);
+    }
+    .result-panel .checkmark { font-size:2.2rem; margin-bottom:8px; }
+    .result-stats {
+      display:flex; justify-content:center; gap:32px; margin:18px 0;
+      flex-wrap:wrap;
+    }
+    .result-stats .stat-n { font-family:var(--font-mono); font-size:1.4rem; font-weight:700; color:var(--ink); }
+    .result-stats .stat-l { font-size:.75rem; color:var(--muted); margin-top:2px; }
+
+    .spinner {
+      width:32px; height:32px; border:3px solid var(--border); border-top-color:var(--accent);
+      border-radius:50%; margin:20px auto; animation:spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -86,28 +130,81 @@
       <p class="breadcrumb"><a href="../../index.html">All tools</a> / Image to PDF</p>
       <span class="catalog-tag">DOC&nbsp;01</span>
       <h1 style="margin-top:10px;">Image to PDF Converter</h1>
-      <p class="muted" style="max-width:60ch;">Select one or more images to combine into a single PDF. Everything happens locally in your browser — nothing is uploaded.</p>
+      <p class="muted" style="max-width:60ch;">Add your images, arrange them, pick a quality level, and download — all done locally in your browser.</p>
     </div>
   </section>
 
   <main class="container">
     <div class="panel">
 
-      <div class="dropzone" id="dropzone">
-        <div class="icon">🖼️</div>
-        <p><strong>Click to choose images</strong> or drag and drop here</p>
-        <p style="font-size:.8rem; margin-top:4px;">JPG, PNG, WEBP supported</p>
+      <!-- STEP 1: Select & arrange -->
+      <div class="step active" id="step-1">
+        <div class="step-heading"><span class="step-num">1</span><h3>Add your images</h3></div>
+
+        <div class="dropzone" id="dropzone">
+          <div class="icon">🖼️</div>
+          <p><strong>Click to choose images</strong> or drag and drop here</p>
+          <p style="font-size:.8rem; margin-top:4px;">JPG, PNG, WEBP supported</p>
+        </div>
+        <input type="file" id="file-input" accept="image/*" multiple style="display:none;">
+
+        <div class="thumb-grid" id="thumb-grid"></div>
+        <p class="muted" style="font-size:.8rem; margin-top:14px;" id="reorder-hint"></p>
+
+        <div style="display:flex; gap:10px; margin-top:20px;">
+          <button class="btn btn-primary" id="to-step2-btn" disabled>Next: Choose quality →</button>
+          <button class="btn btn-secondary" id="clear-btn" style="display:none;">Clear all</button>
+        </div>
       </div>
-      <input type="file" id="file-input" accept="image/*" multiple style="display:none;">
 
-      <div class="thumb-grid" id="thumb-grid"></div>
+      <!-- STEP 2: Compression -->
+      <div class="step" id="step-2">
+        <div class="step-heading"><span class="step-num">2</span><h3>Choose a quality level</h3></div>
 
-      <div style="display:flex; gap:10px; margin-top:24px;">
-        <button class="btn btn-primary" id="generate-btn" disabled>Convert to PDF</button>
-        <button class="btn btn-secondary" id="clear-btn">Clear all</button>
+        <div class="quality-options">
+          <div class="quality-card selected" data-quality="best">
+            <div class="qc-title">Best quality</div>
+            <div class="qc-desc">Original resolution. Largest file size.</div>
+          </div>
+          <div class="quality-card" data-quality="balanced">
+            <div class="qc-title">Balanced</div>
+            <div class="qc-desc">Slight compression. Good for sharing.</div>
+          </div>
+          <div class="quality-card" data-quality="small">
+            <div class="qc-title">Smallest size</div>
+            <div class="qc-desc">More compression. Best for email limits.</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:24px;">
+          <button class="btn btn-secondary" id="back-to-1-btn">← Back</button>
+          <button class="btn btn-primary" id="generate-btn">Generate PDF</button>
+        </div>
       </div>
 
-      <p class="muted" style="font-size:.8rem; margin-top:16px;">Use ↑ / ↓ on each image to reorder pages before converting.</p>
+      <!-- STEP 3: Processing -->
+      <div class="step" id="step-processing">
+        <div class="result-panel">
+          <div class="spinner"></div>
+          <p class="muted">Building your PDF…</p>
+        </div>
+      </div>
+
+      <!-- STEP 4: Result -->
+      <div class="step" id="step-result">
+        <div class="result-panel">
+          <div class="checkmark">✅</div>
+          <h3 style="margin:0;">Your PDF is ready</h3>
+          <div class="result-stats">
+            <div><div class="stat-n" id="stat-pages">—</div><div class="stat-l">Pages</div></div>
+            <div><div class="stat-n" id="stat-size">—</div><div class="stat-l">File size</div></div>
+          </div>
+          <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+            <button class="btn btn-primary" id="download-btn">⬇ Download PDF</button>
+            <button class="btn btn-secondary" id="start-over-btn">Start over</button>
+          </div>
+        </div>
+      </div>
 
     </div>
   </main>
@@ -122,13 +219,24 @@
   <script src="../../js/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
-    const dropzone   = document.getElementById('dropzone');
-    const fileInput  = document.getElementById('file-input');
-    const thumbGrid  = document.getElementById('thumb-grid');
-    const generateBtn = document.getElementById('generate-btn');
+    const dropzone     = document.getElementById('dropzone');
+    const fileInput    = document.getElementById('file-input');
+    const thumbGrid    = document.getElementById('thumb-grid');
+    const reorderHint  = document.getElementById('reorder-hint');
+    const toStep2Btn   = document.getElementById('to-step2-btn');
+    const clearBtn     = document.getElementById('clear-btn');
 
-    let items = []; // { dataUrl, type }
+    let items = []; // { dataUrl }
+    let selectedQuality = 'best';
+    let resultBlob = null;
 
+    // ---------- Step navigation ----------
+    function showStep(id) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // ---------- Step 1: select & arrange ----------
     dropzone.addEventListener('click', () => fileInput.click());
     dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
     dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
@@ -147,7 +255,7 @@
       Array.from(fileList).filter(f => f.type.startsWith('image/')).forEach(file => {
         const reader = new FileReader();
         reader.onload = (ev) => {
-          items.push({ dataUrl: ev.target.result, type: file.type.includes('png') ? 'PNG' : 'JPEG' });
+          items.push({ dataUrl: ev.target.result });
           render();
         };
         reader.readAsDataURL(file);
@@ -166,7 +274,10 @@
           </div>
         </div>
       `).join('');
-      generateBtn.disabled = items.length === 0;
+
+      toStep2Btn.disabled = items.length === 0;
+      clearBtn.style.display = items.length ? 'inline-flex' : 'none';
+      reorderHint.textContent = items.length ? 'Use ↑ / ↓ to reorder pages, ✕ to remove.' : '';
 
       thumbGrid.querySelectorAll('button').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -179,10 +290,61 @@
       });
     }
 
-    document.getElementById('clear-btn').addEventListener('click', () => { items = []; render(); });
+    clearBtn.addEventListener('click', () => { items = []; render(); });
+    toStep2Btn.addEventListener('click', () => showStep('step-2'));
 
-    generateBtn.addEventListener('click', async () => {
+    // ---------- Step 2: quality selection ----------
+    document.querySelectorAll('.quality-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.quality-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedQuality = card.dataset.quality;
+      });
+    });
+
+    document.getElementById('back-to-1-btn').addEventListener('click', () => showStep('step-1'));
+
+    // ---------- Step 3 → 4: generate ----------
+    const QUALITY_SETTINGS = {
+      best:     { jpegQuality: 0.95, maxDimension: null, reencode: false },
+      balanced: { jpegQuality: 0.78, maxDimension: 1800, reencode: true },
+      small:    { jpegQuality: 0.5,  maxDimension: 1200, reencode: true },
+    };
+
+    function loadImage(dataUrl) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.src = dataUrl;
+      });
+    }
+
+    // Re-encodes an image through canvas to control quality/size. Fills white
+    // behind transparent PNGs so they don't turn black when flattened to JPEG.
+    function reencode(img, settings) {
+      let w = img.width, h = img.height;
+      if (settings.maxDimension && Math.max(w, h) > settings.maxDimension) {
+        const ratio = settings.maxDimension / Math.max(w, h);
+        w = Math.round(w * ratio);
+        h = Math.round(h * ratio);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, w, h);
+      ctx.drawImage(img, 0, 0, w, h);
+      return canvas.toDataURL('image/jpeg', settings.jpegQuality);
+    }
+
+    document.getElementById('generate-btn').addEventListener('click', async () => {
       if (items.length === 0) return;
+      showStep('step-processing');
+
+      // Let the UI paint the spinner before the (synchronous-ish) work begins
+      await new Promise(r => setTimeout(r, 50));
+
+      const settings = QUALITY_SETTINGS[selectedQuality];
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ unit: 'pt', format: 'a4' });
       const pageWidth = doc.internal.pageSize.getWidth();
@@ -190,24 +352,54 @@
       const margin = 20;
 
       for (let i = 0; i < items.length; i++) {
-        const img = new Image();
-        img.src = items[i].dataUrl;
-        await new Promise(resolve => { img.onload = resolve; });
+        const img = await loadImage(items[i].dataUrl);
+        const finalDataUrl = settings.reencode ? reencode(img, settings) : items[i].dataUrl;
+        const finalImg = settings.reencode ? await loadImage(finalDataUrl) : img;
 
         const maxW = pageWidth - margin * 2;
         const maxH = pageHeight - margin * 2;
-        const ratio = Math.min(maxW / img.width, maxH / img.height);
-        const w = img.width * ratio;
-        const h = img.height * ratio;
+        const ratio = Math.min(maxW / finalImg.width, maxH / finalImg.height);
+        const w = finalImg.width * ratio;
+        const h = finalImg.height * ratio;
         const x = (pageWidth - w) / 2;
         const y = (pageHeight - h) / 2;
 
         if (i > 0) doc.addPage();
-        doc.addImage(img, items[i].type, x, y, w, h);
+        doc.addImage(finalDataUrl, settings.reencode ? 'JPEG' : undefined, x, y, w, h);
       }
 
-      doc.save('microtools365-images.pdf');
-      showToast('PDF downloaded');
+      resultBlob = doc.output('blob');
+
+      document.getElementById('stat-pages').textContent = items.length;
+      document.getElementById('stat-size').textContent = formatBytes(resultBlob.size);
+      showStep('step-result');
+    });
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    document.getElementById('download-btn').addEventListener('click', () => {
+      if (!resultBlob) return;
+      const url = URL.createObjectURL(resultBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'microtools365-images.pdf';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Download started');
+    });
+
+    document.getElementById('start-over-btn').addEventListener('click', () => {
+      items = [];
+      resultBlob = null;
+      selectedQuality = 'best';
+      document.querySelectorAll('.quality-card').forEach(c => c.classList.remove('selected'));
+      document.querySelector('.quality-card[data-quality="best"]').classList.add('selected');
+      render();
+      showStep('step-1');
     });
   </script>
 
