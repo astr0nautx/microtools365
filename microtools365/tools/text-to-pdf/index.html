@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to PDF Converter — Free Online Tool | microtools365</title>
+  <meta name="description" content="Convert plain text into a formatted PDF file for free. Paste text or upload a .txt file — everything happens in your browser, nothing uploaded.">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../gst-calculator/index.html">GST Calculator</a>
+            <a href="../emi-calculator/index.html">EMI Calculator</a>
+            <a href="../sip-calculator/index.html">SIP Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../word-counter/index.html">Word Counter</a>
+            <a href="../case-converter/index.html">Case Converter</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../age-calculator/index.html">Age Calculator</a>
+            <a href="../bmi-calculator/index.html">BMI Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../image-to-pdf/index.html">Image to PDF</a>
+            <a href="../text-to-pdf/index.html">Text to PDF</a>
+            <a href="../xls-to-pdf/index.html">Excel to PDF</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../random-name-picker/index.html">Name Picker</a>
+            <a href="../password-generator/index.html">Password Generator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Text to PDF</p>
+      <span class="catalog-tag">DOC&nbsp;02</span>
+      <h1 style="margin-top:10px;">Text to PDF Converter</h1>
+      <p class="muted" style="max-width:60ch;">Paste your text or upload a .txt file, then download it as a clean, paginated PDF.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div style="margin-bottom:14px;">
+        <button class="btn btn-secondary btn-sm" id="upload-btn">Upload a .txt file</button>
+        <input type="file" id="file-input" accept=".txt" style="display:none;">
+      </div>
+
+      <div class="field">
+        <label for="text-input">Your text</label>
+        <textarea id="text-input" placeholder="Paste or type your text here…" style="min-height:280px;"></textarea>
+      </div>
+
+      <button class="btn btn-primary" id="generate-btn">Convert to PDF</button>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const uploadBtn = document.getElementById('upload-btn');
+    const fileInput = document.getElementById('file-input');
+    const textInput = document.getElementById('text-input');
+
+    uploadBtn.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => { textInput.value = ev.target.result; };
+      reader.readAsText(file);
+      fileInput.value = '';
+    });
+
+    document.getElementById('generate-btn').addEventListener('click', () => {
+      const text = textInput.value;
+      if (!text.trim()) { showToast('Add some text first'); return; }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+      const margin = 48;
+      const pageWidth  = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const maxWidth   = pageWidth - margin * 2;
+      const fontSize   = 12;
+      const lineHeight = fontSize * 1.45;
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(fontSize);
+
+      let y = margin;
+      const paragraphs = text.split('\n');
+
+      paragraphs.forEach(paragraph => {
+        const lines = doc.splitTextToSize(paragraph.length ? paragraph : ' ', maxWidth);
+        lines.forEach(line => {
+          if (y + lineHeight > pageHeight - margin) {
+            doc.addPage();
+            y = margin;
+          }
+          doc.text(line, margin, y);
+          y += lineHeight;
+        });
+      });
+
+      doc.save('microtools365-document.pdf');
+      showToast('PDF downloaded');
+    });
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

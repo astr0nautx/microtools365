@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excel to PDF Converter — XLS, XLSX, CSV to PDF | microtools365</title>
+  <meta name="description" content="Convert Excel (.xls, .xlsx) or CSV files to PDF for free. Preview your data and download a clean table PDF — everything happens in your browser.">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .dropzone {
+      border: 2px dashed var(--border); border-radius: var(--radius);
+      padding: 40px 20px; text-align: center; cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: var(--accent-soft); }
+    .dropzone p { margin: 0; color: var(--muted); }
+    .dropzone .icon { font-size: 2rem; margin-bottom: 8px; }
+
+    .sheet-select-wrap { margin: 18px 0; display:none; }
+    .sheet-select-wrap select {
+      padding: 9px 12px; border:1px solid var(--border); border-radius:var(--radius-sm);
+      font-family:var(--font-body); font-size:.9rem; background:var(--surface);
+    }
+
+    .preview-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius-sm); margin-top:18px; max-height:340px; overflow-y:auto; }
+    .preview-table { border-collapse:collapse; width:100%; font-size:.82rem; }
+    .preview-table th, .preview-table td { border:1px solid var(--border); padding:6px 10px; white-space:nowrap; }
+    .preview-table th { background:var(--bg); font-weight:600; position:sticky; top:0; }
+    .preview-note { font-size:.78rem; color:var(--muted); margin-top:8px; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../gst-calculator/index.html">GST Calculator</a>
+            <a href="../emi-calculator/index.html">EMI Calculator</a>
+            <a href="../sip-calculator/index.html">SIP Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../word-counter/index.html">Word Counter</a>
+            <a href="../case-converter/index.html">Case Converter</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../age-calculator/index.html">Age Calculator</a>
+            <a href="../bmi-calculator/index.html">BMI Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../image-to-pdf/index.html">Image to PDF</a>
+            <a href="../text-to-pdf/index.html">Text to PDF</a>
+            <a href="../xls-to-pdf/index.html">Excel to PDF</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../random-name-picker/index.html">Name Picker</a>
+            <a href="../password-generator/index.html">Password Generator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Excel to PDF</p>
+      <span class="catalog-tag">DOC&nbsp;03</span>
+      <h1 style="margin-top:10px;">Excel to PDF Converter</h1>
+      <p class="muted" style="max-width:60ch;">Upload an Excel (.xls, .xlsx) or CSV file, preview it, and download it as a PDF table.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="dropzone" id="dropzone">
+        <div class="icon">📊</div>
+        <p><strong>Click to choose a file</strong> or drag and drop here</p>
+        <p style="font-size:.8rem; margin-top:4px;">.xlsx, .xls or .csv supported</p>
+      </div>
+      <input type="file" id="file-input" accept=".xlsx,.xls,.csv" style="display:none;">
+
+      <div class="sheet-select-wrap" id="sheet-select-wrap">
+        <label style="font-size:.85rem; font-weight:600; display:block; margin-bottom:6px;">Sheet</label>
+        <select id="sheet-select"></select>
+      </div>
+
+      <div class="preview-wrap" id="preview-wrap" style="display:none;"></div>
+      <p class="preview-note" id="preview-note" style="display:none;">Showing a preview — the full sheet will be included in the PDF.</p>
+
+      <button class="btn btn-primary" id="generate-btn" style="margin-top:20px;" disabled>Convert to PDF</button>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+  <script>
+    const dropzone     = document.getElementById('dropzone');
+    const fileInput    = document.getElementById('file-input');
+    const sheetWrap    = document.getElementById('sheet-select-wrap');
+    const sheetSelect  = document.getElementById('sheet-select');
+    const previewWrap  = document.getElementById('preview-wrap');
+    const previewNote  = document.getElementById('preview-note');
+    const generateBtn  = document.getElementById('generate-btn');
+
+    let workbook = null;
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files[0]) loadFile(e.target.files[0]);
+      fileInput.value = '';
+    });
+
+    function loadFile(file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const data = new Uint8Array(ev.target.result);
+        workbook = XLSX.read(data, { type: 'array' });
+        sheetSelect.innerHTML = workbook.SheetNames.map(n => `<option value="${n}">${n}</option>`).join('');
+        sheetWrap.style.display = workbook.SheetNames.length > 1 ? 'block' : 'none';
+        renderPreview();
+        generateBtn.disabled = false;
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function getRows() {
+      const name = sheetSelect.value || workbook.SheetNames[0];
+      const ws = workbook.Sheets[name];
+      return XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+    }
+
+    function renderPreview() {
+      const rows = getRows();
+      if (!rows.length) { previewWrap.style.display = 'none'; previewNote.style.display = 'none'; return; }
+
+      const headerRow = rows[0];
+      const bodyRows = rows.slice(1, 9); // preview first 8 data rows
+
+      let html = '<table class="preview-table"><thead><tr>' +
+        headerRow.map(c => `<th>${c}</th>`).join('') + '</tr></thead><tbody>';
+      bodyRows.forEach(row => {
+        html += '<tr>' + row.map(c => `<td>${c}</td>`).join('') + '</tr>';
+      });
+      html += '</tbody></table>';
+
+      previewWrap.innerHTML = html;
+      previewWrap.style.display = 'block';
+      previewNote.style.display = rows.length > 9 ? 'block' : 'none';
+    }
+
+    sheetSelect.addEventListener('change', renderPreview);
+
+    generateBtn.addEventListener('click', () => {
+      if (!workbook) return;
+      const rows = getRows();
+      if (!rows.length) { showToast('No data found'); return; }
+
+      const head = [rows[0]];
+      const body = rows.slice(1);
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'a4' });
+      doc.autoTable({
+        head,
+        body,
+        styles: { fontSize: 8, cellPadding: 4 },
+        headStyles: { fillColor: [255, 90, 31] },
+        margin: { top: 30, left: 20, right: 20 },
+      });
+
+      doc.save('microtools365-spreadsheet.pdf');
+      showToast('PDF downloaded');
+    });
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
