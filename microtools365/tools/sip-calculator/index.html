@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIP Calculator — Mutual Fund SIP Returns Calculator | microtools365</title>
+  <meta name="description" content="Free SIP calculator. Estimate the future value of your monthly mutual fund SIP investment based on expected return rate and investment duration.">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .slider-wrap { margin-bottom:20px; }
+    .slider-wrap label { font-size:.85rem; font-weight:600; display:flex; justify-content:space-between; margin-bottom:6px; }
+    .slider-wrap label span { font-family:var(--font-mono); font-weight:700; color:var(--accent); }
+    input[type="range"] { width:100%; accent-color:var(--accent); height:6px; cursor:pointer; }
+    .slider-hints { display:flex; justify-content:space-between; font-size:.75rem; color:var(--muted); margin-top:2px; }
+
+    .summary-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:20px; }
+    .summary-card { border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px; text-align:center; }
+    .summary-card .sc-n { font-family:var(--font-mono); font-size:1.25rem; font-weight:700; color:var(--ink); }
+    .summary-card .sc-l { font-size:.75rem; color:var(--muted); margin-top:4px; }
+    .summary-card.highlight { background:var(--accent); border-color:var(--accent); }
+    .summary-card.highlight .sc-n, .summary-card.highlight .sc-l { color:#fff; }
+
+    .ratio-bar { display:flex; height:14px; border-radius:999px; overflow:hidden; margin-top:22px; }
+    .ratio-bar .invested { background:#5B9BD5; }
+    .ratio-bar .returns { background:var(--accent); }
+    .ratio-legend { display:flex; gap:20px; margin-top:10px; font-size:.85rem; }
+    .ratio-legend span { display:flex; align-items:center; gap:6px; }
+    .dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+
+    @media (max-width:600px) { .summary-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <a href="../percentage-calculator/index.html">% Calculator</a>
+        <a href="../gst-calculator/index.html">GST Calculator</a>
+        <a href="../emi-calculator/index.html">EMI Calculator</a>
+        <a href="../sip-calculator/index.html" class="active">SIP Calculator</a>
+        <a href="../word-counter/index.html">Word Counter</a>
+        <a href="../case-converter/index.html">Case Converter</a>
+        <a href="../age-calculator/index.html">Age Calculator</a>
+        <a href="../bmi-calculator/index.html">BMI Calculator</a>
+        <a href="../random-name-picker/index.html">Name Picker</a>
+        <a href="../password-generator/index.html">Password Generator</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / SIP Calculator</p>
+      <span class="catalog-tag">CALC&nbsp;06</span>
+      <h1 style="margin-top:10px;">SIP Calculator</h1>
+      <p class="muted" style="max-width:60ch;">Estimate what your monthly mutual fund SIP could grow to, based on your expected rate of return and investment duration.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="slider-wrap">
+        <label>Monthly investment <span id="lbl-amount">₹5,000</span></label>
+        <input type="range" id="sl-amount" min="500" max="100000" step="500" value="5000">
+        <div class="slider-hints"><span>₹500</span><span>₹1,00,000</span></div>
+      </div>
+
+      <div class="slider-wrap">
+        <label>Expected annual return <span id="lbl-rate">12%</span></label>
+        <input type="range" id="sl-rate" min="1" max="30" step="0.5" value="12">
+        <div class="slider-hints"><span>1%</span><span>30%</span></div>
+      </div>
+
+      <div class="slider-wrap">
+        <label>Investment duration <span id="lbl-years">10 years</span></label>
+        <input type="range" id="sl-years" min="1" max="40" step="1" value="10">
+        <div class="slider-hints"><span>1 yr</span><span>40 yrs</span></div>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="sc-n" id="r-invested">—</div>
+          <div class="sc-l">Total invested</div>
+        </div>
+        <div class="summary-card">
+          <div class="sc-n" id="r-returns">—</div>
+          <div class="sc-l">Est. returns</div>
+        </div>
+        <div class="summary-card highlight">
+          <div class="sc-n" id="r-total">—</div>
+          <div class="sc-l">Total value</div>
+        </div>
+      </div>
+
+      <div class="ratio-bar" id="ratio-bar"></div>
+      <div class="ratio-legend">
+        <span><span class="dot" style="background:#5B9BD5;"></span> Invested amount</span>
+        <span><span class="dot" style="background:var(--accent);"></span> Estimated returns</span>
+      </div>
+
+      <p class="muted" style="font-size:.82rem; margin-top:20px;">
+        This is an estimate based on a constant assumed rate of return. Actual mutual fund returns vary and are not guaranteed.
+      </p>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    const slAmount = document.getElementById('sl-amount');
+    const slRate   = document.getElementById('sl-rate');
+    const slYears  = document.getElementById('sl-years');
+
+    function fmtINR(n) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
+
+    function calculate() {
+      const P = parseFloat(slAmount.value);
+      const annualRate = parseFloat(slRate.value);
+      const years = parseInt(slYears.value);
+
+      document.getElementById('lbl-amount').textContent = fmtINR(P);
+      document.getElementById('lbl-rate').textContent   = annualRate.toFixed(1).replace('.0', '') + '%';
+      document.getElementById('lbl-years').textContent  = years + (years === 1 ? ' year' : ' years');
+
+      const n = years * 12;
+      const i = (annualRate / 100) / 12;
+
+      // Future value of a monthly SIP (ordinary annuity, contribution at start of month)
+      const futureValue = i === 0
+        ? P * n
+        : P * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+
+      const invested = P * n;
+      const returns  = futureValue - invested;
+
+      document.getElementById('r-invested').textContent = fmtINR(invested);
+      document.getElementById('r-returns').textContent  = fmtINR(returns);
+      document.getElementById('r-total').textContent    = fmtINR(futureValue);
+
+      const investedPct = (invested / futureValue) * 100;
+      document.getElementById('ratio-bar').innerHTML =
+        `<div class="invested" style="width:${investedPct}%;"></div><div class="returns" style="width:${100 - investedPct}%;"></div>`;
+    }
+
+    [slAmount, slRate, slYears].forEach(sl => sl.addEventListener('input', calculate));
+    calculate();
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
