@@ -55,3 +55,31 @@ function showToast(message) {
   clearTimeout(toast._timer);
   toast._timer = setTimeout(() => toast.classList.remove('show'), 1800);
 }
+
+// Category dropdown menus in the header nav
+document.addEventListener('DOMContentLoaded', () => {
+  const toggles = document.querySelectorAll('.nav-dropdown-toggle');
+
+  toggles.forEach(toggle => {
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const menu = toggle.nextElementSibling;
+      const isOpen = menu.classList.contains('open');
+
+      // Close all other open dropdowns first
+      document.querySelectorAll('.nav-dropdown-menu.open').forEach(m => m.classList.remove('open'));
+      document.querySelectorAll('.nav-dropdown-toggle.open').forEach(t => t.classList.remove('open'));
+
+      if (!isOpen) {
+        menu.classList.add('open');
+        toggle.classList.add('open');
+      }
+    });
+  });
+
+  // Click anywhere outside to close open dropdowns
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.nav-dropdown-menu.open').forEach(m => m.classList.remove('open'));
+    document.querySelectorAll('.nav-dropdown-toggle.open').forEach(t => t.classList.remove('open'));
+  });
+});
