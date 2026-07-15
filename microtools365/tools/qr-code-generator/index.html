@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Generator — Free, No Sign-Up | microtools365</title>
+  <meta name="description" content="Generate free QR codes for text, URLs, Wi-Fi networks or contact cards. Customize size and colors, then download as PNG. No sign-up, no watermark.">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .qr-layout { display:grid; grid-template-columns: 1fr; gap:28px; }
+    @media (min-width: 800px) { .qr-layout { grid-template-columns: 1.3fr 1fr; } }
+
+    .qr-preview-box {
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      border:1px solid var(--border); border-radius:var(--radius); background:var(--bg);
+      padding:28px; position:sticky; top:88px; height:fit-content;
+    }
+    #qr-preview { display:flex; align-items:center; justify-content:center; min-height:100px; }
+    #qr-preview canvas, #qr-preview img { border-radius:6px; }
+    .qr-empty { color:var(--muted); font-size:.9rem; text-align:center; }
+
+    .color-row { display:flex; gap:16px; }
+    .color-field { flex:1; }
+    .color-field label { display:block; font-size:.85rem; font-weight:600; margin-bottom:6px; }
+    .color-field input[type="color"] { width:100%; height:42px; border:1px solid var(--border); border-radius:var(--radius-sm); cursor:pointer; padding:2px; }
+
+    .size-row label { display:flex; justify-content:space-between; font-size:.85rem; font-weight:600; margin-bottom:6px; }
+    .size-row span { font-family:var(--font-mono); color:var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../gst-calculator/index.html">GST Calculator</a>
+            <a href="../emi-calculator/index.html">EMI Calculator</a>
+            <a href="../sip-calculator/index.html">SIP Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../word-counter/index.html">Word Counter</a>
+            <a href="../case-converter/index.html">Case Converter</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../age-calculator/index.html">Age Calculator</a>
+            <a href="../bmi-calculator/index.html">BMI Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../image-to-pdf/index.html">Image to PDF</a>
+            <a href="../text-to-pdf/index.html">Text to PDF</a>
+            <a href="../xls-to-pdf/index.html">Excel to PDF</a>
+            <a href="../image-editor/index.html">Image Editor</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../random-name-picker/index.html">Name Picker</a>
+            <a href="../password-generator/index.html">Password Generator</a>
+            <a href="../qr-code-generator/index.html">QR Code Generator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / QR Code Generator</p>
+      <span class="catalog-tag">GEN&nbsp;03</span>
+      <h1 style="margin-top:10px;">QR Code Generator</h1>
+      <p class="muted" style="max-width:60ch;">Create a QR code for a link, plain text, a Wi-Fi network, or a contact card. Customize the size and colors, then download it as a PNG.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="tabs">
+        <button class="tab-btn active" data-type="text">Text / URL</button>
+        <button class="tab-btn" data-type="wifi">Wi-Fi</button>
+        <button class="tab-btn" data-type="contact">Contact card</button>
+      </div>
+
+      <div class="qr-layout">
+        <div>
+
+          <!-- TEXT / URL -->
+          <div class="tab-panel active" id="panel-text">
+            <div class="field">
+              <label for="text-value">Text or URL</label>
+              <textarea id="text-value" placeholder="https://example.com or any text…" style="min-height:100px;"></textarea>
+            </div>
+          </div>
+
+          <!-- WIFI -->
+          <div class="tab-panel" id="panel-wifi">
+            <div class="field">
+              <label for="wifi-ssid">Network name (SSID)</label>
+              <input type="text" id="wifi-ssid" placeholder="e.g. Home_WiFi_5G">
+            </div>
+            <div class="field">
+              <label for="wifi-password">Password</label>
+              <input type="text" id="wifi-password" placeholder="Leave blank if open network">
+            </div>
+            <div class="field">
+              <label for="wifi-security">Security type</label>
+              <select id="wifi-security" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--bg); font-family:var(--font-body);">
+                <option value="WPA">WPA / WPA2</option>
+                <option value="WEP">WEP</option>
+                <option value="nopass">No password (open)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- CONTACT -->
+          <div class="tab-panel" id="panel-contact">
+            <div class="field">
+              <label for="contact-name">Full name</label>
+              <input type="text" id="contact-name" placeholder="e.g. Priya Sharma">
+            </div>
+            <div class="field">
+              <label for="contact-phone">Phone number</label>
+              <input type="text" id="contact-phone" placeholder="e.g. +91 98765 43210">
+            </div>
+            <div class="field">
+              <label for="contact-email">Email</label>
+              <input type="text" id="contact-email" placeholder="e.g. priya@example.com">
+            </div>
+            <div class="field">
+              <label for="contact-org">Organization (optional)</label>
+              <input type="text" id="contact-org" placeholder="e.g. Acme Pvt Ltd">
+            </div>
+          </div>
+
+          <hr class="step-divider" style="border:none; border-top:1px solid var(--border); margin:24px 0;">
+
+          <div class="size-row field">
+            <label>Size <span id="size-label">240px</span></label>
+            <input type="range" id="size-slider" min="120" max="500" step="10" value="240" style="width:100%; accent-color:var(--accent);">
+          </div>
+
+          <div class="color-row">
+            <div class="color-field">
+              <label for="color-dark">Foreground color</label>
+              <input type="color" id="color-dark" value="#1A1D29">
+            </div>
+            <div class="color-field">
+              <label for="color-light">Background color</label>
+              <input type="color" id="color-light" value="#FFFFFF">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="qr-preview-box">
+          <div id="qr-preview"><p class="qr-empty">Your QR code will appear here</p></div>
+          <button class="btn btn-primary" id="download-btn" style="margin-top:20px; display:none;">⬇ Download PNG</button>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    const qrPreview   = document.getElementById('qr-preview');
+    const downloadBtn = document.getElementById('download-btn');
+    const sizeSlider  = document.getElementById('size-slider');
+    const sizeLabel   = document.getElementById('size-label');
+    const colorDark   = document.getElementById('color-dark');
+    const colorLight  = document.getElementById('color-light');
+
+    let activeType = 'text';
+    let qrInstance = null;
+
+    // ---------- Tabs ----------
+    document.querySelectorAll('.tabs .tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tabs .tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        activeType = btn.dataset.type;
+        document.getElementById('panel-' + activeType).classList.add('active');
+        generate();
+      });
+    });
+
+    // ---------- Payload builders ----------
+    function escapeWifi(str) {
+      return (str || '').replace(/([\\;,:"])/g, '\\$1');
+    }
+
+    function buildPayload() {
+      if (activeType === 'text') {
+        return document.getElementById('text-value').value.trim();
+      }
+      if (activeType === 'wifi') {
+        const ssid = document.getElementById('wifi-ssid').value.trim();
+        if (!ssid) return '';
+        const password = document.getElementById('wifi-password').value;
+        const security = document.getElementById('wifi-security').value;
+        const passPart = security === 'nopass' ? '' : `P:${escapeWifi(password)};`;
+        return `WIFI:T:${security};S:${escapeWifi(ssid)};${passPart}H:false;;`;
+      }
+      if (activeType === 'contact') {
+        const name  = document.getElementById('contact-name').value.trim();
+        const phone = document.getElementById('contact-phone').value.trim();
+        const email = document.getElementById('contact-email').value.trim();
+        const org   = document.getElementById('contact-org').value.trim();
+        if (!name && !phone && !email) return '';
+        let vcard = 'BEGIN:VCARD\nVERSION:3.0\n';
+        if (name)  vcard += `FN:${name}\n`;
+        if (org)   vcard += `ORG:${org}\n`;
+        if (phone) vcard += `TEL:${phone}\n`;
+        if (email) vcard += `EMAIL:${email}\n`;
+        vcard += 'END:VCARD';
+        return vcard;
+      }
+      return '';
+    }
+
+    // ---------- Generate ----------
+    function generate() {
+      const payload = buildPayload();
+      qrPreview.innerHTML = '';
+
+      if (!payload) {
+        qrPreview.innerHTML = '<p class="qr-empty">Fill in the details to generate your QR code</p>';
+        downloadBtn.style.display = 'none';
+        return;
+      }
+
+      const size = parseInt(sizeSlider.value);
+      qrInstance = new QRCode(qrPreview, {
+        text: payload,
+        width: size,
+        height: size,
+        colorDark: colorDark.value,
+        colorLight: colorLight.value,
+        correctLevel: QRCode.CorrectLevel.H,
+      });
+
+      downloadBtn.style.display = 'inline-flex';
+    }
+
+    // ---------- Inputs that trigger regeneration ----------
+    const watchedIds = [
+      'text-value', 'wifi-ssid', 'wifi-password', 'wifi-security',
+      'contact-name', 'contact-phone', 'contact-email', 'contact-org',
+      'color-dark', 'color-light',
+    ];
+    watchedIds.forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input', generate);
+      el.addEventListener('change', generate);
+    });
+
+    sizeSlider.addEventListener('input', () => {
+      sizeLabel.textContent = sizeSlider.value + 'px';
+      generate();
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      const canvas = qrPreview.querySelector('canvas');
+      if (!canvas) return;
+      const url = canvas.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'microtools365-qrcode.png';
+      a.click();
+      showToast('Download started');
+    });
+
+    generate();
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
