@@ -5,11 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Age Calculator — How Old Am I? | microtools365</title>
   <meta name="description" content="Free age calculator. Enter your date of birth and instantly find out your exact age in years, months and days — plus days until your next birthday.">
-  <link rel="stylesheet" href="../../css/style.css">
+    <style>
+    #mt-loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #FAFAF8;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .25s ease;
+    }
+    #mt-loader.mt-loader-dark { background: #14161C; }
+    #mt-loader .mt-spin {
+      width: 34px; height: 34px;
+      border: 3px solid #E5E3DC;
+      border-top-color: #FF5A1F;
+      border-radius: 50%;
+      animation: mt-spin .7s linear infinite;
+    }
+    #mt-loader.mt-loader-dark .mt-spin { border-color: #2C2F3A; border-top-color: #FF6B3D; }
+    @keyframes mt-spin { to { transform: rotate(360deg); } }
+    #mt-loader.mt-loader-hide { opacity: 0; pointer-events: none; }
+  </style>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('mt365-theme') === 'dark') {
+          document.documentElement.classList.add('dark-mode');
+        }
+      } catch (e) {}
+    })();
+  </script>
+<link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 
-  <header class="site-header">
+    <div id="mt-loader"><div class="mt-spin"></div></div>
+  <script>
+    document.getElementById('mt-loader').classList.toggle(
+      'mt-loader-dark', document.documentElement.classList.contains('dark-mode')
+    );
+    window.addEventListener('load', function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    });
+    // Safety fallback — never leave a visitor stuck behind the loader
+    setTimeout(function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    }, 5000);
+  </script>
+<header class="site-header">
     <div class="container">
       <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
       <nav class="nav">
