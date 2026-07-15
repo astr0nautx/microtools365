@@ -406,3 +406,55 @@ textarea { min-height: 220px; resize: vertical; line-height: 1.6; }
   }
   .nav-dropdown-toggle .caret { display: none; }
 }
+/* ==========================================================================
+   Dark mode
+   Toggled via html.dark-mode class (added by js/main.js). Only the color
+   variables change — layout, spacing and fonts stay identical.
+   ========================================================================== */
+html.dark-mode {
+  --bg: #14161C;
+  --surface: #1C1F27;
+  --ink: #EDEDEB;
+  --muted: #9A9DAA;
+  --border: #2C2F3A;
+  --accent: #FF6B3D;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #3D2416;
+  --success: #3DDBA0;
+  --success-soft: #123526;
+  --danger: #FF7272;
+  --danger-soft: #3A1414;
+}
+
+/* A handful of components deliberately use a fixed dark surface (calculator
+   LCD readouts, active-tab pills, numbered badges) regardless of theme —
+   force those back to a constant dark color so they don't invert to a pale
+   background in dark mode. !important is needed here because several tool
+   pages redeclare these same selectors in their own inline <style> blocks
+   later in the document, which would otherwise win the cascade. */
+html.dark-mode .readout,
+html.dark-mode .tab-btn.active,
+html.dark-mode .step-num,
+html.dark-mode .thumb-num {
+  background: #14161C !important;
+  color: #F4FFFA !important;
+}
+
+/* Theme toggle button (injected into the header by js/main.js) */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.05rem;
+  margin-left: 8px;
+  flex-shrink: 0;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.theme-toggle:hover { border-color: var(--accent); }
+.theme-toggle:active { transform: scale(0.92); }
