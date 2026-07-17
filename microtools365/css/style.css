@@ -90,11 +90,20 @@ p { margin: 0 0 1em; color: var(--ink); }
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.25rem;
   letter-spacing: -0.01em;
   color: var(--ink);
+  text-decoration: none;
+}
+.logo img {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
 }
 .logo span { color: var(--accent); }
 
