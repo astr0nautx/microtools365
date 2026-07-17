@@ -282,7 +282,7 @@
           <p class="muted" style="margin:0; font-size:.9rem;">microtools365 is free and always will be — but feedback and support both help it grow.</p>
         </div>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a href="mailto:astronaut2328@gmail.com?subject=Tool%20request%20for%20microtools365" class="btn btn-secondary">💌 Request a tool</a>
+          <a href="mailto:astronaut2328@gmail.com?subject=Tool%20request%20for%20microtools365" class="btn btn-secondary" id="request-tool-link">💌 Request a tool</a>
           <a href="https://ko-fi.com/astronautx" target="_blank" rel="noopener noreferrer" class="btn btn-primary">☕ Support on Ko-fi</a>
         </div>
       </div>
@@ -301,5 +301,12 @@
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
+  <script>
+    document.getElementById('request-tool-link')?.addEventListener('click', () => {
+      navigator.clipboard.writeText('astronaut2328@gmail.com').then(() => {
+        showToast('Email copied: astronaut2328@gmail.com');
+      });
+    });
+  </script>
 </body>
 </html>
