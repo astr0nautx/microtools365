@@ -16,7 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.nav');
   if (toggle && nav) {
-    toggle.addEventListener('click', () => nav.classList.toggle('open'));
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      document.body.classList.toggle('nav-locked', nav.classList.contains('open'));
+    });
   }
 
   document.querySelectorAll('#year').forEach(el => {
