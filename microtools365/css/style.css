@@ -458,3 +458,31 @@ html.dark-mode .thumb-num {
 }
 .theme-toggle:hover { border-color: var(--accent); }
 .theme-toggle:active { transform: scale(0.92); }
+/* ==========================================================================
+   Dark mode fixes — round 2
+   ========================================================================== */
+
+/* Helps browser-native form control chrome (some input/select rendering,
+   scrollbars) match the dark theme more consistently. */
+html.dark-mode {
+  color-scheme: dark;
+}
+
+/* More "always-dark surface" components that were missed in the first pass —
+   same issue as .readout/.tab-btn.active: they use var(--ink) as a background
+   assuming it's always dark, which breaks once --ink flips to a light color
+   for dark-mode text. Force them back to a fixed dark surface. */
+html.dark-mode .pw-display,
+html.dark-mode .rate-btn.active,
+html.dark-mode .preset-btn.active {
+  background: #14161C !important;
+  color: #F4FFFA !important;
+}
+
+/* ==========================================================================
+   BMI Calculator — fix color bar to match real category widths
+   ========================================================================== */
+.bmi-scale div:nth-child(1) { flex: 0 0 14% !important; } /* Underweight: 15–18.5 */
+.bmi-scale div:nth-child(2) { flex: 0 0 26% !important; } /* Normal: 18.5–25 */
+.bmi-scale div:nth-child(3) { flex: 0 0 20% !important; } /* Overweight: 25–30 */
+.bmi-scale div:nth-child(4) { flex: 0 0 40% !important; } /* Obese: 30–40 */
