@@ -486,3 +486,20 @@ html.dark-mode .preset-btn.active {
 .bmi-scale div:nth-child(2) { flex: 0 0 26% !important; } /* Normal: 18.5–25 */
 .bmi-scale div:nth-child(3) { flex: 0 0 20% !important; } /* Overweight: 25–30 */
 .bmi-scale div:nth-child(4) { flex: 0 0 40% !important; } /* Obese: 30–40 */
+/* ==========================================================================
+   Mobile menu scroll fix
+   ========================================================================== */
+@media (max-width: 720px) {
+  .nav {
+    top: 68px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+body.nav-locked {
+  overflow: hidden;
+}
