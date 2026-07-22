@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.microtools365.com/sitemap.xml
+Sitemap: https://www.microtools365.com/image-sitemap.xml
+
