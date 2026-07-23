@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merge PDF Files — Free, No Upload Needed | microtools365</title>
+  <meta name="description" content="Combine multiple PDF files into one for free. Reorder pages before merging — everything happens in your browser, nothing is uploaded.">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .step { display:none; }
+    .step.active { display:block; }
+    .step-heading { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+    .step-num {
+      width:26px; height:26px; border-radius:50%; background:var(--ink); color:#fff;
+      display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; flex-shrink:0;
+    }
+    .step-heading h3 { margin:0; font-size:1.05rem; }
+
+    .dropzone {
+      border: 2px dashed var(--border); border-radius: var(--radius);
+      padding: 40px 20px; text-align: center; cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: var(--accent-soft); }
+    .dropzone p { margin: 0; color: var(--muted); }
+    .dropzone .icon { font-size: 2rem; margin-bottom: 8px; }
+
+    .file-list { margin-top:18px; display:flex; flex-direction:column; gap:10px; }
+    .file-item {
+      display:flex; align-items:center; gap:12px; padding:12px 14px;
+      border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--bg);
+    }
+    .file-item .file-icon { font-size:1.3rem; flex-shrink:0; }
+    .file-item .file-info { flex-grow:1; min-width:0; }
+    .file-item .file-name { font-size:.9rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .file-item .file-pages { font-size:.78rem; color:var(--muted); }
+    .file-item .file-actions { display:flex; gap:4px; flex-shrink:0; }
+    .file-item .file-actions button {
+      background:none; border:1px solid var(--border); border-radius:6px; cursor:pointer;
+      width:28px; height:28px; font-size:.85rem; color:var(--muted);
+    }
+    .file-item .file-actions button:hover { border-color:var(--accent); color:var(--accent); }
+
+    .result-panel { text-align:center; padding:32px 20px; border:1px solid var(--border); border-radius:var(--radius); background:var(--bg); }
+    .result-panel .checkmark { font-size:2.2rem; margin-bottom:8px; }
+    .result-stats { display:flex; justify-content:center; gap:32px; margin:18px 0; flex-wrap:wrap; }
+    .result-stats .stat-n { font-family:var(--font-mono); font-size:1.4rem; font-weight:700; color:var(--ink); }
+    .result-stats .stat-l { font-size:.75rem; color:var(--muted); margin-top:2px; }
+
+    .spinner {
+      width:32px; height:32px; border:3px solid var(--border); border-top-color:var(--accent);
+      border-radius:50%; margin:20px auto; animation:spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../gst-calculator/index.html">GST Calculator</a>
+            <a href="../emi-calculator/index.html">EMI Calculator</a>
+            <a href="../sip-calculator/index.html">SIP Calculator</a>
+            <a href="../compound-interest-calculator/index.html">Compound Interest</a>
+            <a href="../income-tax-calculator/index.html">Income Tax Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../word-counter/index.html">Word Counter</a>
+            <a href="../case-converter/index.html">Case Converter</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../age-calculator/index.html">Age Calculator</a>
+            <a href="../bmi-calculator/index.html">BMI Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../image-to-pdf/index.html">Image to PDF</a>
+            <a href="../text-to-pdf/index.html">Text to PDF</a>
+            <a href="../xls-to-pdf/index.html">Excel to PDF</a>
+            <a href="../image-editor/index.html">Image Editor</a>
+            <a href="../pdf-merge/index.html">Merge PDF</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../random-name-picker/index.html">Name Picker</a>
+            <a href="../password-generator/index.html">Password Generator</a>
+            <a href="../qr-code-generator/index.html">QR Code Generator</a>
+            <a href="../tip-calculator/index.html">Tip Calculator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Merge PDF</p>
+      <span class="catalog-tag">DOC&nbsp;05</span>
+      <h1 style="margin-top:10px;">Merge PDF Files</h1>
+      <p class="muted" style="max-width:60ch;">Combine multiple PDFs into one file, in the order you choose. Everything happens locally in your browser.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <!-- STEP 1: upload & reorder -->
+      <div class="step active" id="step-1">
+        <div class="step-heading"><span class="step-num">1</span><h3>Add your PDF files</h3></div>
+
+        <div class="dropzone" id="dropzone">
+          <div class="icon">📎</div>
+          <p><strong>Click to choose PDF files</strong> or drag and drop here</p>
+          <p style="font-size:.8rem; margin-top:4px;">Select 2 or more PDFs</p>
+        </div>
+        <input type="file" id="file-input" accept="application/pdf" multiple style="display:none;">
+
+        <div class="file-list" id="file-list"></div>
+
+        <div style="display:flex; gap:10px; margin-top:20px;">
+          <button class="btn btn-primary" id="generate-btn" disabled>Merge PDFs</button>
+          <button class="btn btn-secondary" id="clear-btn" style="display:none;">Clear all</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: processing -->
+      <div class="step" id="step-processing">
+        <div class="result-panel">
+          <div class="spinner"></div>
+          <p class="muted">Merging your PDFs…</p>
+        </div>
+      </div>
+
+      <!-- STEP 3: result -->
+      <div class="step" id="step-result">
+        <div class="result-panel">
+          <div class="checkmark">✅</div>
+          <h3 style="margin:0;">Your merged PDF is ready</h3>
+          <div class="result-stats">
+            <div><div class="stat-n" id="stat-files">—</div><div class="stat-l">Files merged</div></div>
+            <div><div class="stat-n" id="stat-pages">—</div><div class="stat-l">Total pages</div></div>
+            <div><div class="stat-n" id="stat-size">—</div><div class="stat-l">File size</div></div>
+          </div>
+          <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+            <button class="btn btn-primary" id="download-btn">⬇ Download PDF</button>
+            <button class="btn btn-secondary" id="start-over-btn">Start over</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script>
+    const dropzone   = document.getElementById('dropzone');
+    const fileInput  = document.getElementById('file-input');
+    const fileList   = document.getElementById('file-list');
+    const generateBtn = document.getElementById('generate-btn');
+    const clearBtn   = document.getElementById('clear-btn');
+
+    let items = []; // { file, name, pageCount }
+    let resultBlob = null;
+
+    function showStep(id) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', (e) => {
+      handleFiles(e.target.files);
+      fileInput.value = '';
+    });
+
+    async function handleFiles(fileList_) {
+      const { PDFDocument } = PDFLib;
+      for (const file of Array.from(fileList_)) {
+        if (file.type !== 'application/pdf') continue;
+        try {
+          const bytes = await file.arrayBuffer();
+          const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+          items.push({ file, name: file.name, pageCount: pdf.getPageCount() });
+        } catch (e) {
+          showToast(`Couldn't read ${file.name} — it may be corrupted or password-protected`);
+        }
+      }
+      render();
+    }
+
+    function render() {
+      fileList.innerHTML = items.map((item, i) => `
+        <div class="file-item">
+          <span class="file-icon">📄</span>
+          <div class="file-info">
+            <div class="file-name">${item.name}</div>
+            <div class="file-pages">${item.pageCount} page${item.pageCount === 1 ? '' : 's'}</div>
+          </div>
+          <div class="file-actions">
+            <button data-action="up" data-i="${i}" title="Move up">↑</button>
+            <button data-action="down" data-i="${i}" title="Move down">↓</button>
+            <button data-action="remove" data-i="${i}" title="Remove">✕</button>
+          </div>
+        </div>
+      `).join('');
+
+      generateBtn.disabled = items.length < 2;
+      clearBtn.style.display = items.length ? 'inline-flex' : 'none';
+
+      fileList.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const i = parseInt(btn.dataset.i);
+          if (btn.dataset.action === 'remove') items.splice(i, 1);
+          if (btn.dataset.action === 'up' && i > 0) [items[i - 1], items[i]] = [items[i], items[i - 1]];
+          if (btn.dataset.action === 'down' && i < items.length - 1) [items[i + 1], items[i]] = [items[i], items[i + 1]];
+          render();
+        });
+      });
+    }
+
+    clearBtn.addEventListener('click', () => { items = []; render(); });
+
+    generateBtn.addEventListener('click', async () => {
+      if (items.length < 2) return;
+      showStep('step-processing');
+      await new Promise(r => setTimeout(r, 50));
+
+      try {
+        const { PDFDocument } = PDFLib;
+        const mergedPdf = await PDFDocument.create();
+
+        for (const item of items) {
+          const bytes = await item.file.arrayBuffer();
+          const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+          const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+          copiedPages.forEach(page => mergedPdf.addPage(page));
+        }
+
+        const mergedBytes = await mergedPdf.save();
+        resultBlob = new Blob([mergedBytes], { type: 'application/pdf' });
+
+        const totalPages = items.reduce((sum, i) => sum + i.pageCount, 0);
+        document.getElementById('stat-files').textContent = items.length;
+        document.getElementById('stat-pages').textContent = totalPages;
+        document.getElementById('stat-size').textContent = formatBytes(resultBlob.size);
+        showStep('step-result');
+      } catch (e) {
+        showToast('Something went wrong merging these PDFs');
+        showStep('step-1');
+      }
+    });
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    document.getElementById('download-btn').addEventListener('click', () => {
+      if (!resultBlob) return;
+      const url = URL.createObjectURL(resultBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'microtools365-merged.pdf';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Download started');
+    });
+
+    document.getElementById('start-over-btn').addEventListener('click', () => {
+      items = [];
+      resultBlob = null;
+      render();
+      showStep('step-1');
+    });
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

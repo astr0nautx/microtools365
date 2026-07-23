@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Income Tax Calculator India — Old vs New Regime FY 2026-27 | microtools365</title>
+  <meta name="description" content="Free income tax calculator for India. Compare old vs new tax regime for FY 2026-27 side by side and see which one saves you more.">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .compare-grid { display:grid; grid-template-columns:1fr; gap:16px; margin-top:20px; }
+    @media (min-width:700px) { .compare-grid { grid-template-columns:1fr 1fr; } }
+    .regime-card { border:1px solid var(--border); border-radius:var(--radius); padding:22px; }
+    .regime-card.winner { border-color:var(--success); background:var(--success-soft); }
+    .regime-card h3 { margin:0 0 4px; font-size:1.05rem; }
+    .regime-card .badge { display:inline-block; font-size:.7rem; font-weight:700; padding:3px 9px; border-radius:999px; background:var(--success); color:#fff; margin-bottom:10px; }
+    .regime-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:.88rem; }
+    .regime-row:last-child { border-bottom:none; }
+    .regime-row .val { font-family:var(--font-mono); font-weight:600; }
+    .regime-row.total { font-weight:700; font-size:1rem; padding-top:12px; }
+    .regime-row.total .val { color:var(--accent); font-size:1.1rem; }
+
+    .verdict-box { text-align:center; padding:20px; border-radius:var(--radius); background:var(--bg); border:1px solid var(--border); margin-top:20px; }
+    .verdict-box .v-amount { font-family:var(--font-mono); font-size:1.5rem; font-weight:700; color:var(--success); }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../gst-calculator/index.html">GST Calculator</a>
+            <a href="../emi-calculator/index.html">EMI Calculator</a>
+            <a href="../sip-calculator/index.html">SIP Calculator</a>
+            <a href="../compound-interest-calculator/index.html">Compound Interest</a>
+            <a href="../income-tax-calculator/index.html">Income Tax Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../word-counter/index.html">Word Counter</a>
+            <a href="../case-converter/index.html">Case Converter</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../age-calculator/index.html">Age Calculator</a>
+            <a href="../bmi-calculator/index.html">BMI Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../image-to-pdf/index.html">Image to PDF</a>
+            <a href="../text-to-pdf/index.html">Text to PDF</a>
+            <a href="../xls-to-pdf/index.html">Excel to PDF</a>
+            <a href="../image-editor/index.html">Image Editor</a>
+            <a href="../pdf-merge/index.html">Merge PDF</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../random-name-picker/index.html">Name Picker</a>
+            <a href="../password-generator/index.html">Password Generator</a>
+            <a href="../qr-code-generator/index.html">QR Code Generator</a>
+            <a href="../tip-calculator/index.html">Tip Calculator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Income Tax Calculator</p>
+      <span class="catalog-tag">FIN&nbsp;05</span>
+      <h1 style="margin-top:10px;">Income Tax Calculator — Old vs New Regime</h1>
+      <p class="muted" style="max-width:60ch;">Enter your annual income and see both regimes compared side by side for FY 2026-27, so you can see which one actually saves you money.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="field">
+        <label for="gross-income">Annual gross income (₹)</label>
+        <input type="number" id="gross-income" placeholder="e.g. 1200000" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:1.05rem; background:var(--bg);">
+      </div>
+
+      <label style="display:flex; align-items:center; gap:8px; font-size:.9rem; font-weight:500; margin:14px 0;">
+        <input type="checkbox" id="is-salaried" checked> I'm salaried or a pensioner (standard deduction applies)
+      </label>
+
+      <div class="field" id="old-deductions-field">
+        <label for="old-deductions">Other deductions under old regime — 80C, 80D, HRA, home loan interest, etc. (₹)</label>
+        <input type="number" id="old-deductions" placeholder="e.g. 150000" value="0" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); background:var(--bg);">
+      </div>
+
+      <div class="compare-grid" id="compare-grid"></div>
+      <div class="verdict-box" id="verdict-box"></div>
+
+      <p class="muted" style="font-size:.78rem; margin-top:20px;">
+        Estimate for resident individuals below 60. Doesn't include surcharge (relevant above ₹50L income) or marginal relief just above the ₹12L new-regime threshold. For exact filing figures, consult a tax professional or the official <a href="https://incometax.gov.in" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Income Tax Department</a> calculator.
+      </p>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    const NEW_SLABS = [[400000,0],[800000,0.05],[1200000,0.10],[1600000,0.15],[2000000,0.20],[2400000,0.25],[Infinity,0.30]];
+    const OLD_SLABS = [[250000,0],[500000,0.05],[1000000,0.20],[Infinity,0.30]];
+
+    function slabTax(taxableIncome, slabs) {
+      let tax = 0, prev = 0;
+      for (const [limit, rate] of slabs) {
+        if (taxableIncome > prev) {
+          tax += (Math.min(taxableIncome, limit) - prev) * rate;
+        }
+        prev = limit;
+      }
+      return tax;
+    }
+
+    function fmtINR(n) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
+
+    function calculate() {
+      const gross = parseFloat(document.getElementById('gross-income').value) || 0;
+      const salaried = document.getElementById('is-salaried').checked;
+      const otherDeductions = parseFloat(document.getElementById('old-deductions').value) || 0;
+
+      if (gross <= 0) {
+        document.getElementById('compare-grid').innerHTML = '';
+        document.getElementById('verdict-box').innerHTML = '<p class="muted">Enter your income above to compare regimes.</p>';
+        return;
+      }
+
+      // New regime
+      const newStdDeduction = salaried ? 75000 : 0;
+      const newTaxable = Math.max(0, gross - newStdDeduction);
+      let newTax = newTaxable <= 1200000 ? 0 : slabTax(newTaxable, NEW_SLABS);
+      const newCess = newTax * 0.04;
+      const newTotal = newTax + newCess;
+
+      // Old regime
+      const oldStdDeduction = salaried ? 50000 : 0;
+      const oldTaxable = Math.max(0, gross - oldStdDeduction - otherDeductions);
+      let oldTax = oldTaxable <= 500000 ? 0 : slabTax(oldTaxable, OLD_SLABS);
+      const oldCess = oldTax * 0.04;
+      const oldTotal = oldTax + oldCess;
+
+      const newWins = newTotal <= oldTotal;
+
+      document.getElementById('compare-grid').innerHTML = `
+        <div class="regime-card ${newWins ? 'winner' : ''}">
+          ${newWins ? '<span class="badge">Lower tax</span><br>' : ''}
+          <h3>New Regime</h3>
+          <div class="regime-row"><span>Taxable income</span><span class="val">${fmtINR(newTaxable)}</span></div>
+          <div class="regime-row"><span>Standard deduction</span><span class="val">${fmtINR(newStdDeduction)}</span></div>
+          <div class="regime-row"><span>Cess (4%)</span><span class="val">${fmtINR(newCess)}</span></div>
+          <div class="regime-row total"><span>Total tax</span><span class="val">${fmtINR(newTotal)}</span></div>
+        </div>
+        <div class="regime-card ${!newWins ? 'winner' : ''}">
+          ${!newWins ? '<span class="badge">Lower tax</span><br>' : ''}
+          <h3>Old Regime</h3>
+          <div class="regime-row"><span>Taxable income</span><span class="val">${fmtINR(oldTaxable)}</span></div>
+          <div class="regime-row"><span>Deductions applied</span><span class="val">${fmtINR(oldStdDeduction + otherDeductions)}</span></div>
+          <div class="regime-row"><span>Cess (4%)</span><span class="val">${fmtINR(oldCess)}</span></div>
+          <div class="regime-row total"><span>Total tax</span><span class="val">${fmtINR(oldTotal)}</span></div>
+        </div>
+      `;
+
+      const diff = Math.abs(newTotal - oldTotal);
+      document.getElementById('verdict-box').innerHTML = diff === 0
+        ? `<p style="margin:0;">Both regimes give you the same tax. Pick whichever is simpler for you.</p>`
+        : `<p style="margin:0 0 6px;">The <strong>${newWins ? 'New' : 'Old'} Regime</strong> saves you</p><div class="v-amount">${fmtINR(diff)}</div>`;
+    }
+
+    document.getElementById('gross-income').addEventListener('input', calculate);
+    document.getElementById('is-salaried').addEventListener('change', calculate);
+    document.getElementById('old-deductions').addEventListener('input', calculate);
+    calculate();
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
