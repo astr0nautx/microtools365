@@ -512,3 +512,7 @@ html.dark-mode .preset-btn.active {
 body.nav-locked {
   overflow: hidden;
 }
+
+.blog-card {
+  background: var(--surface);
+}
