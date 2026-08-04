@@ -516,3 +516,13 @@ body.nav-locked {
 .blog-card {
   background: var(--surface);
 }
+
+.blog-article {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 40px 72px;
+}
+
+@media (max-width: 480px) {
+  .blog-article { padding: 40px 20px 56px; }
+}
