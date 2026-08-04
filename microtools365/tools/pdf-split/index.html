@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Split PDF — Extract Pages or Split into Files | microtools365</title>
+  <meta name="description" content="Split a PDF for free — extract specific pages into a new PDF, or split every page into separate files. Everything happens in your browser.">
+    <style>
+    #mt-loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #FAFAF8;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .25s ease;
+    }
+    #mt-loader.mt-loader-dark { background: #14161C; }
+    #mt-loader .mt-spin {
+      width: 34px; height: 34px;
+      border: 3px solid #E5E3DC;
+      border-top-color: #FF5A1F;
+      border-radius: 50%;
+      animation: mt-spin .7s linear infinite;
+    }
+    #mt-loader.mt-loader-dark .mt-spin { border-color: #2C2F3A; border-top-color: #FF6B3D; }
+    @keyframes mt-spin { to { transform: rotate(360deg); } }
+    #mt-loader.mt-loader-hide { opacity: 0; pointer-events: none; }
+  </style>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('mt365-theme') === 'dark') {
+          document.documentElement.classList.add('dark-mode');
+        }
+      } catch (e) {}
+    })();
+  </script>
+<link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .step { display:none; }
+    .step.active { display:block; }
+    .step-heading { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+    .step-num {
+      width:26px; height:26px; border-radius:50%; background:var(--ink); color:#fff;
+      display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; flex-shrink:0;
+    }
+    .step-heading h3 { margin:0; font-size:1.05rem; }
+
+    .dropzone {
+      border: 2px dashed var(--border); border-radius: var(--radius);
+      padding: 40px 20px; text-align: center; cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: var(--accent-soft); }
+    .dropzone p { margin: 0; color: var(--muted); }
+    .dropzone .icon { font-size: 2rem; margin-bottom: 8px; }
+
+    .file-loaded { display:flex; align-items:center; gap:12px; padding:14px; border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--bg); margin-top:16px; }
+    .file-loaded .fi-name { font-weight:600; font-size:.9rem; }
+    .file-loaded .fi-pages { font-size:.8rem; color:var(--muted); }
+
+    .mode-cards { display:grid; grid-template-columns:1fr; gap:12px; margin:20px 0; }
+    @media (min-width:600px) { .mode-cards { grid-template-columns:1fr 1fr; } }
+    .mode-card { border:1px solid var(--border); border-radius:var(--radius); padding:18px; cursor:pointer; }
+    .mode-card.selected { border-color:var(--accent); background:var(--accent-soft); }
+    .mode-card h4 { margin:0 0 6px; font-size:.95rem; }
+    .mode-card p { margin:0; font-size:.82rem; color:var(--muted); }
+
+    .result-panel { text-align:center; padding:32px 20px; border:1px solid var(--border); border-radius:var(--radius); background:var(--bg); }
+    .result-panel .checkmark { font-size:2.2rem; margin-bottom:8px; }
+    .result-stats { display:flex; justify-content:center; gap:32px; margin:18px 0; flex-wrap:wrap; }
+    .result-stats .stat-n { font-family:var(--font-mono); font-size:1.4rem; font-weight:700; color:var(--ink); }
+    .result-stats .stat-l { font-size:.75rem; color:var(--muted); margin-top:2px; }
+
+    .spinner {
+      width:32px; height:32px; border:3px solid var(--border); border-top-color:var(--accent);
+      border-radius:50%; margin:20px auto; animation:spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <div id="mt-loader"><div class="mt-spin"></div></div>
+  <script>
+    document.getElementById('mt-loader').classList.toggle(
+      'mt-loader-dark', document.documentElement.classList.contains('dark-mode')
+    );
+    window.addEventListener('load', function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    });
+    // Safety fallback — never leave a visitor stuck behind the loader
+    setTimeout(function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    }, 5000);
+  </script>
+
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../gst-calculator/index.html">GST Calculator</a>
+            <a href="../emi-calculator/index.html">EMI Calculator</a>
+            <a href="../sip-calculator/index.html">SIP Calculator</a>
+            <a href="../compound-interest-calculator/index.html">Compound Interest</a>
+            <a href="../income-tax-calculator/index.html">Income Tax Calculator</a>
+            <a href="../in-hand-salary-calculator/index.html">In-Hand Salary</a>
+            <a href="../fd-calculator/index.html">FD Calculator</a>
+            <a href="../hra-calculator/index.html">HRA Exemption</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../word-counter/index.html">Word Counter</a>
+            <a href="../case-converter/index.html">Case Converter</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../age-calculator/index.html">Age Calculator</a>
+            <a href="../bmi-calculator/index.html">BMI Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../image-to-pdf/index.html">Image to PDF</a>
+            <a href="../text-to-pdf/index.html">Text to PDF</a>
+            <a href="../xls-to-pdf/index.html">Excel to PDF</a>
+            <a href="../image-editor/index.html">Image Editor</a>
+            <a href="../pdf-merge/index.html">Merge PDF</a>
+            <a href="../pdf-split/index.html">Split PDF</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../random-name-picker/index.html">Name Picker</a>
+            <a href="../password-generator/index.html">Password Generator</a>
+            <a href="../qr-code-generator/index.html">QR Code Generator</a>
+            <a href="../tip-calculator/index.html">Tip Calculator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Split PDF</p>
+      <span class="catalog-tag">DOC&nbsp;06</span>
+      <h1 style="margin-top:10px;">Split PDF</h1>
+      <p class="muted" style="max-width:60ch;">Extract specific pages into a new PDF, or split every page into its own file. Everything happens locally in your browser.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <!-- STEP 1: upload -->
+      <div class="step active" id="step-1">
+        <div class="step-heading"><span class="step-num">1</span><h3>Upload your PDF</h3></div>
+
+        <div class="dropzone" id="dropzone">
+          <div class="icon">📎</div>
+          <p><strong>Click to choose a PDF</strong> or drag and drop here</p>
+        </div>
+        <input type="file" id="file-input" accept="application/pdf" style="display:none;">
+        <div class="file-loaded" id="file-loaded" style="display:none;">
+          <span style="font-size:1.3rem;">📄</span>
+          <div>
+            <div class="fi-name" id="fi-name"></div>
+            <div class="fi-pages" id="fi-pages"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: choose mode -->
+      <div class="step" id="step-2">
+        <div class="step-heading"><span class="step-num">2</span><h3>How do you want to split it?</h3></div>
+
+        <div class="mode-cards">
+          <div class="mode-card selected" data-mode="range">
+            <h4>Extract a page range</h4>
+            <p>Pull specific pages out into one new PDF — e.g. pages 2-5.</p>
+          </div>
+          <div class="mode-card" data-mode="every">
+            <h4>Split every page</h4>
+            <p>Turn each page into its own PDF, delivered as a ZIP file.</p>
+          </div>
+        </div>
+
+        <div class="field" id="range-field">
+          <label for="page-range">Pages to extract (e.g. 1-3,5,8-10)</label>
+          <input type="text" id="page-range" placeholder="1-3,5,8-10" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); background:var(--bg);">
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:20px;">
+          <button class="btn btn-secondary" id="back-to-1-btn">← Back</button>
+          <button class="btn btn-primary" id="generate-btn">Split PDF</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: processing -->
+      <div class="step" id="step-processing">
+        <div class="result-panel">
+          <div class="spinner"></div>
+          <p class="muted">Splitting your PDF…</p>
+        </div>
+      </div>
+
+      <!-- STEP 4: result -->
+      <div class="step" id="step-result">
+        <div class="result-panel">
+          <div class="checkmark">✅</div>
+          <h3 style="margin:0;" id="result-title">Done</h3>
+          <div class="result-stats">
+            <div><div class="stat-n" id="stat-count">—</div><div class="stat-l" id="stat-count-label">Pages</div></div>
+            <div><div class="stat-n" id="stat-size">—</div><div class="stat-l">File size</div></div>
+          </div>
+          <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+            <button class="btn btn-primary" id="download-btn">⬇ Download</button>
+            <button class="btn btn-secondary" id="start-over-btn">Start over</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script>
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('file-input');
+    let loadedFile = null;
+    let pageCount = 0;
+    let splitMode = 'range';
+    let resultBlob = null;
+    let resultIsZip = false;
+
+    function showStep(id) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files[0]) loadFile(e.target.files[0]);
+      fileInput.value = '';
+    });
+
+    async function loadFile(file) {
+      if (file.type !== 'application/pdf') { showToast('Please choose a PDF file'); return; }
+      try {
+        const { PDFDocument } = PDFLib;
+        const bytes = await file.arrayBuffer();
+        const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+        loadedFile = file;
+        pageCount = pdf.getPageCount();
+
+        document.getElementById('fi-name').textContent = file.name;
+        document.getElementById('fi-pages').textContent = `${pageCount} page${pageCount === 1 ? '' : 's'}`;
+        document.getElementById('file-loaded').style.display = 'flex';
+        document.getElementById('page-range').placeholder = `e.g. 1-3,5${pageCount > 5 ? ',8-' + pageCount : ''}`;
+
+        setTimeout(() => showStep('step-2'), 400);
+      } catch (e) {
+        showToast("Couldn't read this PDF — it may be corrupted or password-protected");
+      }
+    }
+
+    document.querySelectorAll('.mode-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        splitMode = card.dataset.mode;
+        document.getElementById('range-field').style.display = splitMode === 'range' ? 'block' : 'none';
+      });
+    });
+
+    document.getElementById('back-to-1-btn').addEventListener('click', () => showStep('step-1'));
+
+    function parsePageRange(rangeStr, maxPage) {
+      const indices = new Set();
+      rangeStr.split(',').forEach(part => {
+        part = part.trim();
+        if (!part) return;
+        if (part.includes('-')) {
+          const [start, end] = part.split('-').map(n => parseInt(n.trim()));
+          if (isNaN(start) || isNaN(end)) return;
+          for (let i = Math.max(1, start); i <= Math.min(maxPage, end); i++) indices.add(i - 1);
+        } else {
+          const n = parseInt(part);
+          if (!isNaN(n) && n >= 1 && n <= maxPage) indices.add(n - 1);
+        }
+      });
+      return Array.from(indices).sort((a, b) => a - b);
+    }
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    document.getElementById('generate-btn').addEventListener('click', async () => {
+      if (!loadedFile) return;
+      const { PDFDocument } = PDFLib;
+
+      showStep('step-processing');
+      await new Promise(r => setTimeout(r, 50));
+
+      try {
+        const bytes = await loadedFile.arrayBuffer();
+        const srcPdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+
+        if (splitMode === 'range') {
+          const rangeStr = document.getElementById('page-range').value.trim();
+          const indices = parsePageRange(rangeStr, pageCount);
+          if (indices.length === 0) { showToast('Enter a valid page range'); showStep('step-2'); return; }
+
+          const newPdf = await PDFDocument.create();
+          const copiedPages = await newPdf.copyPages(srcPdf, indices);
+          copiedPages.forEach(p => newPdf.addPage(p));
+          const outBytes = await newPdf.save();
+          resultBlob = new Blob([outBytes], { type: 'application/pdf' });
+          resultIsZip = false;
+
+          document.getElementById('result-title').textContent = 'Your PDF is ready';
+          document.getElementById('stat-count').textContent = indices.length;
+          document.getElementById('stat-count-label').textContent = 'Pages extracted';
+          document.getElementById('stat-size').textContent = formatBytes(resultBlob.size);
+        } else {
+          const zip = new JSZip();
+          for (let i = 0; i < pageCount; i++) {
+            const newPdf = await PDFDocument.create();
+            const [copiedPage] = await newPdf.copyPages(srcPdf, [i]);
+            newPdf.addPage(copiedPage);
+            const outBytes = await newPdf.save();
+            zip.file(`page-${i + 1}.pdf`, outBytes);
+          }
+          resultBlob = await zip.generateAsync({ type: 'blob' });
+          resultIsZip = true;
+
+          document.getElementById('result-title').textContent = 'Your files are ready';
+          document.getElementById('stat-count').textContent = pageCount;
+          document.getElementById('stat-count-label').textContent = 'PDF files';
+          document.getElementById('stat-size').textContent = formatBytes(resultBlob.size);
+        }
+
+        showStep('step-result');
+      } catch (e) {
+        showToast('Something went wrong splitting this PDF');
+        showStep('step-2');
+      }
+    });
+
+    document.getElementById('download-btn').addEventListener('click', () => {
+      if (!resultBlob) return;
+      const url = URL.createObjectURL(resultBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = resultIsZip ? 'microtools365-split-pages.zip' : 'microtools365-split.pdf';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Download started');
+    });
+
+    document.getElementById('start-over-btn').addEventListener('click', () => {
+      loadedFile = null;
+      resultBlob = null;
+      document.getElementById('file-loaded').style.display = 'none';
+      document.getElementById('page-range').value = '';
+      showStep('step-1');
+    });
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

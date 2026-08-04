@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>In-Hand Salary Calculator — CTC to Take Home Pay India | microtools365</title>
+  <meta name="description" content="Free in-hand salary calculator for India. Convert your CTC to monthly take-home pay, with a full breakdown of PF, professional tax and income tax deductions.">
+    <style>
+    #mt-loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #FAFAF8;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .25s ease;
+    }
+    #mt-loader.mt-loader-dark { background: #14161C; }
+    #mt-loader .mt-spin {
+      width: 34px; height: 34px;
+      border: 3px solid #E5E3DC;
+      border-top-color: #FF5A1F;
+      border-radius: 50%;
+      animation: mt-spin .7s linear infinite;
+    }
+    #mt-loader.mt-loader-dark .mt-spin { border-color: #2C2F3A; border-top-color: #FF6B3D; }
+    @keyframes mt-spin { to { transform: rotate(360deg); } }
+    #mt-loader.mt-loader-hide { opacity: 0; pointer-events: none; }
+  </style>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('mt365-theme') === 'dark') {
+          document.documentElement.classList.add('dark-mode');
+        }
+      } catch (e) {}
+    })();
+  </script>
+<link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .slider-wrap { margin-bottom:22px; }
+    .slider-label-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; gap:12px; flex-wrap:wrap; }
+    .slider-label-row label { font-size:.85rem; font-weight:600; }
+    .num-input-wrap { display:flex; align-items:center; border:1px solid var(--border); border-radius:var(--radius-sm); overflow:hidden; background:var(--bg); flex-shrink:0; }
+    .num-input-wrap:focus-within { border-color:var(--accent); }
+    .num-affix { padding:0 8px; font-family:var(--font-mono); font-size:.85rem; color:var(--muted); }
+    .num-input { border:none; background:transparent; font-family:var(--font-mono); font-weight:700; color:var(--accent); font-size:.9rem; padding:8px 10px; width:130px; text-align:right; }
+    .num-input:focus { outline:none; }
+    input[type="range"] { width:100%; accent-color:var(--accent); height:6px; cursor:pointer; }
+
+    .toggle-row { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+    .toggle-btn { padding:9px 16px; border:1px solid var(--border); border-radius:999px; background:var(--surface); font-size:.85rem; font-weight:600; cursor:pointer; }
+    .toggle-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+    .breakdown-table { width:100%; border-collapse:collapse; margin-top:20px; font-size:.9rem; }
+    .breakdown-table td { padding:10px 4px; border-bottom:1px solid var(--border); }
+    .breakdown-table td:last-child { text-align:right; font-family:var(--font-mono); font-weight:600; }
+    .breakdown-table tr.deduction td:last-child { color:var(--danger); }
+    .breakdown-table tr.deduction td:last-child::before { content: "− "; }
+    .breakdown-table tr.total td { font-weight:700; font-size:1.05rem; border-bottom:none; padding-top:14px; }
+    .breakdown-table tr.total td:last-child { color:var(--success); }
+    .breakdown-table tr.section-head td { font-size:.75rem; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); padding-top:18px; border-bottom:none; }
+
+    .result-hero { text-align:center; padding:24px; background:var(--accent); border-radius:var(--radius); color:#fff; margin-bottom:8px; }
+    .result-hero .rh-n { font-family:var(--font-mono); font-size:2rem; font-weight:700; }
+    .result-hero .rh-l { font-size:.85rem; opacity:.9; }
+  </style>
+</head>
+<body>
+
+  <div id="mt-loader"><div class="mt-spin"></div></div>
+  <script>
+    document.getElementById('mt-loader').classList.toggle(
+      'mt-loader-dark', document.documentElement.classList.contains('dark-mode')
+    );
+    window.addEventListener('load', function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    });
+    // Safety fallback — never leave a visitor stuck behind the loader
+    setTimeout(function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    }, 5000);
+  </script>
+
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../gst-calculator/index.html">GST Calculator</a>
+            <a href="../emi-calculator/index.html">EMI Calculator</a>
+            <a href="../sip-calculator/index.html">SIP Calculator</a>
+            <a href="../compound-interest-calculator/index.html">Compound Interest</a>
+            <a href="../income-tax-calculator/index.html">Income Tax Calculator</a>
+            <a href="../in-hand-salary-calculator/index.html">In-Hand Salary</a>
+            <a href="../fd-calculator/index.html">FD Calculator</a>
+            <a href="../hra-calculator/index.html">HRA Exemption</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../word-counter/index.html">Word Counter</a>
+            <a href="../case-converter/index.html">Case Converter</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../age-calculator/index.html">Age Calculator</a>
+            <a href="../bmi-calculator/index.html">BMI Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../image-to-pdf/index.html">Image to PDF</a>
+            <a href="../text-to-pdf/index.html">Text to PDF</a>
+            <a href="../xls-to-pdf/index.html">Excel to PDF</a>
+            <a href="../image-editor/index.html">Image Editor</a>
+            <a href="../pdf-merge/index.html">Merge PDF</a>
+            <a href="../pdf-split/index.html">Split PDF</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../random-name-picker/index.html">Name Picker</a>
+            <a href="../password-generator/index.html">Password Generator</a>
+            <a href="../qr-code-generator/index.html">QR Code Generator</a>
+            <a href="../tip-calculator/index.html">Tip Calculator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / In-Hand Salary Calculator</p>
+      <span class="catalog-tag">FIN&nbsp;07</span>
+      <h1 style="margin-top:10px;">In-Hand Salary Calculator</h1>
+      <p class="muted" style="max-width:60ch;">Estimate your monthly take-home pay from your CTC. Every company structures salary differently, so treat this as a close estimate, not an exact figure.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="slider-wrap">
+        <div class="slider-label-row">
+          <label>Annual CTC</label>
+          <div class="num-input-wrap">
+            <span class="num-affix">₹</span>
+            <input type="number" id="num-ctc" class="num-input" value="1000000" min="0" step="10000">
+          </div>
+        </div>
+        <input type="range" id="sl-ctc" min="200000" max="10000000" step="10000" value="1000000">
+      </div>
+
+      <div class="slider-wrap">
+        <div class="slider-label-row">
+          <label>Bonus / variable pay (part of CTC)</label>
+          <div class="num-input-wrap">
+            <span class="num-affix">₹</span>
+            <input type="number" id="num-bonus" class="num-input" value="0" min="0" step="5000">
+          </div>
+        </div>
+        <input type="range" id="sl-bonus" min="0" max="2000000" step="5000" value="0">
+      </div>
+
+      <div class="slider-wrap">
+        <div class="slider-label-row">
+          <label>Basic salary (% of fixed CTC)</label>
+          <div class="num-input-wrap">
+            <input type="number" id="num-basic-pct" class="num-input" value="40" min="20" max="60" step="1">
+            <span class="num-affix">%</span>
+          </div>
+        </div>
+        <input type="range" id="sl-basic-pct" min="20" max="60" step="1" value="40">
+        <p class="muted" style="font-size:.78rem; margin-top:4px;">Most companies use 40-50%. Check your offer letter or payslip if unsure.</p>
+      </div>
+
+      <label style="font-size:.85rem; font-weight:600; display:block; margin-bottom:8px;">Professional tax</label>
+      <div class="toggle-row">
+        <button class="toggle-btn active" data-pt="2400">Applicable (₹200/month)</button>
+        <button class="toggle-btn" data-pt="0">Not applicable</button>
+      </div>
+
+      <label style="font-size:.85rem; font-weight:600; display:block; margin-bottom:8px;">Employer PF contribution base</label>
+      <div class="toggle-row">
+        <button class="toggle-btn active" data-pfcap="true">Capped at ₹15,000 basic (statutory minimum)</button>
+        <button class="toggle-btn" data-pfcap="false">Full basic salary</button>
+      </div>
+
+      <div class="result-hero">
+        <div class="rh-n" id="r-monthly-inhand">—</div>
+        <div class="rh-l">Estimated monthly take-home</div>
+      </div>
+
+      <table class="breakdown-table" id="breakdown-table"></table>
+
+      <p class="muted" style="font-size:.78rem; margin-top:20px;">
+        This is an estimate using common CTC structuring assumptions and new-regime tax slabs for FY 2026-27. Your actual in-hand pay depends on your specific company's salary structure, HRA, other allowances, and any additional deductions. Check your payslip for exact figures.
+      </p>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    const slCtc = document.getElementById('sl-ctc'), numCtc = document.getElementById('num-ctc');
+    const slBonus = document.getElementById('sl-bonus'), numBonus = document.getElementById('num-bonus');
+    const slBasicPct = document.getElementById('sl-basic-pct'), numBasicPct = document.getElementById('num-basic-pct');
+
+    let professionalTax = 2400;
+    let pfCapped = true;
+
+    function bindPair(slider, number) {
+      slider.addEventListener('input', () => { number.value = slider.value; calculate(); });
+      number.addEventListener('input', () => { if (number.value === '') return; slider.value = number.value; calculate(); });
+    }
+    bindPair(slCtc, numCtc);
+    bindPair(slBonus, numBonus);
+    bindPair(slBasicPct, numBasicPct);
+
+    document.querySelectorAll('[data-pt]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-pt]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        professionalTax = parseFloat(btn.dataset.pt);
+        calculate();
+      });
+    });
+    document.querySelectorAll('[data-pfcap]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-pfcap]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        pfCapped = btn.dataset.pfcap === 'true';
+        calculate();
+      });
+    });
+
+    function fmtINR(n) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
+
+    // New regime slabs, FY 2026-27 — same as the Income Tax Calculator
+    const NEW_SLABS = [[400000,0],[800000,0.05],[1200000,0.10],[1600000,0.15],[2000000,0.20],[2400000,0.25],[Infinity,0.30]];
+    function slabTax(taxableIncome) {
+      let tax = 0, prev = 0;
+      for (const [limit, rate] of NEW_SLABS) {
+        if (taxableIncome > prev) tax += (Math.min(taxableIncome, limit) - prev) * rate;
+        prev = limit;
+      }
+      return tax;
+    }
+
+    function calculate() {
+      const ctc = parseFloat(numCtc.value) || 0;
+      const bonus = parseFloat(numBonus.value) || 0;
+      const basicPct = (parseFloat(numBasicPct.value) || 40) / 100;
+
+      if (ctc <= 0) return;
+
+      const fixedCtc = Math.max(0, ctc - bonus);
+      const basic = fixedCtc * basicPct;
+      const pfBase = pfCapped ? Math.min(basic, 180000) : basic; // ₹15,000/month × 12
+      const employerPF = pfBase * 0.12;
+      const gratuity = basic * 0.0481;
+
+      const grossAnnual = Math.max(0, fixedCtc - employerPF - gratuity);
+      const employeePF = pfBase * 0.12;
+      const proTaxAnnual = professionalTax;
+
+      // Rough TDS estimate using new regime, standard deduction ₹75,000
+      const taxableIncome = Math.max(0, grossAnnual - 75000);
+      const tax = taxableIncome <= 1200000 ? 0 : slabTax(taxableIncome);
+      const incomeTaxAnnual = tax * 1.04; // + 4% cess
+
+      const netAnnual = grossAnnual - employeePF - proTaxAnnual - incomeTaxAnnual;
+      const netMonthly = netAnnual / 12;
+
+      document.getElementById('r-monthly-inhand').textContent = fmtINR(netMonthly);
+
+      document.getElementById('breakdown-table').innerHTML = `
+        <tr class="section-head"><td colspan="2">Annual figures</td></tr>
+        <tr><td>Fixed CTC (excl. bonus)</td><td>${fmtINR(fixedCtc)}</td></tr>
+        <tr class="deduction"><td>Employer PF contribution</td><td>${fmtINR(employerPF)}</td></tr>
+        <tr class="deduction"><td>Gratuity provision</td><td>${fmtINR(gratuity)}</td></tr>
+        <tr class="total"><td>Gross annual salary</td><td>${fmtINR(grossAnnual)}</td></tr>
+        <tr class="section-head"><td colspan="2">Deductions from gross</td></tr>
+        <tr class="deduction"><td>Employee PF contribution</td><td>${fmtINR(employeePF)}</td></tr>
+        <tr class="deduction"><td>Professional tax</td><td>${fmtINR(proTaxAnnual)}</td></tr>
+        <tr class="deduction"><td>Estimated income tax (TDS)</td><td>${fmtINR(incomeTaxAnnual)}</td></tr>
+        <tr class="total"><td>Net annual take-home</td><td>${fmtINR(netAnnual)}</td></tr>
+      `;
+    }
+
+    calculate();
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

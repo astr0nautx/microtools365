@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HRA Exemption Calculator — Old Tax Regime India | microtools365</title>
+  <meta name="description" content="Free HRA exemption calculator for India. Find out how much of your House Rent Allowance is tax-exempt under the old tax regime.">
+    <style>
+    #mt-loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #FAFAF8;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .25s ease;
+    }
+    #mt-loader.mt-loader-dark { background: #14161C; }
+    #mt-loader .mt-spin {
+      width: 34px; height: 34px;
+      border: 3px solid #E5E3DC;
+      border-top-color: #FF5A1F;
+      border-radius: 50%;
+      animation: mt-spin .7s linear infinite;
+    }
+    #mt-loader.mt-loader-dark .mt-spin { border-color: #2C2F3A; border-top-color: #FF6B3D; }
+    @keyframes mt-spin { to { transform: rotate(360deg); } }
+    #mt-loader.mt-loader-hide { opacity: 0; pointer-events: none; }
+  </style>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('mt365-theme') === 'dark') {
+          document.documentElement.classList.add('dark-mode');
+        }
+      } catch (e) {}
+    })();
+  </script>
+<link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .breakdown-table { width:100%; border-collapse:collapse; margin-top:20px; font-size:.9rem; }
+    .breakdown-table td { padding:10px 4px; border-bottom:1px solid var(--border); }
+    .breakdown-table td:last-child { text-align:right; font-family:var(--font-mono); font-weight:600; }
+    .breakdown-table tr.winner td { background:var(--success-soft); }
+    .breakdown-table tr.winner td:first-child { border-radius:6px 0 0 6px; }
+    .breakdown-table tr.winner td:last-child { border-radius:0 6px 6px 0; color:var(--success); }
+
+    .result-hero { text-align:center; padding:24px; background:var(--accent); border-radius:var(--radius); color:#fff; margin-bottom:8px; }
+    .result-hero .rh-n { font-family:var(--font-mono); font-size:2rem; font-weight:700; }
+    .result-hero .rh-l { font-size:.85rem; opacity:.9; }
+  </style>
+</head>
+<body>
+
+  <div id="mt-loader"><div class="mt-spin"></div></div>
+  <script>
+    document.getElementById('mt-loader').classList.toggle(
+      'mt-loader-dark', document.documentElement.classList.contains('dark-mode')
+    );
+    window.addEventListener('load', function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    });
+    // Safety fallback — never leave a visitor stuck behind the loader
+    setTimeout(function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    }, 5000);
+  </script>
+
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../gst-calculator/index.html">GST Calculator</a>
+            <a href="../emi-calculator/index.html">EMI Calculator</a>
+            <a href="../sip-calculator/index.html">SIP Calculator</a>
+            <a href="../compound-interest-calculator/index.html">Compound Interest</a>
+            <a href="../income-tax-calculator/index.html">Income Tax Calculator</a>
+            <a href="../in-hand-salary-calculator/index.html">In-Hand Salary</a>
+            <a href="../fd-calculator/index.html">FD Calculator</a>
+            <a href="../hra-calculator/index.html">HRA Exemption</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../word-counter/index.html">Word Counter</a>
+            <a href="../case-converter/index.html">Case Converter</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../age-calculator/index.html">Age Calculator</a>
+            <a href="../bmi-calculator/index.html">BMI Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../image-to-pdf/index.html">Image to PDF</a>
+            <a href="../text-to-pdf/index.html">Text to PDF</a>
+            <a href="../xls-to-pdf/index.html">Excel to PDF</a>
+            <a href="../image-editor/index.html">Image Editor</a>
+            <a href="../pdf-merge/index.html">Merge PDF</a>
+            <a href="../pdf-split/index.html">Split PDF</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../random-name-picker/index.html">Name Picker</a>
+            <a href="../password-generator/index.html">Password Generator</a>
+            <a href="../qr-code-generator/index.html">QR Code Generator</a>
+            <a href="../tip-calculator/index.html">Tip Calculator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / HRA Exemption Calculator</p>
+      <span class="catalog-tag">FIN&nbsp;09</span>
+      <h1 style="margin-top:10px;">HRA Exemption Calculator</h1>
+      <p class="muted" style="max-width:60ch;">Find out how much of your House Rent Allowance is tax-exempt under the old regime. This only applies if you've chosen the old tax regime — HRA exemption isn't available under the new regime.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="field">
+        <label for="basic">Basic salary (annual, ₹)</label>
+        <input type="number" id="basic" placeholder="e.g. 600000" value="600000" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); background:var(--bg);">
+      </div>
+
+      <div class="field">
+        <label for="da">Dearness Allowance, if any (annual, ₹)</label>
+        <input type="number" id="da" placeholder="e.g. 0" value="0" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); background:var(--bg);">
+      </div>
+
+      <div class="field">
+        <label for="hra-received">HRA received from employer (annual, ₹)</label>
+        <input type="number" id="hra-received" placeholder="e.g. 240000" value="240000" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); background:var(--bg);">
+      </div>
+
+      <div class="field">
+        <label for="rent-paid">Actual rent paid (annual, ₹)</label>
+        <input type="number" id="rent-paid" placeholder="e.g. 216000" value="216000" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); background:var(--bg);">
+      </div>
+
+      <label style="font-size:.85rem; font-weight:600; display:block; margin-bottom:8px;">City type</label>
+      <div class="tabs">
+        <button class="tab-btn active" data-city="metro">Metro (Delhi, Mumbai, Kolkata, Chennai)</button>
+        <button class="tab-btn" data-city="nonmetro">Non-metro</button>
+      </div>
+
+      <div class="result-hero">
+        <div class="rh-n" id="r-exemption">—</div>
+        <div class="rh-l">HRA exemption (tax-free)</div>
+      </div>
+
+      <table class="breakdown-table" id="breakdown-table"></table>
+
+      <p class="muted" style="font-size:.78rem; margin-top:20px;">
+        HRA exemption is the <strong>lowest</strong> of three amounts: actual HRA received, rent paid minus 10% of basic+DA, or 50%/40% of basic+DA (metro/non-metro). Whichever is smallest is what's exempt — the rest of your HRA is taxable as regular income.
+      </p>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    let city = 'metro';
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        city = btn.dataset.city;
+        calculate();
+      });
+    });
+
+    function fmtINR(n) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
+
+    function calculate() {
+      const basic = parseFloat(document.getElementById('basic').value) || 0;
+      const da = parseFloat(document.getElementById('da').value) || 0;
+      const hraReceived = parseFloat(document.getElementById('hra-received').value) || 0;
+      const rentPaid = parseFloat(document.getElementById('rent-paid').value) || 0;
+
+      const basicPlusDa = basic + da;
+      const cityPct = city === 'metro' ? 0.5 : 0.4;
+
+      const option1 = hraReceived;
+      const option2 = Math.max(0, rentPaid - (basicPlusDa * 0.1));
+      const option3 = basicPlusDa * cityPct;
+
+      const exemption = Math.min(option1, option2, option3);
+      const taxableHra = Math.max(0, hraReceived - exemption);
+
+      document.getElementById('r-exemption').textContent = fmtINR(exemption);
+
+      const rows = [
+        { label: 'Actual HRA received', value: option1 },
+        { label: 'Rent paid − 10% of basic+DA', value: option2 },
+        { label: `${city === 'metro' ? '50%' : '40%'} of basic+DA`, value: option3 },
+      ];
+
+      document.getElementById('breakdown-table').innerHTML = rows.map(r =>
+        `<tr class="${r.value === exemption ? 'winner' : ''}"><td>${r.label}${r.value === exemption ? ' (lowest — this is your exemption)' : ''}</td><td>${fmtINR(r.value)}</td></tr>`
+      ).join('') + `<tr><td style="padding-top:16px; font-weight:700;">Taxable HRA (added to income)</td><td style="padding-top:16px;">${fmtINR(taxableHra)}</td></tr>`;
+    }
+
+    ['basic', 'da', 'hra-received', 'rent-paid'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calculate);
+    });
+
+    calculate();
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
