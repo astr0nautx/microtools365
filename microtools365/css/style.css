@@ -526,3 +526,24 @@ body.nav-locked {
 @media (max-width: 480px) {
   .blog-article { padding: 40px 20px 56px; }
 }
+   
+  /*========================================================================== */
+.site-footer .container {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+.footer-links {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: .85rem;
+}
+.footer-links a:hover { color: var(--accent); }
+.footer-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 10px;
+}

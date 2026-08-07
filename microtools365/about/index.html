@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog — microtools365</title>
-  <meta name="description" content="Practical guides on GST, taxes, investing and more — written to actually help, not pad word count.">
-  <link rel="stylesheet" href="../css/style.css">
+  <title>About — microtools365</title>
+  <meta name="description" content="Why microtools365 exists, and what it is (and isn't) trying to be.">
   <style>
     #mt-loader {
       position: fixed; inset: 0; z-index: 9999;
@@ -34,47 +33,10 @@
       } catch (e) {}
     })();
   </script>
-
-  <style>
-    .featured-post {
-      display: block;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin-bottom: 40px;
-      transition: border-color .15s ease;
-    }
-    .featured-post:hover { border-color: var(--accent); }
-    .featured-post .fp-inner { padding: 36px 32px; background: var(--surface); }
-    .featured-post .fp-eyebrow {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-      color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px;
-      margin-bottom: 14px;
-    }
-    .featured-post h2 { font-size: 1.6rem; margin: 0 0 10px; max-width: 26ch; }
-    .featured-post p { color: var(--muted); max-width: 55ch; margin: 0 0 18px; }
-
-    .post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
-    .post-card {
-      display: flex; flex-direction: column; gap: 10px;
-      border: 1px solid var(--border); border-radius: var(--radius); padding: 22px;
-      background: var(--surface);
-      transition: border-color .15s ease, transform .15s ease;
-    }
-    .post-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .post-card .pc-tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-    .post-card .pc-cat {
-      font-size: .68rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
-      color: var(--accent); background: var(--accent-soft); padding: 3px 8px; border-radius: 4px;
-    }
-    .post-card .pc-read { font-size: .72rem; color: var(--muted); }
-    .post-card h3 { font-size: 1.05rem; margin: 0; line-height: 1.35; }
-    .post-card p { font-size: .88rem; color: var(--muted); margin: 0; flex-grow: 1; }
-    .post-card .go { font-size: .82rem; font-weight: 600; color: var(--accent); }
-  </style>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+
   <div id="mt-loader"><div class="mt-spin"></div></div>
   <script>
     document.getElementById('mt-loader').classList.toggle(
@@ -84,19 +46,19 @@
       var l = document.getElementById('mt-loader');
       if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
     });
+    // Safety fallback — never leave a visitor stuck behind the loader
     setTimeout(function () {
       var l = document.getElementById('mt-loader');
       if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
     }, 5000);
   </script>
 
-
   <header class="site-header">
     <div class="container">
       <a href="../index.html" class="logo">micro<span>tools</span>365</a>
       <nav class="nav">
         <a href="../index.html">All tools</a>
-        <a href="../blog/index.html" class="active">Blog</a>
+        <a href="../blog/index.html">Blog</a>
         <div class="nav-item">
           <button class="nav-dropdown-toggle">Finance <span class="caret">▾</span></button>
           <div class="nav-dropdown-menu">
@@ -152,65 +114,32 @@
     </div>
   </header>
 
-  <section class="hero">
-    <div class="container">
-      <h1>Guides, not filler.</h1>
-      <p class="lede">Practical explainers on money, taxes and everyday calculations — each one links straight to the tool that does the math for you.</p>
-    </div>
-  </section>
+  <article class="blog-article">
+    <p class="breadcrumb"><a href="../index.html">Home</a> / About</p>
+    <h1 style="margin-top:14px;">About microtools365</h1>
 
-  <section class="section">
-    <div class="container">
+    <div class="article-body">
+      <p>microtools365 is a small, growing collection of free online tools — calculators for everyday finance and tax questions, document converters, text utilities, and a few generators — built to do one job well each, without getting in your way.</p>
 
-      <a class="featured-post" href="passport-photo-size-india/index.html">
-        <div class="fp-inner">
-          <span class="fp-eyebrow">📌 Latest · Documents</span>
-          <h2>Passport & Document Photo Sizes in India: A Practical Guide</h2>
-          <p>Almost every Indian application form asks for a photo in a specific size — here's how to actually get it right the first time, without a studio visit.</p>
-          <span class="go">Read more →</span>
-        </div>
-      </a>
+      <h2>What it's trying to be</h2>
+      <p>Most "free tool" sites online are cluttered with ads, force you through a sign-up wall for basic features, or bury the actual tool under paragraphs of SEO filler before you can use it. This site is a deliberate reaction to that: no accounts, no paywalls, no dark patterns. You land on a tool, you use it, you get your answer.</p>
+      <p>A meaningful share of the tools lean toward India-specific needs — GST, EMI, SIP, income tax, in-hand salary — because that's the audience this was originally built for, and because good, ad-free versions of these calculators were genuinely hard to find.</p>
 
-      <div class="post-grid">
+      <h2>What it's not</h2>
+      <p>This isn't a replacement for a chartered accountant, a financial advisor, or a doctor. The calculators here are built to be accurate and transparent about their assumptions, but they're estimation tools — for anything with real financial, legal, or medical consequences, treat the output as a starting point for a conversation with a qualified professional, not the final word.</p>
 
-        <a class="post-card" href="emi-amortization-explained/index.html">
-          <div class="pc-tags"><span class="pc-cat">Finance</span><span class="pc-read">5 min read</span></div>
-          <h3>Why Your Early EMIs Feel Like They Barely Touch Your Loan</h3>
-          <p>The real reason your loan balance barely moves in year one — and what to do about it.</p>
-          <span class="go">Read more →</span>
-        </a>
+      <h2>Who's behind it</h2>
+      <p>microtools365 is an independent, one-person project — built, maintained, and occasionally broken and fixed again by someone who goes by <strong>astronautx</strong>. It's kept intentionally low-key: no personal branding, no portfolio pitch, just the tools themselves.</p>
 
-        <a class="post-card" href="bmi-explained/index.html">
-          <div class="pc-tags"><span class="pc-cat">Personal</span><span class="pc-read">5 min read</span></div>
-          <h3>BMI Explained: What Your Number Actually Means</h3>
-          <p>What BMI was actually designed to measure, and where it genuinely falls apart for individuals.</p>
-          <span class="go">Read more →</span>
-        </a>
+      <h2>Privacy, by design</h2>
+      <p>Every document and image tool on this site — PDF merging, splitting, image editing, format conversion — runs entirely inside your browser. Nothing you upload into these tools is ever sent to a server. That's not a marketing claim; it's simply how the tools are built, using client-side JavaScript libraries rather than any backend processing.</p>
 
-        <a class="post-card" href="old-vs-new-tax-regime/index.html">
-          <div class="pc-tags"><span class="pc-cat">Finance</span><span class="pc-read">6 min read</span></div>
-          <h3>Old vs New Tax Regime: Which Actually Saves You More?</h3>
-          <p>A plain-English breakdown with real examples at different income levels.</p>
-          <span class="go">Read more →</span>
-        </a>
-
-        <a class="post-card" href="how-to-calculate-gst-india/index.html">
-          <div class="pc-tags"><span class="pc-cat">Finance</span><span class="pc-read">5 min read</span></div>
-          <h3>How to Calculate GST in India (With Examples)</h3>
-          <p>The exact formulas for adding and removing GST, plus the mistake almost everyone makes.</p>
-          <span class="go">Read more →</span>
-        </a>
-
-        <a class="post-card" href="sip-vs-lump-sum/index.html">
-          <div class="pc-tags"><span class="pc-cat">Finance</span><span class="pc-read">6 min read</span></div>
-          <h3>SIP vs Lump Sum: Which Should You Choose?</h3>
-          <p>What actually determines the winner — it's not as simple as "SIP is always safer."</p>
-          <span class="go">Read more →</span>
-        </a>
-
+      <div class="cta-box">
+        <p>Have an idea for a tool that's missing, or found something broken?</p>
+        <a href="mailto:astronaut2328@gmail.com?subject=Feedback%20for%20microtools365" class="btn btn-primary">Get in touch →</a>
       </div>
     </div>
-  </section>
+  </article>
 
   <footer class="site-footer">
     <div class="container">
