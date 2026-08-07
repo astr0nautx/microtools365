@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Diff Checker — Compare Two Texts Online | microtools365</title>
+  <meta name="description" content="Free text diff checker. Compare two blocks of text and instantly see what's been added, removed, or changed, line by line.">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    #mt-loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #FAFAF8;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .25s ease;
+    }
+    #mt-loader.mt-loader-dark { background: #14161C; }
+    #mt-loader .mt-spin {
+      width: 34px; height: 34px;
+      border: 3px solid #E5E3DC;
+      border-top-color: #FF5A1F;
+      border-radius: 50%;
+      animation: mt-spin .7s linear infinite;
+    }
+    #mt-loader.mt-loader-dark .mt-spin { border-color: #2C2F3A; border-top-color: #FF6B3D; }
+    @keyframes mt-spin { to { transform: rotate(360deg); } }
+    #mt-loader.mt-loader-hide { opacity: 0; pointer-events: none; }
+  </style>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('mt365-theme') === 'dark') {
+          document.documentElement.classList.add('dark-mode');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <style>
+    .diff-inputs { display:grid; grid-template-columns:1fr; gap:16px; }
+    @media (min-width:800px) { .diff-inputs { grid-template-columns:1fr 1fr; } }
+    .diff-inputs textarea { min-height:220px; font-family:var(--font-mono); font-size:.88rem; }
+
+    .diff-summary { display:flex; gap:20px; margin:18px 0; flex-wrap:wrap; font-size:.88rem; }
+    .diff-summary span { display:flex; align-items:center; gap:6px; }
+    .diff-dot { width:10px; height:10px; border-radius:2px; display:inline-block; }
+
+    .diff-output {
+      font-family:var(--font-mono); font-size:.85rem; line-height:1.6;
+      border:1px solid var(--border); border-radius:var(--radius-sm); overflow:hidden;
+    }
+    .diff-line { padding:2px 14px; white-space:pre-wrap; word-break:break-word; }
+    .diff-line.added { background:var(--success-soft); }
+    .diff-line.removed { background:var(--danger-soft); }
+    .diff-line .marker { display:inline-block; width:18px; font-weight:700; }
+    .diff-line.added .marker { color:var(--success); }
+    .diff-line.removed .marker { color:var(--danger); }
+  </style>
+</head>
+<body>
+  <div id="mt-loader"><div class="mt-spin"></div></div>
+  <script>
+    document.getElementById('mt-loader').classList.toggle(
+      'mt-loader-dark', document.documentElement.classList.contains('dark-mode')
+    );
+    window.addEventListener('load', function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    });
+    setTimeout(function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    }, 5000);
+  </script>
+
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../gst-calculator/index.html">GST Calculator</a>
+            <a href="../emi-calculator/index.html">EMI Calculator</a>
+            <a href="../sip-calculator/index.html">SIP Calculator</a>
+            <a href="../compound-interest-calculator/index.html">Compound Interest</a>
+            <a href="../income-tax-calculator/index.html">Income Tax Calculator</a>
+            <a href="../in-hand-salary-calculator/index.html">In-Hand Salary</a>
+            <a href="../fd-calculator/index.html">FD Calculator</a>
+            <a href="../hra-calculator/index.html">HRA Exemption</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../word-counter/index.html">Word Counter</a>
+            <a href="../case-converter/index.html">Case Converter</a>
+            <a href="../text-diff-checker/index.html">Text Diff Checker</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../age-calculator/index.html">Age Calculator</a>
+            <a href="../bmi-calculator/index.html">BMI Calculator</a>
+            <a href="../calorie-calculator/index.html">BMR &amp; Calorie Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../image-to-pdf/index.html">Image to PDF</a>
+            <a href="../text-to-pdf/index.html">Text to PDF</a>
+            <a href="../xls-to-pdf/index.html">Excel to PDF</a>
+            <a href="../image-editor/index.html">Image Editor</a>
+            <a href="../pdf-merge/index.html">Merge PDF</a>
+            <a href="../pdf-split/index.html">Split PDF</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../random-name-picker/index.html">Name Picker</a>
+            <a href="../password-generator/index.html">Password Generator</a>
+            <a href="../qr-code-generator/index.html">QR Code Generator</a>
+            <a href="../tip-calculator/index.html">Tip Calculator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Text Diff Checker</p>
+      <span class="catalog-tag">TXT&nbsp;03</span>
+      <h1 style="margin-top:10px;">Text Diff Checker</h1>
+      <p class="muted" style="max-width:60ch;">Paste two versions of a text below to see exactly what changed, line by line.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="diff-inputs">
+        <div class="field">
+          <label for="text-original">Original text</label>
+          <textarea id="text-original" placeholder="Paste the original version here…"></textarea>
+        </div>
+        <div class="field">
+          <label for="text-modified">Modified text</label>
+          <textarea id="text-modified" placeholder="Paste the changed version here…"></textarea>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="compare-btn" style="margin-top:8px;">Compare texts</button>
+
+      <div class="diff-summary" id="diff-summary" style="display:none;">
+        <span><span class="diff-dot" style="background:var(--success);"></span> <span id="stat-added">0</span> added</span>
+        <span><span class="diff-dot" style="background:var(--danger);"></span> <span id="stat-removed">0</span> removed</span>
+        <span><span class="diff-dot" style="background:var(--border);"></span> <span id="stat-same">0</span> unchanged</span>
+      </div>
+
+      <div class="diff-output" id="diff-output"></div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    // Line-based diff using the classic LCS (Longest Common Subsequence)
+    // approach — the same core idea behind most "diff" tools.
+    function diffLines(oldLines, newLines) {
+      const m = oldLines.length, n = newLines.length;
+      const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          dp[i][j] = oldLines[i - 1] === newLines[j - 1]
+            ? dp[i - 1][j - 1] + 1
+            : Math.max(dp[i - 1][j], dp[i][j - 1]);
+        }
+      }
+
+      const result = [];
+      let i = m, j = n;
+      while (i > 0 && j > 0) {
+        if (oldLines[i - 1] === newLines[j - 1]) {
+          result.unshift({ type: 'same', text: oldLines[i - 1] });
+          i--; j--;
+        } else if (dp[i - 1][j] >= dp[i][j - 1]) {
+          result.unshift({ type: 'removed', text: oldLines[i - 1] });
+          i--;
+        } else {
+          result.unshift({ type: 'added', text: newLines[j - 1] });
+          j--;
+        }
+      }
+      while (i > 0) { result.unshift({ type: 'removed', text: oldLines[i - 1] }); i--; }
+      while (j > 0) { result.unshift({ type: 'added', text: newLines[j - 1] }); j--; }
+
+      return result;
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    document.getElementById('compare-btn').addEventListener('click', () => {
+      const original = document.getElementById('text-original').value;
+      const modified = document.getElementById('text-modified').value;
+
+      if (!original.trim() && !modified.trim()) { showToast('Paste some text in both boxes first'); return; }
+
+      const oldLines = original.split('\n');
+      const newLines = modified.split('\n');
+      const diff = diffLines(oldLines, newLines);
+
+      let added = 0, removed = 0, same = 0;
+      const html = diff.map(line => {
+        if (line.type === 'added') added++;
+        else if (line.type === 'removed') removed++;
+        else same++;
+
+        const marker = line.type === 'added' ? '+' : line.type === 'removed' ? '−' : ' ';
+        const cls = line.type === 'same' ? '' : line.type;
+        return `<div class="diff-line ${cls}"><span class="marker">${marker}</span>${escapeHtml(line.text) || '&nbsp;'}</div>`;
+      }).join('');
+
+      document.getElementById('diff-output').innerHTML = html;
+      document.getElementById('stat-added').textContent = added;
+      document.getElementById('stat-removed').textContent = removed;
+      document.getElementById('stat-same').textContent = same;
+      document.getElementById('diff-summary').style.display = 'flex';
+    });
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

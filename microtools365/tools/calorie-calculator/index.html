@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMR & Calorie Calculator — Free Online Tool | microtools365</title>
+  <meta name="description" content="Free BMR and daily calorie calculator. Find your Basal Metabolic Rate and daily calorie targets for weight loss, maintenance, or weight gain.">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    #mt-loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #FAFAF8;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .25s ease;
+    }
+    #mt-loader.mt-loader-dark { background: #14161C; }
+    #mt-loader .mt-spin {
+      width: 34px; height: 34px;
+      border: 3px solid #E5E3DC;
+      border-top-color: #FF5A1F;
+      border-radius: 50%;
+      animation: mt-spin .7s linear infinite;
+    }
+    #mt-loader.mt-loader-dark .mt-spin { border-color: #2C2F3A; border-top-color: #FF6B3D; }
+    @keyframes mt-spin { to { transform: rotate(360deg); } }
+    #mt-loader.mt-loader-hide { opacity: 0; pointer-events: none; }
+  </style>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('mt365-theme') === 'dark') {
+          document.documentElement.classList.add('dark-mode');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <style>
+    .activity-cards { display:grid; grid-template-columns:1fr; gap:10px; margin-bottom:20px; }
+    .activity-card { border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; cursor:pointer; }
+    .activity-card:hover { border-color:var(--accent); }
+    .activity-card.selected { border-color:var(--accent); background:var(--accent-soft); }
+    .activity-card .ac-title { font-weight:700; font-size:.9rem; }
+    .activity-card .ac-desc { font-size:.8rem; color:var(--muted); }
+
+    .calorie-cards { display:grid; grid-template-columns:1fr; gap:14px; margin-top:20px; }
+    @media (min-width:600px) { .calorie-cards { grid-template-columns:1fr 1fr 1fr; } }
+    .calorie-card { border:1px solid var(--border); border-radius:var(--radius); padding:18px; text-align:center; }
+    .calorie-card.highlight { background:var(--accent); border-color:var(--accent); }
+    .calorie-card.highlight .cc-n, .calorie-card.highlight .cc-l { color:#fff; }
+    .calorie-card .cc-n { font-family:var(--font-mono); font-size:1.3rem; font-weight:700; }
+    .calorie-card .cc-l { font-size:.78rem; color:var(--muted); margin-top:4px; }
+
+    .bmr-hero { text-align:center; padding:22px; border:1px solid var(--border); border-radius:var(--radius); background:var(--bg); margin-bottom:20px; }
+    .bmr-hero .bh-n { font-family:var(--font-mono); font-size:1.8rem; font-weight:700; color:var(--ink); }
+    .bmr-hero .bh-l { font-size:.85rem; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <div id="mt-loader"><div class="mt-spin"></div></div>
+  <script>
+    document.getElementById('mt-loader').classList.toggle(
+      'mt-loader-dark', document.documentElement.classList.contains('dark-mode')
+    );
+    window.addEventListener('load', function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    });
+    setTimeout(function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    }, 5000);
+  </script>
+
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../gst-calculator/index.html">GST Calculator</a>
+            <a href="../emi-calculator/index.html">EMI Calculator</a>
+            <a href="../sip-calculator/index.html">SIP Calculator</a>
+            <a href="../compound-interest-calculator/index.html">Compound Interest</a>
+            <a href="../income-tax-calculator/index.html">Income Tax Calculator</a>
+            <a href="../in-hand-salary-calculator/index.html">In-Hand Salary</a>
+            <a href="../fd-calculator/index.html">FD Calculator</a>
+            <a href="../hra-calculator/index.html">HRA Exemption</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../word-counter/index.html">Word Counter</a>
+            <a href="../case-converter/index.html">Case Converter</a>
+            <a href="../text-diff-checker/index.html">Text Diff Checker</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../age-calculator/index.html">Age Calculator</a>
+            <a href="../bmi-calculator/index.html">BMI Calculator</a>
+            <a href="../calorie-calculator/index.html">BMR &amp; Calorie Calculator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../image-to-pdf/index.html">Image to PDF</a>
+            <a href="../text-to-pdf/index.html">Text to PDF</a>
+            <a href="../xls-to-pdf/index.html">Excel to PDF</a>
+            <a href="../image-editor/index.html">Image Editor</a>
+            <a href="../pdf-merge/index.html">Merge PDF</a>
+            <a href="../pdf-split/index.html">Split PDF</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../random-name-picker/index.html">Name Picker</a>
+            <a href="../password-generator/index.html">Password Generator</a>
+            <a href="../qr-code-generator/index.html">QR Code Generator</a>
+            <a href="../tip-calculator/index.html">Tip Calculator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / BMR &amp; Calorie Calculator</p>
+      <span class="catalog-tag">PERS&nbsp;03</span>
+      <h1 style="margin-top:10px;">BMR &amp; Calorie Calculator</h1>
+      <p class="muted" style="max-width:60ch;">Find your Basal Metabolic Rate and daily calorie targets for maintaining, losing, or gaining weight.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="tabs">
+        <button class="tab-btn active" data-gender="male">Male</button>
+        <button class="tab-btn" data-gender="female">Female</button>
+      </div>
+
+      <div style="display:grid; gap:16px; grid-template-columns:1fr 1fr 1fr; margin-bottom:20px;">
+        <div class="field" style="margin-bottom:0;">
+          <label for="age">Age</label>
+          <input type="number" id="age" value="28" style="width:100%; padding:12px 10px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); background:var(--bg);">
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label for="height">Height (cm)</label>
+          <input type="number" id="height" value="170" style="width:100%; padding:12px 10px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); background:var(--bg);">
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label for="weight">Weight (kg)</label>
+          <input type="number" id="weight" value="65" style="width:100%; padding:12px 10px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); background:var(--bg);">
+        </div>
+      </div>
+
+      <label style="font-size:.85rem; font-weight:600; display:block; margin-bottom:10px;">Activity level</label>
+      <div class="activity-cards">
+        <div class="activity-card" data-mult="1.2">
+          <div class="ac-title">Sedentary</div>
+          <div class="ac-desc">Little to no exercise, desk job</div>
+        </div>
+        <div class="activity-card selected" data-mult="1.375">
+          <div class="ac-title">Lightly active</div>
+          <div class="ac-desc">Light exercise 1-3 days/week</div>
+        </div>
+        <div class="activity-card" data-mult="1.55">
+          <div class="ac-title">Moderately active</div>
+          <div class="ac-desc">Moderate exercise 3-5 days/week</div>
+        </div>
+        <div class="activity-card" data-mult="1.725">
+          <div class="ac-title">Very active</div>
+          <div class="ac-desc">Hard exercise 6-7 days/week</div>
+        </div>
+        <div class="activity-card" data-mult="1.9">
+          <div class="ac-title">Extremely active</div>
+          <div class="ac-desc">Physical job plus daily training</div>
+        </div>
+      </div>
+
+      <div class="bmr-hero">
+        <div class="bh-n" id="r-bmr">—</div>
+        <div class="bh-l">Basal Metabolic Rate (calories/day at complete rest)</div>
+      </div>
+
+      <label style="font-size:.85rem; font-weight:600; display:block; margin-bottom:10px;">Daily calorie targets</label>
+      <div class="calorie-cards">
+        <div class="calorie-card">
+          <div class="cc-n" id="r-lose">—</div>
+          <div class="cc-l">Weight loss (~0.5 kg/week)</div>
+        </div>
+        <div class="calorie-card highlight">
+          <div class="cc-n" id="r-maintain">—</div>
+          <div class="cc-l">Maintain current weight</div>
+        </div>
+        <div class="calorie-card">
+          <div class="cc-n" id="r-gain">—</div>
+          <div class="cc-l">Weight gain (~0.5 kg/week)</div>
+        </div>
+      </div>
+
+      <p class="muted" style="font-size:.78rem; margin-top:20px;">
+        Calculated using the Mifflin-St Jeor equation, the most widely used BMR formula. These are estimates — actual needs vary by individual metabolism, body composition and health conditions. Consult a doctor or nutritionist before starting any significant diet change.
+      </p>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year"></span> microtools365</span>
+      <a href="../../index.html">← Back to all tools</a>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    let gender = 'male';
+    let activityMult = 1.375;
+
+    document.querySelectorAll('.tabs .tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tabs .tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        gender = btn.dataset.gender;
+        calculate();
+      });
+    });
+
+    document.querySelectorAll('.activity-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.activity-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        activityMult = parseFloat(card.dataset.mult);
+        calculate();
+      });
+    });
+
+    function calculate() {
+      const age = parseFloat(document.getElementById('age').value) || 0;
+      const height = parseFloat(document.getElementById('height').value) || 0;
+      const weight = parseFloat(document.getElementById('weight').value) || 0;
+
+      if (age <= 0 || height <= 0 || weight <= 0) return;
+
+      // Mifflin-St Jeor equation
+      const bmr = gender === 'male'
+        ? (10 * weight) + (6.25 * height) - (5 * age) + 5
+        : (10 * weight) + (6.25 * height) - (5 * age) - 161;
+
+      const tdee = bmr * activityMult;
+
+      document.getElementById('r-bmr').textContent = Math.round(bmr).toLocaleString('en-IN') + ' kcal';
+      document.getElementById('r-lose').textContent = Math.round(tdee - 500).toLocaleString('en-IN') + ' kcal';
+      document.getElementById('r-maintain').textContent = Math.round(tdee).toLocaleString('en-IN') + ' kcal';
+      document.getElementById('r-gain').textContent = Math.round(tdee + 500).toLocaleString('en-IN') + ' kcal';
+    }
+
+    ['age', 'height', 'weight'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calculate);
+    });
+
+    calculate();
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
