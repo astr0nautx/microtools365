@@ -6,6 +6,44 @@
   <title>Blog — microtools365</title>
   <meta name="description" content="Practical guides on GST, taxes, investing and more — written to actually help, not pad word count.">
   <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .featured-post {
+      display: block;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 40px;
+      transition: border-color .15s ease;
+    }
+    .featured-post:hover { border-color: var(--accent); }
+    .featured-post .fp-inner { padding: 36px 32px; background: var(--surface); }
+    .featured-post .fp-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px;
+      margin-bottom: 14px;
+    }
+    .featured-post h2 { font-size: 1.6rem; margin: 0 0 10px; max-width: 26ch; }
+    .featured-post p { color: var(--muted); max-width: 55ch; margin: 0 0 18px; }
+
+    .post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+    .post-card {
+      display: flex; flex-direction: column; gap: 10px;
+      border: 1px solid var(--border); border-radius: var(--radius); padding: 22px;
+      background: var(--surface);
+      transition: border-color .15s ease, transform .15s ease;
+    }
+    .post-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .post-card .pc-tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .post-card .pc-cat {
+      font-size: .68rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-soft); padding: 3px 8px; border-radius: 4px;
+    }
+    .post-card .pc-read { font-size: .72rem; color: var(--muted); }
+    .post-card h3 { font-size: 1.05rem; margin: 0; line-height: 1.35; }
+    .post-card p { font-size: .88rem; color: var(--muted); margin: 0; flex-grow: 1; }
+    .post-card .go { font-size: .82rem; font-weight: 600; color: var(--accent); }
+  </style>
 </head>
 <body>
 
@@ -77,26 +115,50 @@
 
   <section class="section">
     <div class="container">
-      <div class="tool-grid">
 
-        <a class="blog-card" href="old-vs-new-tax-regime/index.html">
-          <span class="blog-meta">Finance · 6 min read</span>
-          <h3>Old vs New Tax Regime: Which Actually Saves You More in FY 2026-27?</h3>
-          <p>A plain-English breakdown of both regimes, with real examples at different income levels.</p>
+      <a class="featured-post" href="passport-photo-size-india/index.html">
+        <div class="fp-inner">
+          <span class="fp-eyebrow">📌 Latest · Documents</span>
+          <h2>Passport & Document Photo Sizes in India: A Practical Guide</h2>
+          <p>Almost every Indian application form asks for a photo in a specific size — here's how to actually get it right the first time, without a studio visit.</p>
+          <span class="go">Read more →</span>
+        </div>
+      </a>
+
+      <div class="post-grid">
+
+        <a class="post-card" href="emi-amortization-explained/index.html">
+          <div class="pc-tags"><span class="pc-cat">Finance</span><span class="pc-read">5 min read</span></div>
+          <h3>Why Your Early EMIs Feel Like They Barely Touch Your Loan</h3>
+          <p>The real reason your loan balance barely moves in year one — and what to do about it.</p>
           <span class="go">Read more →</span>
         </a>
 
-        <a class="blog-card" href="how-to-calculate-gst-india/index.html">
-          <span class="blog-meta">Finance · 5 min read</span>
+        <a class="post-card" href="bmi-explained/index.html">
+          <div class="pc-tags"><span class="pc-cat">Personal</span><span class="pc-read">5 min read</span></div>
+          <h3>BMI Explained: What Your Number Actually Means</h3>
+          <p>What BMI was actually designed to measure, and where it genuinely falls apart for individuals.</p>
+          <span class="go">Read more →</span>
+        </a>
+
+        <a class="post-card" href="old-vs-new-tax-regime/index.html">
+          <div class="pc-tags"><span class="pc-cat">Finance</span><span class="pc-read">6 min read</span></div>
+          <h3>Old vs New Tax Regime: Which Actually Saves You More?</h3>
+          <p>A plain-English breakdown with real examples at different income levels.</p>
+          <span class="go">Read more →</span>
+        </a>
+
+        <a class="post-card" href="how-to-calculate-gst-india/index.html">
+          <div class="pc-tags"><span class="pc-cat">Finance</span><span class="pc-read">5 min read</span></div>
           <h3>How to Calculate GST in India (With Examples)</h3>
-          <p>The exact formulas for adding and removing GST, plus common mistakes people make.</p>
+          <p>The exact formulas for adding and removing GST, plus the mistake almost everyone makes.</p>
           <span class="go">Read more →</span>
         </a>
 
-        <a class="blog-card" href="sip-vs-lump-sum/index.html">
-          <span class="blog-meta">Finance · 6 min read</span>
+        <a class="post-card" href="sip-vs-lump-sum/index.html">
+          <div class="pc-tags"><span class="pc-cat">Finance</span><span class="pc-read">6 min read</span></div>
           <h3>SIP vs Lump Sum: Which Should You Choose?</h3>
-          <p>What actually determines which strategy wins — it's not as simple as "SIP is always safer."</p>
+          <p>What actually determines the winner — it's not as simple as "SIP is always safer."</p>
           <span class="go">Read more →</span>
         </a>
 
