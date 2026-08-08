@@ -3,28 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tip Calculator — Free Online Tool | microtools365</title>
-  <meta name="description" content="Free tip calculator. Calculate the tip amount and split the total bill between any number of people.">
+  <title>Pregnancy Due Date Calculator — Free Online Tool | microtools365</title>
+  <meta name="description" content="Free pregnancy due date calculator. Estimate your due date and current week of pregnancy based on your last menstrual period.">
   <link rel="stylesheet" href="../../css/style.css">
   <style>
-    .tip-row { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
-    .tip-btn { padding:10px 18px; border:1px solid var(--border); border-radius:999px; background:var(--surface); font-weight:700; font-family:var(--font-mono); cursor:pointer; }
-    .tip-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
-    .stepper { display:flex; align-items:center; gap:12px; }
-    .stepper button {
-      width:38px; height:38px; border-radius:50%; border:1px solid var(--border); background:var(--surface);
-      font-size:1.1rem; font-weight:700; cursor:pointer; color:var(--accent);
-    }
-    .stepper span { font-family:var(--font-mono); font-size:1.2rem; font-weight:700; min-width:30px; text-align:center; }
-
+    .result-hero { text-align:center; padding:24px; background:var(--accent); border-radius:var(--radius); color:#fff; margin-bottom:8px; }
+    .result-hero .rh-n { font-family:var(--font-mono); font-size:1.6rem; font-weight:700; }
+    .result-hero .rh-l { font-size:.85rem; opacity:.9; }
     .summary-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px; }
-    @media (min-width:500px) { .summary-grid { grid-template-columns:repeat(3,1fr); } }
     .summary-card { border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px; text-align:center; }
     .summary-card .sc-n { font-family:var(--font-mono); font-size:1.3rem; font-weight:700; color:var(--ink); }
     .summary-card .sc-l { font-size:.75rem; color:var(--muted); margin-top:4px; }
-    .summary-card.highlight { background:var(--accent); border-color:var(--accent); grid-column: 1 / -1; }
-    .summary-card.highlight .sc-n, .summary-card.highlight .sc-l { color:#fff; }
-    .summary-card.highlight .sc-n { font-size:1.6rem; }
   </style>
 </head>
 <body>
@@ -60,7 +49,7 @@
           </div>
         </div>
         <div class="nav-item">
-          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <button class="nav-dropdown-toggle open">Personal <span class="caret">▾</span></button>
           <div class="nav-dropdown-menu">
             <a href="../age-calculator/index.html">Age Calculator</a>
             <a href="../bmi-calculator/index.html">BMI Calculator</a>
@@ -81,7 +70,7 @@
           </div>
         </div>
         <div class="nav-item">
-          <button class="nav-dropdown-toggle open">Generators <span class="caret">▾</span></button>
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
           <div class="nav-dropdown-menu">
             <a href="../random-name-picker/index.html">Name Picker</a>
             <a href="../password-generator/index.html">Password Generator</a>
@@ -96,11 +85,10 @@
 
   <section class="tool-header">
     <div class="container">
-      <p class="breadcrumb"><a href="../../index.html">All tools</a>
-        <a href="../../blog/index.html">Blog</a> / Tip Calculator</p>
-      <span class="catalog-tag">GEN&nbsp;04</span>
-      <h1 style="margin-top:10px;">Tip Calculator</h1>
-      <p class="muted" style="max-width:60ch;">Enter your bill, pick a tip percentage, and split it between everyone at the table.</p>
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Pregnancy Due Date Calculator</p>
+      <span class="catalog-tag">PERS&nbsp;05</span>
+      <h1 style="margin-top:10px;">Pregnancy Due Date Calculator</h1>
+      <p class="muted" style="max-width:60ch;">Estimate your due date and current week of pregnancy based on your last menstrual period (LMP).</p>
     </div>
   </section>
 
@@ -108,40 +96,34 @@
     <div class="panel">
 
       <div class="field">
-        <label for="bill-amount">Bill amount (₹)</label>
-        <input type="number" id="bill-amount" placeholder="e.g. 1200" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:1.05rem; background:var(--bg);">
+        <label for="lmp-date">First day of your last menstrual period</label>
+        <input type="date" id="lmp-date" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-body); background:var(--bg);">
       </div>
 
-      <label style="font-size:.85rem; font-weight:600; display:block; margin-bottom:8px;">Tip percentage</label>
-      <div class="tip-row">
-        <button class="tip-btn" data-pct="5">5%</button>
-        <button class="tip-btn active" data-pct="10">10%</button>
-        <button class="tip-btn" data-pct="15">15%</button>
-        <button class="tip-btn" data-pct="20">20%</button>
+      <div class="field">
+        <label for="cycle-length">Average cycle length (days)</label>
+        <input type="number" id="cycle-length" value="28" min="20" max="45" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); background:var(--bg);">
       </div>
 
-      <label style="font-size:.85rem; font-weight:600; display:block; margin-bottom:8px;">Split between</label>
-      <div class="stepper" style="margin-bottom:24px;">
-        <button id="dec-people">−</button>
-        <span id="people-count">1</span>
-        <button id="inc-people">+</button>
-        <span class="muted" style="font-size:.85rem;">people</span>
+      <div class="result-hero">
+        <div class="rh-n" id="r-duedate">—</div>
+        <div class="rh-l">Estimated due date</div>
       </div>
 
       <div class="summary-grid">
         <div class="summary-card">
-          <div class="sc-n" id="r-tip">—</div>
-          <div class="sc-l">Tip amount</div>
+          <div class="sc-n" id="r-week">—</div>
+          <div class="sc-l">Current week of pregnancy</div>
         </div>
         <div class="summary-card">
-          <div class="sc-n" id="r-total">—</div>
-          <div class="sc-l">Total bill</div>
-        </div>
-        <div class="summary-card highlight">
-          <div class="sc-n" id="r-per-person">—</div>
-          <div class="sc-l">Per person</div>
+          <div class="sc-n" id="r-trimester">—</div>
+          <div class="sc-l">Trimester</div>
         </div>
       </div>
+
+      <p class="muted" style="font-size:.78rem; margin-top:20px;">
+        This uses Naegele's rule (LMP + 280 days, adjusted for cycle length), the standard method for a first estimate. Only about 5% of babies arrive exactly on their due date — an ultrasound-based estimate from your doctor is more precise than this calculation alone. This tool is not a substitute for prenatal care.
+      </p>
 
     </div>
   </main>
@@ -163,50 +145,38 @@
 
   <script src="../../js/main.js"></script>
   <script>
-    let tipPct = 10;
-    let people = 1;
-
-    function fmtINR(n) { return '₹' + n.toLocaleString('en-IN', { maximumFractionDigits: 2 }); }
-
-    document.querySelectorAll('.tip-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tip-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        tipPct = parseFloat(btn.dataset.pct);
-        calculate();
-      });
-    });
-
-    document.getElementById('inc-people').addEventListener('click', () => {
-      people++;
-      document.getElementById('people-count').textContent = people;
-      calculate();
-    });
-    document.getElementById('dec-people').addEventListener('click', () => {
-      if (people > 1) people--;
-      document.getElementById('people-count').textContent = people;
-      calculate();
-    });
-
     function calculate() {
-      const bill = parseFloat(document.getElementById('bill-amount').value) || 0;
-      if (bill <= 0) {
-        document.getElementById('r-tip').textContent = '—';
-        document.getElementById('r-total').textContent = '—';
-        document.getElementById('r-per-person').textContent = '—';
-        return;
-      }
-      const tip = bill * (tipPct / 100);
-      const total = bill + tip;
-      const perPerson = total / people;
+      const lmpValue = document.getElementById('lmp-date').value;
+      const cycleLength = parseInt(document.getElementById('cycle-length').value) || 28;
 
-      document.getElementById('r-tip').textContent = fmtINR(tip);
-      document.getElementById('r-total').textContent = fmtINR(total);
-      document.getElementById('r-per-person').textContent = fmtINR(perPerson);
+      if (!lmpValue) return;
+
+      const lmp = new Date(lmpValue);
+      const cycleAdjustment = cycleLength - 28;
+
+      // Naegele's rule: LMP + 280 days, adjusted for cycle length variance from 28 days
+      const dueDate = new Date(lmp);
+      dueDate.setDate(dueDate.getDate() + 280 + cycleAdjustment);
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const daysPregnant = Math.floor((today - lmp) / 86400000);
+      const weeksPregnant = Math.floor(daysPregnant / 7);
+      const daysRemainder = daysPregnant % 7;
+
+      let trimester = '—';
+      if (daysPregnant < 0) trimester = 'Not yet started';
+      else if (weeksPregnant < 13) trimester = 'First trimester';
+      else if (weeksPregnant < 27) trimester = 'Second trimester';
+      else trimester = 'Third trimester';
+
+      document.getElementById('r-duedate').textContent = dueDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+      document.getElementById('r-week').textContent = daysPregnant < 0 ? '—' : `Week ${weeksPregnant + 1} (${daysRemainder}d)`;
+      document.getElementById('r-trimester').textContent = trimester;
     }
 
-    document.getElementById('bill-amount').addEventListener('input', calculate);
-    calculate();
+    document.getElementById('lmp-date').addEventListener('change', calculate);
+    document.getElementById('cycle-length').addEventListener('input', calculate);
   </script>
 
   <script>

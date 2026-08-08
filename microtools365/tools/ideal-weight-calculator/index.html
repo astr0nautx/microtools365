@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ideal Weight Calculator — Free Online Tool | microtools365</title>
+  <meta name="description" content="Free ideal weight calculator. See your estimated ideal body weight using several well-known formulas, based on your height and gender.">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .formula-table { width:100%; border-collapse:collapse; margin-top:20px; font-size:.9rem; }
+    .formula-table td { padding:10px 4px; border-bottom:1px solid var(--border); }
+    .formula-table td:last-child { text-align:right; font-family:var(--font-mono); font-weight:600; }
+    .result-hero { text-align:center; padding:24px; background:var(--accent); border-radius:var(--radius); color:#fff; margin-bottom:8px; }
+    .result-hero .rh-n { font-family:var(--font-mono); font-size:1.7rem; font-weight:700; }
+    .result-hero .rh-l { font-size:.85rem; opacity:.9; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <a href="../../blog/index.html">Blog</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../gst-calculator/index.html">GST Calculator</a>
+            <a href="../emi-calculator/index.html">EMI Calculator</a>
+            <a href="../sip-calculator/index.html">SIP Calculator</a>
+            <a href="../compound-interest-calculator/index.html">Compound Interest</a>
+            <a href="../income-tax-calculator/index.html">Income Tax Calculator</a>
+            <a href="../in-hand-salary-calculator/index.html">In-Hand Salary</a>
+            <a href="../fd-calculator/index.html">FD Calculator</a>
+            <a href="../hra-calculator/index.html">HRA Exemption</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../word-counter/index.html">Word Counter</a>
+            <a href="../case-converter/index.html">Case Converter</a>
+            <a href="../text-diff-checker/index.html">Text Diff Checker</a>
+            <a href="../lorem-ipsum-generator/index.html">Lorem Ipsum Generator</a>
+            <a href="../slug-generator/index.html">Slug Generator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../age-calculator/index.html">Age Calculator</a>
+            <a href="../bmi-calculator/index.html">BMI Calculator</a>
+            <a href="../calorie-calculator/index.html">BMR &amp; Calorie Calculator</a>
+            <a href="../ideal-weight-calculator/index.html">Ideal Weight Calculator</a>
+            <a href="../pregnancy-due-date-calculator/index.html">Pregnancy Due Date</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../image-to-pdf/index.html">Image to PDF</a>
+            <a href="../text-to-pdf/index.html">Text to PDF</a>
+            <a href="../xls-to-pdf/index.html">Excel to PDF</a>
+            <a href="../image-editor/index.html">Image Editor</a>
+            <a href="../pdf-merge/index.html">Merge PDF</a>
+            <a href="../pdf-split/index.html">Split PDF</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../random-name-picker/index.html">Name Picker</a>
+            <a href="../password-generator/index.html">Password Generator</a>
+            <a href="../qr-code-generator/index.html">QR Code Generator</a>
+            <a href="../tip-calculator/index.html">Tip Calculator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Ideal Weight Calculator</p>
+      <span class="catalog-tag">PERS&nbsp;04</span>
+      <h1 style="margin-top:10px;">Ideal Weight Calculator</h1>
+      <p class="muted" style="max-width:60ch;">See your estimated ideal weight using several well-known formulas, based on your height and gender.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="tabs">
+        <button class="tab-btn active" data-gender="male">Male</button>
+        <button class="tab-btn" data-gender="female">Female</button>
+      </div>
+
+      <div style="display:grid; gap:16px; grid-template-columns:1fr 1fr;">
+        <div class="field">
+          <label for="height">Height (cm)</label>
+          <input type="number" id="height" value="170" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); background:var(--bg);">
+        </div>
+      </div>
+
+      <div class="result-hero">
+        <div class="rh-n" id="r-average">—</div>
+        <div class="rh-l">Average across formulas</div>
+      </div>
+
+      <table class="formula-table" id="formula-table"></table>
+
+      <p class="muted" style="font-size:.78rem; margin-top:20px;">
+        These are decades-old formulas originally developed for medication dosing, not fitness or body-composition guidance. They don't account for muscle mass, frame size, or body fat percentage — treat the result as a rough reference point, not a target to chase.
+      </p>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="../../about/index.html">About</a>
+        <a href="../../privacy-policy/index.html">Privacy Policy</a>
+        <a href="../../terms-of-use/index.html">Terms of Use</a>
+        <a href="../../blog/index.html">Blog</a>
+      </div>
+      <div class="footer-bottom-row">
+        <span>© <span id="year"></span> microtools365</span>
+        <a href="../../index.html">← Back to all tools</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    let gender = 'male';
+
+    document.querySelectorAll('.tabs .tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tabs .tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        gender = btn.dataset.gender;
+        calculate();
+      });
+    });
+
+    function calculate() {
+      const heightCm = parseFloat(document.getElementById('height').value) || 0;
+      if (heightCm <= 0) return;
+
+      const heightIn = heightCm / 2.54;
+      const inchesOver5ft = Math.max(0, heightIn - 60);
+
+      // Four classic formulas, all originally in kg based on inches over 5 feet
+      const devine = gender === 'male' ? 50 + 2.3 * inchesOver5ft : 45.5 + 2.3 * inchesOver5ft;
+      const robinson = gender === 'male' ? 52 + 1.9 * inchesOver5ft : 49 + 1.7 * inchesOver5ft;
+      const miller = gender === 'male' ? 56.2 + 1.41 * inchesOver5ft : 53.1 + 1.36 * inchesOver5ft;
+      const hamwi = gender === 'male' ? 48 + 2.7 * inchesOver5ft : 45.5 + 2.2 * inchesOver5ft;
+
+      const formulas = [
+        { label: 'Devine formula (1974)', value: devine },
+        { label: 'Robinson formula (1983)', value: robinson },
+        { label: 'Miller formula (1983)', value: miller },
+        { label: 'Hamwi formula (1964)', value: hamwi },
+      ];
+
+      const average = formulas.reduce((sum, f) => sum + f.value, 0) / formulas.length;
+
+      document.getElementById('r-average').textContent = average.toFixed(1) + ' kg';
+      document.getElementById('formula-table').innerHTML = formulas.map(f =>
+        `<tr><td>${f.label}</td><td>${f.value.toFixed(1)} kg</td></tr>`
+      ).join('');
+    }
+
+    document.getElementById('height').addEventListener('input', calculate);
+    calculate();
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
