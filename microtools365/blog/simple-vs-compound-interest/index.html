@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-19PMSNFG2R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-19PMSNFG2R');
+</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Interest vs Compound Interest: What's the Real Difference? | microtools365</title>
+  <meta name="description" content="Simple interest and compound interest can look almost identical for a year or two, then diverge dramatically. Here's exactly why, with real numbers.">
+  <link rel="canonical" href="https://www.microtools365.com/blog/simple-vs-compound-interest/">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    #mt-loader { position: fixed; inset: 0; z-index: 9999; background: #FAFAF8; display: flex; align-items: center; justify-content: center; transition: opacity .25s ease; }
+    #mt-loader.mt-loader-dark { background: #14161C; }
+    #mt-loader .mt-spin { width: 34px; height: 34px; border: 3px solid #E5E3DC; border-top-color: #FF5A1F; border-radius: 50%; animation: mt-spin .7s linear infinite; }
+    #mt-loader.mt-loader-dark .mt-spin { border-color: #2C2F3A; border-top-color: #FF6B3D; }
+    @keyframes mt-spin { to { transform: rotate(360deg); } }
+    #mt-loader.mt-loader-hide { opacity: 0; pointer-events: none; }
+  </style>
+  <script>
+    (function () { try { if (localStorage.getItem('mt365-theme') === 'dark') { document.documentElement.classList.add('dark-mode'); } } catch (e) {} })();
+  </script>
+</head>
+<body>
+  <div id="mt-loader"><div class="mt-spin"></div></div>
+  <script>
+    document.getElementById('mt-loader').classList.toggle('mt-loader-dark', document.documentElement.classList.contains('dark-mode'));
+    window.addEventListener('load', function () { var l = document.getElementById('mt-loader'); if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); } });
+    setTimeout(function () { var l = document.getElementById('mt-loader'); if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); } }, 5000);
+  </script>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <a href="../../blog/index.html" class="active">Blog</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../../tools/percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../../tools/gst-calculator/index.html">GST Calculator</a>
+            <a href="../../tools/emi-calculator/index.html">EMI Calculator</a>
+            <a href="../../tools/sip-calculator/index.html">SIP Calculator</a>
+            <a href="../../tools/compound-interest-calculator/index.html">Compound Interest</a>
+            <a href="../../tools/simple-interest-calculator/index.html">Simple Interest</a>
+            <a href="../../tools/discount-calculator/index.html">Discount Calculator</a>
+            <a href="../../tools/income-tax-calculator/index.html">Income Tax Calculator</a>
+            <a href="../../tools/in-hand-salary-calculator/index.html">In-Hand Salary</a>
+            <a href="../../tools/fd-calculator/index.html">FD Calculator</a>
+            <a href="../../tools/hra-calculator/index.html">HRA Exemption</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../../tools/word-counter/index.html">Word Counter</a>
+            <a href="../../tools/case-converter/index.html">Case Converter</a>
+            <a href="../../tools/text-diff-checker/index.html">Text Diff Checker</a>
+            <a href="../../tools/lorem-ipsum-generator/index.html">Lorem Ipsum Generator</a>
+            <a href="../../tools/slug-generator/index.html">Slug Generator</a>
+            <a href="../../tools/json-formatter/index.html">JSON Formatter</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../../tools/age-calculator/index.html">Age Calculator</a>
+            <a href="../../tools/bmi-calculator/index.html">BMI Calculator</a>
+            <a href="../../tools/calorie-calculator/index.html">BMR &amp; Calorie Calculator</a>
+            <a href="../../tools/ideal-weight-calculator/index.html">Ideal Weight Calculator</a>
+            <a href="../../tools/pregnancy-due-date-calculator/index.html">Pregnancy Due Date</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../../tools/image-to-pdf/index.html">Image to PDF</a>
+            <a href="../../tools/text-to-pdf/index.html">Text to PDF</a>
+            <a href="../../tools/xls-to-pdf/index.html">Excel to PDF</a>
+            <a href="../../tools/image-editor/index.html">Image Editor</a>
+            <a href="../../tools/pdf-merge/index.html">Merge PDF</a>
+            <a href="../../tools/pdf-split/index.html">Split PDF</a>
+            <a href="../../tools/rent-receipt-generator/index.html">Rent Receipt Generator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../../tools/random-name-picker/index.html">Name Picker</a>
+            <a href="../../tools/password-generator/index.html">Password Generator</a>
+            <a href="../../tools/qr-code-generator/index.html">QR Code Generator</a>
+            <a href="../../tools/tip-calculator/index.html">Tip Calculator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <article class="blog-article">
+    <p class="breadcrumb"><a href="../../index.html">Home</a> / <a href="../index.html">Blog</a> / Simple vs Compound Interest</p>
+    <span class="catalog-tag">FIN&nbsp;11</span>
+    <h1 style="margin-top:14px;">Simple Interest vs Compound Interest: What's the Real Difference?</h1>
+    <p class="article-meta">Published August 15, 2026 · 5 min read</p>
+
+    <div class="article-body">
+      <p>Both formulas answer the same basic question — how much does money grow over time with interest — but they diverge more dramatically than most people expect, and the gap grows every year. Here's exactly why, with real numbers rather than just the abstract formulas.</p>
+
+      <h2>The core mechanical difference</h2>
+      <p>Simple interest is calculated once, on the original principal, for the entire period — it never changes what it's calculated on. Compound interest recalculates at set intervals (yearly, quarterly, monthly), and each time, the interest already earned gets added to the principal before the next calculation. In other words: compound interest earns interest on its own interest. Simple interest never does.</p>
+
+      <h2>A real comparison</h2>
+      <p>Take ₹1,00,000 at 8% annual interest over 10 years, comparing both methods:</p>
+      <table>
+        <thead><tr><th>Year</th><th>Simple interest total</th><th>Compound interest total (annual)</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>₹1,08,000</td><td>₹1,08,000</td></tr>
+          <tr><td>3</td><td>₹1,24,000</td><td>₹1,25,971</td></tr>
+          <tr><td>5</td><td>₹1,40,000</td><td>₹1,46,933</td></tr>
+          <tr><td>10</td><td>₹1,80,000</td><td>₹2,15,892</td></tr>
+        </tbody>
+      </table>
+      <p>Notice that in year 1, they're identical — this is the trap. Simple and compound interest always match exactly for the first period, which is why people sometimes assume the difference is negligible. By year 5, compound interest has already pulled ahead by about ₹7,000. By year 10, the gap has widened to nearly ₹36,000 on the same ₹1,00,000 principal — over a third of the original amount, purely from the compounding effect.</p>
+
+      <h2>Why the gap accelerates rather than growing steadily</h2>
+      <p>Simple interest grows in a straight line — the same fixed amount gets added every year, forever. Compound interest grows on a curve that gets steeper over time, because the base it's calculated on keeps increasing. This is the same mathematical shape behind "the power of compounding" that gets mentioned constantly in investing advice — it's not marketing language, it's a direct consequence of the formula. The effect is small early on and large late — which is exactly why starting early matters more than the amount you start with.</p>
+
+      <h2>Where each one actually shows up</h2>
+      <ul>
+        <li><strong>Simple interest</strong> is more common in short-term loans, some personal loans, and certain fixed-term instruments where the lender wants predictable, unchanging interest.</li>
+        <li><strong>Compound interest</strong> is the standard for savings accounts, fixed deposits, mutual funds, and most long-term investment products — it's also how most loan EMIs are actually structured internally, even though the monthly payment itself stays flat.</li>
+      </ul>
+      <p>As a borrower, simple interest works in your favor — you're not paying interest on interest. As an investor or saver, compound interest works in your favor — you're earning interest on your interest. Which formula is "better" entirely depends on which side of the transaction you're on.</p>
+
+      <h2>The practical takeaway</h2>
+      <p>If you're comparing two similar-looking financial products and one uses simple interest while the other compounds, don't assume they're close just because the stated rate is the same — run the actual numbers, especially for anything running more than a couple of years. The difference that looks small at year 1 becomes very real by year 10.</p>
+
+      <div class="cta-box">
+        <p>Run your own numbers with either formula and see the real difference for your amount and timeline.</p>
+        <a href="../../tools/simple-interest-calculator/index.html" class="btn btn-primary">Simple Interest Calculator →</a>
+        <a href="../../tools/compound-interest-calculator/index.html" class="btn btn-secondary" style="margin-left:8px;">Compound Interest Calculator →</a>
+      </div>
+    </div>
+  </article>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="../../about/index.html">About</a>
+        <a href="../../privacy-policy/index.html">Privacy Policy</a>
+        <a href="../../terms-of-use/index.html">Terms of Use</a>
+        <a href="../../blog/index.html">Blog</a>
+      </div>
+      <div class="footer-bottom-row">
+        <span>© <span id="year"></span> microtools365</span>
+        <a href="../../index.html">← Back to all tools</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

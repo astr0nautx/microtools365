@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-19PMSNFG2R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-19PMSNFG2R');
+</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discount Calculator — Find the Final Price | microtools365</title>
+  <meta name="description" content="Free discount calculator. Find the final price after a percentage discount, and see exactly how much you're saving.">
+  <link rel="canonical" href="https://www.microtools365.com/tools/discount-calculator/">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    #mt-loader { position: fixed; inset: 0; z-index: 9999; background: #FAFAF8; display: flex; align-items: center; justify-content: center; transition: opacity .25s ease; }
+    #mt-loader.mt-loader-dark { background: #14161C; }
+    #mt-loader .mt-spin { width: 34px; height: 34px; border: 3px solid #E5E3DC; border-top-color: #FF5A1F; border-radius: 50%; animation: mt-spin .7s linear infinite; }
+    #mt-loader.mt-loader-dark .mt-spin { border-color: #2C2F3A; border-top-color: #FF6B3D; }
+    @keyframes mt-spin { to { transform: rotate(360deg); } }
+    #mt-loader.mt-loader-hide { opacity: 0; pointer-events: none; }
+
+    .discount-row { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+    .discount-btn { padding:10px 18px; border:1px solid var(--border); border-radius:999px; background:var(--surface); font-weight:700; font-family:var(--font-mono); cursor:pointer; }
+    .discount-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+    .summary-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px; }
+    .summary-card { border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px; text-align:center; }
+    .summary-card .sc-n { font-family:var(--font-mono); font-size:1.3rem; font-weight:700; color:var(--ink); }
+    .summary-card .sc-l { font-size:.75rem; color:var(--muted); margin-top:4px; }
+    .summary-card.highlight { background:var(--accent); border-color:var(--accent); grid-column:1/-1; }
+    .summary-card.highlight .sc-n, .summary-card.highlight .sc-l { color:#fff; }
+    .summary-card.highlight .sc-n { font-size:1.6rem; }
+  </style>
+  <script>
+    (function () { try { if (localStorage.getItem('mt365-theme') === 'dark') { document.documentElement.classList.add('dark-mode'); } } catch (e) {} })();
+  </script>
+</head>
+<body>
+  <div id="mt-loader"><div class="mt-spin"></div></div>
+  <script>
+    document.getElementById('mt-loader').classList.toggle('mt-loader-dark', document.documentElement.classList.contains('dark-mode'));
+    window.addEventListener('load', function () { var l = document.getElementById('mt-loader'); if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); } });
+    setTimeout(function () { var l = document.getElementById('mt-loader'); if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); } }, 5000);
+  </script>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <a href="../../blog/index.html">Blog</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../gst-calculator/index.html">GST Calculator</a>
+            <a href="../emi-calculator/index.html">EMI Calculator</a>
+            <a href="../sip-calculator/index.html">SIP Calculator</a>
+            <a href="../compound-interest-calculator/index.html">Compound Interest</a>
+            <a href="../simple-interest-calculator/index.html">Simple Interest</a>
+            <a href="../discount-calculator/index.html">Discount Calculator</a>
+            <a href="../income-tax-calculator/index.html">Income Tax Calculator</a>
+            <a href="../in-hand-salary-calculator/index.html">In-Hand Salary</a>
+            <a href="../fd-calculator/index.html">FD Calculator</a>
+            <a href="../hra-calculator/index.html">HRA Exemption</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../word-counter/index.html">Word Counter</a>
+            <a href="../case-converter/index.html">Case Converter</a>
+            <a href="../text-diff-checker/index.html">Text Diff Checker</a>
+            <a href="../lorem-ipsum-generator/index.html">Lorem Ipsum Generator</a>
+            <a href="../slug-generator/index.html">Slug Generator</a>
+            <a href="../json-formatter/index.html">JSON Formatter</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../age-calculator/index.html">Age Calculator</a>
+            <a href="../bmi-calculator/index.html">BMI Calculator</a>
+            <a href="../calorie-calculator/index.html">BMR &amp; Calorie Calculator</a>
+            <a href="../ideal-weight-calculator/index.html">Ideal Weight Calculator</a>
+            <a href="../pregnancy-due-date-calculator/index.html">Pregnancy Due Date</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../image-to-pdf/index.html">Image to PDF</a>
+            <a href="../text-to-pdf/index.html">Text to PDF</a>
+            <a href="../xls-to-pdf/index.html">Excel to PDF</a>
+            <a href="../image-editor/index.html">Image Editor</a>
+            <a href="../pdf-merge/index.html">Merge PDF</a>
+            <a href="../pdf-split/index.html">Split PDF</a>
+            <a href="../rent-receipt-generator/index.html">Rent Receipt Generator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../random-name-picker/index.html">Name Picker</a>
+            <a href="../password-generator/index.html">Password Generator</a>
+            <a href="../qr-code-generator/index.html">QR Code Generator</a>
+            <a href="../tip-calculator/index.html">Tip Calculator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / Discount Calculator</p>
+      <span class="catalog-tag">FIN&nbsp;10</span>
+      <h1 style="margin-top:10px;">Discount Calculator</h1>
+      <p class="muted" style="max-width:60ch;">Find the final price after a discount, and see exactly how much you're saving.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="field">
+        <label for="original-price">Original price (₹)</label>
+        <input type="number" id="original-price" placeholder="e.g. 2500" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:1.05rem; background:var(--bg);">
+      </div>
+
+      <label style="font-size:.85rem; font-weight:600; display:block; margin-bottom:8px;">Discount percentage</label>
+      <div class="discount-row">
+        <button class="discount-btn" data-pct="10">10%</button>
+        <button class="discount-btn active" data-pct="20">20%</button>
+        <button class="discount-btn" data-pct="30">30%</button>
+        <button class="discount-btn" data-pct="50">50%</button>
+      </div>
+
+      <div class="field">
+        <label for="custom-pct">Or enter a custom discount %</label>
+        <input type="number" id="custom-pct" placeholder="e.g. 25" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font-mono); background:var(--bg);">
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="sc-n" id="r-saved">—</div>
+          <div class="sc-l">You save</div>
+        </div>
+        <div class="summary-card">
+          <div class="sc-n" id="r-pct">20%</div>
+          <div class="sc-l">Discount applied</div>
+        </div>
+        <div class="summary-card highlight">
+          <div class="sc-n" id="r-final">—</div>
+          <div class="sc-l">Final price</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="../../about/index.html">About</a>
+        <a href="../../privacy-policy/index.html">Privacy Policy</a>
+        <a href="../../terms-of-use/index.html">Terms of Use</a>
+        <a href="../../blog/index.html">Blog</a>
+      </div>
+      <div class="footer-bottom-row">
+        <span>© <span id="year"></span> microtools365</span>
+        <a href="../../index.html">← Back to all tools</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    let discountPct = 20;
+
+    document.querySelectorAll('.discount-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.discount-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        discountPct = parseFloat(btn.dataset.pct);
+        document.getElementById('custom-pct').value = '';
+        calculate();
+      });
+    });
+
+    document.getElementById('custom-pct').addEventListener('input', () => {
+      const val = parseFloat(document.getElementById('custom-pct').value);
+      if (!isNaN(val)) {
+        document.querySelectorAll('.discount-btn').forEach(b => b.classList.remove('active'));
+        discountPct = val;
+        calculate();
+      }
+    });
+
+    function fmtINR(n) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
+
+    function calculate() {
+      const price = parseFloat(document.getElementById('original-price').value) || 0;
+      if (price <= 0) return;
+
+      const saved = price * (discountPct / 100);
+      const final = price - saved;
+
+      document.getElementById('r-saved').textContent = fmtINR(saved);
+      document.getElementById('r-pct').textContent = discountPct + '%';
+      document.getElementById('r-final').textContent = fmtINR(final);
+    }
+
+    document.getElementById('original-price').addEventListener('input', calculate);
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

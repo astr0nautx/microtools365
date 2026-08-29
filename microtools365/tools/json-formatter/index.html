@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-19PMSNFG2R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-19PMSNFG2R');
+</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Formatter & Validator — Free Online Tool | microtools365</title>
+  <meta name="description" content="Free JSON formatter and validator. Paste your JSON to instantly format, validate, and minify it, with clear error messages if something's wrong.">
+  <link rel="canonical" href="https://www.microtools365.com/tools/json-formatter/">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    #mt-loader { position: fixed; inset: 0; z-index: 9999; background: #FAFAF8; display: flex; align-items: center; justify-content: center; transition: opacity .25s ease; }
+    #mt-loader.mt-loader-dark { background: #14161C; }
+    #mt-loader .mt-spin { width: 34px; height: 34px; border: 3px solid #E5E3DC; border-top-color: #FF5A1F; border-radius: 50%; animation: mt-spin .7s linear infinite; }
+    #mt-loader.mt-loader-dark .mt-spin { border-color: #2C2F3A; border-top-color: #FF6B3D; }
+    @keyframes mt-spin { to { transform: rotate(360deg); } }
+    #mt-loader.mt-loader-hide { opacity: 0; pointer-events: none; }
+
+    #json-input, #json-output { min-height:320px; font-family:var(--font-mono); font-size:.85rem; white-space:pre; }
+    #json-output { background:var(--surface); }
+    .status-banner { padding:12px 16px; border-radius:var(--radius-sm); font-size:.88rem; font-weight:600; margin-bottom:16px; display:none; }
+    .status-banner.valid { background:var(--success-soft); color:var(--success); display:block; }
+    .status-banner.invalid { background:var(--danger-soft); color:var(--danger); display:block; }
+  </style>
+  <script>
+    (function () { try { if (localStorage.getItem('mt365-theme') === 'dark') { document.documentElement.classList.add('dark-mode'); } } catch (e) {} })();
+  </script>
+</head>
+<body>
+  <div id="mt-loader"><div class="mt-spin"></div></div>
+  <script>
+    document.getElementById('mt-loader').classList.toggle('mt-loader-dark', document.documentElement.classList.contains('dark-mode'));
+    window.addEventListener('load', function () { var l = document.getElementById('mt-loader'); if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); } });
+    setTimeout(function () { var l = document.getElementById('mt-loader'); if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); } }, 5000);
+  </script>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../../index.html" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="../../index.html">All tools</a>
+        <a href="../../blog/index.html">Blog</a>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../percentage-calculator/index.html">Percentage Calculator</a>
+            <a href="../gst-calculator/index.html">GST Calculator</a>
+            <a href="../emi-calculator/index.html">EMI Calculator</a>
+            <a href="../sip-calculator/index.html">SIP Calculator</a>
+            <a href="../compound-interest-calculator/index.html">Compound Interest</a>
+            <a href="../simple-interest-calculator/index.html">Simple Interest</a>
+            <a href="../discount-calculator/index.html">Discount Calculator</a>
+            <a href="../income-tax-calculator/index.html">Income Tax Calculator</a>
+            <a href="../in-hand-salary-calculator/index.html">In-Hand Salary</a>
+            <a href="../fd-calculator/index.html">FD Calculator</a>
+            <a href="../hra-calculator/index.html">HRA Exemption</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle open">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../word-counter/index.html">Word Counter</a>
+            <a href="../case-converter/index.html">Case Converter</a>
+            <a href="../text-diff-checker/index.html">Text Diff Checker</a>
+            <a href="../lorem-ipsum-generator/index.html">Lorem Ipsum Generator</a>
+            <a href="../slug-generator/index.html">Slug Generator</a>
+            <a href="../json-formatter/index.html">JSON Formatter</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../age-calculator/index.html">Age Calculator</a>
+            <a href="../bmi-calculator/index.html">BMI Calculator</a>
+            <a href="../calorie-calculator/index.html">BMR &amp; Calorie Calculator</a>
+            <a href="../ideal-weight-calculator/index.html">Ideal Weight Calculator</a>
+            <a href="../pregnancy-due-date-calculator/index.html">Pregnancy Due Date</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../image-to-pdf/index.html">Image to PDF</a>
+            <a href="../text-to-pdf/index.html">Text to PDF</a>
+            <a href="../xls-to-pdf/index.html">Excel to PDF</a>
+            <a href="../image-editor/index.html">Image Editor</a>
+            <a href="../pdf-merge/index.html">Merge PDF</a>
+            <a href="../pdf-split/index.html">Split PDF</a>
+            <a href="../rent-receipt-generator/index.html">Rent Receipt Generator</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="../random-name-picker/index.html">Name Picker</a>
+            <a href="../password-generator/index.html">Password Generator</a>
+            <a href="../qr-code-generator/index.html">QR Code Generator</a>
+            <a href="../tip-calculator/index.html">Tip Calculator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="../../index.html">All tools</a> / JSON Formatter &amp; Validator</p>
+      <span class="catalog-tag">TXT&nbsp;06</span>
+      <h1 style="margin-top:10px;">JSON Formatter &amp; Validator</h1>
+      <p class="muted" style="max-width:60ch;">Paste JSON to format, validate, or minify it. Errors show exactly what's wrong.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <div class="field">
+        <label for="json-input">Your JSON</label>
+        <textarea id="json-input" placeholder='{"example": "paste your JSON here"}'></textarea>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;">
+        <button class="btn btn-primary" id="format-btn">Format &amp; Validate</button>
+        <button class="btn btn-secondary" id="minify-btn">Minify</button>
+        <button class="btn btn-secondary" id="clear-btn">Clear</button>
+      </div>
+
+      <div class="status-banner" id="status-banner"></div>
+
+      <div class="field">
+        <label for="json-output">Result</label>
+        <textarea id="json-output" readonly placeholder="Formatted JSON will appear here…"></textarea>
+      </div>
+
+      <button class="btn btn-secondary" id="copy-btn">Copy result</button>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="../../about/index.html">About</a>
+        <a href="../../privacy-policy/index.html">Privacy Policy</a>
+        <a href="../../terms-of-use/index.html">Terms of Use</a>
+        <a href="../../blog/index.html">Blog</a>
+      </div>
+      <div class="footer-bottom-row">
+        <span>© <span id="year"></span> microtools365</span>
+        <a href="../../index.html">← Back to all tools</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    const input = document.getElementById('json-input');
+    const output = document.getElementById('json-output');
+    const banner = document.getElementById('status-banner');
+
+    function showStatus(valid, message) {
+      banner.className = 'status-banner ' + (valid ? 'valid' : 'invalid');
+      banner.textContent = message;
+    }
+
+    document.getElementById('format-btn').addEventListener('click', () => {
+      if (!input.value.trim()) { showToast('Paste some JSON first'); return; }
+      try {
+        const parsed = JSON.parse(input.value);
+        output.value = JSON.stringify(parsed, null, 2);
+        showStatus(true, '✓ Valid JSON');
+      } catch (e) {
+        output.value = '';
+        showStatus(false, '✗ Invalid JSON — ' + e.message);
+      }
+    });
+
+    document.getElementById('minify-btn').addEventListener('click', () => {
+      if (!input.value.trim()) { showToast('Paste some JSON first'); return; }
+      try {
+        const parsed = JSON.parse(input.value);
+        output.value = JSON.stringify(parsed);
+        showStatus(true, '✓ Valid JSON — minified');
+      } catch (e) {
+        output.value = '';
+        showStatus(false, '✗ Invalid JSON — ' + e.message);
+      }
+    });
+
+    document.getElementById('clear-btn').addEventListener('click', () => {
+      input.value = '';
+      output.value = '';
+      banner.className = 'status-banner';
+    });
+
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      if (!output.value) return;
+      navigator.clipboard.writeText(output.value).then(() => showToast('Copied!'));
+    });
+  </script>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
