@@ -4,3 +4,13 @@ Free, no-signup, multi-purpose online tools. Plain HTML/CSS/JS — no build step
 
 microtools365 is a fast, no-signup utility website built for everyday tasks. It includes dedicated calculator and text tools, a practical blog for helpful guides, and core informational pages such as About, Privacy Policy, and Terms of Use. Each tool is a standalone static page, keeping the site lightweight, easy to navigate, and simple to deploy.
 
+
+## Maintenance
+
+Regenerate the sitemap after adding or removing a page:
+
+```bash
+node scripts/generate-sitemap.mjs
+```
+
+The shared browser behavior in `microtools365/js/main.js` controls navigation links, footer links, related tools, recently used tools, and theme behavior.
