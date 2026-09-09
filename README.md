@@ -13,4 +13,10 @@ Regenerate the sitemap after adding or removing a page:
 node scripts/generate-sitemap.mjs
 ```
 
+Validate titles, descriptions, canonical URLs, sharing metadata, structured data, and duplicate titles/canonicals:
+
+```bash
+node scripts/validate-seo.mjs
+```
+
 The shared browser behavior in `microtools365/js/main.js` controls navigation links, footer links, related tools, recently used tools, and theme behavior.
