@@ -13,6 +13,29 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  // ---------- Shared navigation and footer ----------
+  // Keep site-wide links in one place even though this is a static site.
+  const navigationGroups = [
+    ['Finance', [['percentage-calculator', 'Percentage Calculator'], ['gst-calculator', 'GST Calculator'], ['emi-calculator', 'EMI Calculator'], ['sip-calculator', 'SIP Calculator'], ['compound-interest-calculator', 'Compound Interest'], ['income-tax-calculator', 'Income Tax Calculator'], ['in-hand-salary-calculator', 'In-Hand Salary'], ['fd-calculator', 'FD Calculator'], ['hra-calculator', 'HRA Exemption'], ['simple-interest-calculator', 'Simple Interest'], ['discount-calculator', 'Discount Calculator']]],
+    ['Text', [['word-counter', 'Word Counter'], ['case-converter', 'Case Converter'], ['text-diff-checker', 'Text Diff Checker'], ['lorem-ipsum-generator', 'Lorem Ipsum Generator'], ['slug-generator', 'Slug Generator'], ['json-formatter', 'JSON Formatter']]],
+    ['Personal', [['age-calculator', 'Age Calculator'], ['bmi-calculator', 'BMI Calculator'], ['calorie-calculator', 'BMR & Calorie Calculator'], ['ideal-weight-calculator', 'Ideal Weight Calculator'], ['pregnancy-due-date-calculator', 'Pregnancy Due Date']]],
+    ['Documents', [['image-to-pdf', 'Image to PDF'], ['text-to-pdf', 'Text to PDF'], ['xls-to-pdf', 'Excel to PDF'], ['image-editor', 'Image Editor'], ['pdf-merge', 'Merge PDF'], ['pdf-split', 'Split PDF'], ['rent-receipt-generator', 'Rent Receipt Generator']]],
+    ['Generators', [['random-name-picker', 'Name Picker'], ['password-generator', 'Password Generator'], ['qr-code-generator', 'QR Code Generator'], ['tip-calculator', 'Tip Calculator']]]
+  ];
+  const sharedNav = document.querySelector('.site-header .nav');
+  if (sharedNav) {
+    sharedNav.innerHTML = [
+      '<a href="/">All tools</a>',
+      '<a href="/blog/">Blog</a>',
+      ...navigationGroups.map(([label, tools]) => `<div class="nav-item"><button class="nav-dropdown-toggle">${label} <span class="caret">▾</span></button><div class="nav-dropdown-menu">${tools.map(([id, name]) => `<a href="/tools/${id}/">${name}</a>`).join('')}</div></div>`)
+    ].join('');
+    const logo = document.querySelector('.site-header .logo');
+    if (logo) logo.setAttribute('href', '/');
+  }
+  document.querySelectorAll('.site-footer .footer-links').forEach(footerLinks => {
+    footerLinks.innerHTML = '<a href="/about/">About</a><a href="/privacy-policy/">Privacy Policy</a><a href="/terms-of-use/">Terms of Use</a><a href="/blog/">Blog</a>';
+  });
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.nav');
   if (toggle && nav) {
