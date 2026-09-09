@@ -49,6 +49,94 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+
+  // ---------- Tool discovery ----------
+  const toolGroups = {
+    finance: [
+      ['percentage-calculator', 'Percentage Calculator'],
+      ['gst-calculator', 'GST Calculator'],
+      ['emi-calculator', 'EMI Calculator'],
+      ['sip-calculator', 'SIP Calculator'],
+      ['compound-interest-calculator', 'Compound Interest Calculator'],
+      ['income-tax-calculator', 'Income Tax Calculator'],
+      ['in-hand-salary-calculator', 'In-Hand Salary Calculator'],
+      ['fd-calculator', 'FD Calculator'],
+      ['hra-calculator', 'HRA Exemption Calculator'],
+      ['simple-interest-calculator', 'Simple Interest Calculator'],
+      ['discount-calculator', 'Discount Calculator']
+    ],
+    text: [
+      ['word-counter', 'Word Counter'],
+      ['case-converter', 'Case Converter'],
+      ['text-diff-checker', 'Text Diff Checker'],
+      ['lorem-ipsum-generator', 'Lorem Ipsum Generator'],
+      ['slug-generator', 'Slug Generator'],
+      ['json-formatter', 'JSON Formatter']
+    ],
+    personal: [
+      ['age-calculator', 'Age Calculator'],
+      ['bmi-calculator', 'BMI Calculator'],
+      ['calorie-calculator', 'Calorie Calculator'],
+      ['ideal-weight-calculator', 'Ideal Weight Calculator'],
+      ['pregnancy-due-date-calculator', 'Pregnancy Due Date Calculator']
+    ],
+    documents: [
+      ['image-to-pdf', 'Image to PDF'],
+      ['text-to-pdf', 'Text to PDF'],
+      ['xls-to-pdf', 'Excel to PDF'],
+      ['image-editor', 'Image Editor & Converter'],
+      ['pdf-merge', 'Merge PDF'],
+      ['pdf-split', 'Split PDF'],
+      ['rent-receipt-generator', 'Rent Receipt Generator']
+    ],
+    generators: [
+      ['random-name-picker', 'Random Name Picker'],
+      ['password-generator', 'Password Generator'],
+      ['qr-code-generator', 'QR Code Generator'],
+      ['tip-calculator', 'Tip Calculator']
+    ]
+  };
+
+  const currentTool = location.pathname.match(/\/tools\/([^/]+)\/?/);
+  if (currentTool) {
+    const slug = currentTool[1];
+    const group = Object.values(toolGroups).find(tools => tools.some(([id]) => id === slug));
+
+    try {
+      const recent = JSON.parse(localStorage.getItem('mt365-recent-tools') || '[]')
+        .filter(id => id !== slug && Object.values(toolGroups).flat().some(([known]) => known === id));
+      recent.unshift(slug);
+      localStorage.setItem('mt365-recent-tools', JSON.stringify(recent.slice(0, 4)));
+    } catch (e) { /* recent tools are optional */ }
+
+    if (group) {
+      const related = group.filter(([id]) => id !== slug).slice(0, 3);
+      if (related.length && !document.querySelector('.related-tools')) {
+        const section = document.createElement('section');
+        section.className = 'section related-tools';
+        section.innerHTML = `<div class="container"><h2 class="section-title">Related tools</h2><div class="related-tools-list">${related.map(([id, name]) => `<a href="/tools/${id}/">${name}<span aria-hidden="true">→</span></a>`).join('')}</div></div>`;
+        const footer = document.querySelector('.site-footer');
+        if (footer) footer.parentNode.insertBefore(section, footer);
+      }
+    }
+  }
+
+  const onHomePage = location.pathname === '/' || /\/index\.html$/.test(location.pathname);
+  if (onHomePage && !document.querySelector('.recent-tools')) {
+    try {
+      const ids = JSON.parse(localStorage.getItem('mt365-recent-tools') || '[]');
+      const allTools = Object.values(toolGroups).flat();
+      const recent = ids.map(id => allTools.find(([known]) => known === id)).filter(Boolean);
+      if (recent.length) {
+        const section = document.createElement('section');
+        section.className = 'section recent-tools';
+        section.innerHTML = `<div class="container"><h2 class="section-title">Recently used</h2><div class="related-tools-list">${recent.map(([id, name]) => `<a href="/tools/${id}/">${name}<span aria-hidden="true">→</span></a>`).join('')}</div></div>`;
+        const hero = document.querySelector('.hero');
+        if (hero) hero.insertAdjacentElement('afterend', section);
+      }
+    } catch (e) { /* recent tools are optional */ }
+  }
+
   // ---------- Dark mode toggle ----------
   // Injected into every page's header automatically, right before the
   // mobile hamburger button, so no individual page HTML needs editing.
