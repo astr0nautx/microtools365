@@ -547,3 +547,12 @@ body.nav-locked {
   flex-wrap: wrap;
   gap: 10px;
 }
+
+/* Shared discovery panels injected by js/main.js */
+.related-tools,
+.recent-tools { padding-top: 0; }
+.related-tools-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.related-tools-list a { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--ink); font-weight: 600; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+.related-tools-list a:hover { border-color: var(--accent); transform: translateY(-2px); }
+.related-tools-list span { color: var(--accent); }
+@media (max-width: 720px) { .related-tools-list { grid-template-columns: 1fr; } }
