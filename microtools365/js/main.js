@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------- Shared navigation and footer ----------
   // Keep site-wide links in one place even though this is a static site.
   const navigationGroups = [
-    ['Finance', [['percentage-calculator', 'Percentage Calculator'], ['gst-calculator', 'GST Calculator'], ['emi-calculator', 'EMI Calculator'], ['sip-calculator', 'SIP Calculator'], ['compound-interest-calculator', 'Compound Interest'], ['income-tax-calculator', 'Income Tax Calculator'], ['in-hand-salary-calculator', 'In-Hand Salary'], ['fd-calculator', 'FD Calculator'], ['hra-calculator', 'HRA Exemption'], ['simple-interest-calculator', 'Simple Interest'], ['discount-calculator', 'Discount Calculator']]],
+    ['Finance', [['percentage-calculator', 'Percentage Calculator'], ['gst-calculator', 'GST Calculator'], ['emi-calculator', 'EMI Calculator'], ['sip-calculator', 'SIP Calculator'], ['compound-interest-calculator', 'Compound Interest'], ['income-tax-calculator', 'Income Tax Calculator'], ['in-hand-salary-calculator', 'In-Hand Salary'], ['fd-calculator', 'FD Calculator'], ['hra-calculator', 'HRA Exemption'], ['simple-interest-calculator', 'Simple Interest'], ['discount-calculator', 'Discount Calculator'], ['ppf-calculator', 'PPF Calculator'], ['gratuity-calculator', 'Gratuity Calculator'], ['retirement-calculator', 'Retirement Calculator']]],
     ['Text', [['word-counter', 'Word Counter'], ['case-converter', 'Case Converter'], ['text-diff-checker', 'Text Diff Checker'], ['lorem-ipsum-generator', 'Lorem Ipsum Generator'], ['slug-generator', 'Slug Generator'], ['json-formatter', 'JSON Formatter']]],
-    ['Personal', [['age-calculator', 'Age Calculator'], ['bmi-calculator', 'BMI Calculator'], ['calorie-calculator', 'BMR & Calorie Calculator'], ['ideal-weight-calculator', 'Ideal Weight Calculator'], ['pregnancy-due-date-calculator', 'Pregnancy Due Date']]],
+    ['Personal', [['age-calculator', 'Age Calculator'], ['bmi-calculator', 'BMI Calculator'], ['calorie-calculator', 'BMR & Calorie Calculator'], ['ideal-weight-calculator', 'Ideal Weight Calculator'], ['pregnancy-due-date-calculator', 'Pregnancy Due Date'], ['days-between-dates', 'Days Between Two Dates']]],
     ['Documents', [['image-to-pdf', 'Image to PDF'], ['text-to-pdf', 'Text to PDF'], ['xls-to-pdf', 'Excel to PDF'], ['image-editor', 'Image Editor'], ['pdf-merge', 'Merge PDF'], ['pdf-split', 'Split PDF'], ['rent-receipt-generator', 'Rent Receipt Generator']]],
     ['Generators', [['random-name-picker', 'Name Picker'], ['password-generator', 'Password Generator'], ['qr-code-generator', 'QR Code Generator'], ['tip-calculator', 'Tip Calculator']]]
   ];
@@ -86,7 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
       ['fd-calculator', 'FD Calculator'],
       ['hra-calculator', 'HRA Exemption Calculator'],
       ['simple-interest-calculator', 'Simple Interest Calculator'],
-      ['discount-calculator', 'Discount Calculator']
+      ['discount-calculator', 'Discount Calculator'],
+      ['ppf-calculator', 'PPF Calculator'],
+      ['gratuity-calculator', 'Gratuity Calculator'],
+      ['retirement-calculator', 'Retirement Calculator']
     ],
     text: [
       ['word-counter', 'Word Counter'],
@@ -101,7 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
       ['bmi-calculator', 'BMI Calculator'],
       ['calorie-calculator', 'Calorie Calculator'],
       ['ideal-weight-calculator', 'Ideal Weight Calculator'],
-      ['pregnancy-due-date-calculator', 'Pregnancy Due Date Calculator']
+      ['pregnancy-due-date-calculator', 'Pregnancy Due Date Calculator'],
+      ['days-between-dates', 'Days Between Two Dates']
     ],
     documents: [
       ['image-to-pdf', 'Image to PDF'],
