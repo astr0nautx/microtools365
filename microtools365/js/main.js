@@ -159,7 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
         section.className = 'section recent-tools';
         section.innerHTML = `<div class="container"><h2 class="section-title">Recently used</h2><div class="related-tools-list">${recent.map(([id, name]) => `<a href="/tools/${id}/">${name}<span aria-hidden="true">→</span></a>`).join('')}</div></div>`;
         const hero = document.querySelector('.hero');
-        if (hero) hero.insertAdjacentElement('afterend', section);
+        if (hero) {
+          hero.classList.add('has-recent-tools');
+          hero.insertAdjacentElement('afterend', section);
+        }
       }
     } catch (e) { /* recent tools are optional */ }
   }
