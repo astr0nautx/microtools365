@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-19PMSNFG2R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-19PMSNFG2R');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watermark PDF — Add Text or Image Watermark Online | microtools365</title>
+  <meta name="description" content="Add text or image watermarks to PDF files for free. Customize text, font size, rotation, opacity, and position. 100% private and runs entirely in your browser.">
+  <link rel="canonical" href="https://www.microtools365.com/tools/watermark-pdf/">
+  <meta property="og:title" content="Watermark PDF — Add Text or Image Watermark Online | microtools365">
+  <meta property="og:description" content="Add text or image watermarks to PDF files for free. Customize text, font size, rotation, opacity, and position. 100% private and runs entirely in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.microtools365.com/tools/watermark-pdf/">
+  <meta property="og:image" content="https://www.microtools365.com/og-documents.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.microtools365.com/og-documents.png">
+
+  <style>
+    #mt-loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #FAFAF8;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .25s ease;
+    }
+    #mt-loader.mt-loader-dark { background: #14161C; }
+    #mt-loader .mt-spin {
+      width: 34px; height: 34px;
+      border: 3px solid #E5E3DC;
+      border-top-color: #FF5A1F;
+      border-radius: 50%;
+      animation: mt-spin .7s linear infinite;
+    }
+    #mt-loader.mt-loader-dark .mt-spin { border-color: #2C2F3A; border-top-color: #FF6B3D; }
+    @keyframes mt-spin { to { transform: rotate(360deg); } }
+    #mt-loader.mt-loader-hide { opacity: 0; pointer-events: none; }
+  </style>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('mt365-theme') === 'dark') {
+          document.documentElement.classList.add('dark-mode');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .step { display:none; }
+    .step.active { display:block; }
+    .step-heading { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+    .step-num {
+      width:26px; height:26px; border-radius:50%; background:var(--ink); color:#fff;
+      display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; flex-shrink:0;
+    }
+    .step-heading h3 { margin:0; font-size:1.05rem; }
+
+    .dropzone {
+      border: 2px dashed var(--border); border-radius: var(--radius);
+      padding: 40px 20px; text-align: center; cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: var(--accent-soft); }
+    .dropzone p { margin: 0; color: var(--muted); }
+    .dropzone .icon { font-size: 2rem; margin-bottom: 8px; }
+
+    .file-loaded { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--bg); margin-top:16px; flex-wrap:wrap; gap:10px; }
+    .file-loaded .fi-name { font-weight:600; font-size:.9rem; }
+    .file-loaded .fi-pages { font-size:.8rem; color:var(--muted); }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 20px;
+    }
+    @media (min-width: 800px) {
+      .options-grid { grid-template-columns: 1.1fr 0.9fr; align-items: start; }
+    }
+
+    .preset-pills { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+    .preset-pill {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 20px;
+      padding: 4px 12px; font-size: .8rem; font-weight: 600; cursor: pointer;
+      transition: .12s ease;
+    }
+    .preset-pill:hover { border-color: var(--accent); color: var(--accent); }
+
+    .slider-row { display: flex; align-items: center; gap: 12px; }
+    .slider-row input[type="range"] { flex: 1; accent-color: var(--accent); }
+    .slider-val { width: 64px; text-align: center; font-family: var(--font-mono); font-weight: 600; padding: 6px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--ink); }
+
+    .color-picker-wrap { display: flex; align-items: center; gap: 10px; }
+    .color-swatch-input { width: 44px; height: 38px; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px; cursor: pointer; background: var(--surface); }
+
+    /* Preview Canvas Area */
+    .preview-box {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .preview-box h4 { margin: 0 0 12px; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+    .preview-canvas-wrapper {
+      width: 100%;
+      max-width: 280px;
+      aspect-ratio: 1 / 1.414;
+      background: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      border: 1px solid #DCD9D0;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mock-doc-lines {
+      position: absolute;
+      inset: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+    .mock-line { height: 6px; background: #6B6F7D; border-radius: 3px; }
+    .mock-line.h { height: 10px; width: 60%; background: #1A1D29; margin-bottom: 6px; }
+
+    .preview-watermark-render {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .preview-wm-text {
+      font-family: var(--font-display);
+      font-weight: 700;
+      text-align: center;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .result-panel { text-align:center; padding:32px 20px; border:1px solid var(--border); border-radius:var(--radius); background:var(--bg); }
+    .result-panel .checkmark { font-size:2.2rem; margin-bottom:8px; }
+    .result-stats { display:flex; justify-content:center; gap:32px; margin:18px 0; flex-wrap:wrap; }
+    .result-stats .stat-n { font-family:var(--font-mono); font-size:1.4rem; font-weight:700; color:var(--ink); }
+    .result-stats .stat-l { font-size:.75rem; color:var(--muted); margin-top:2px; }
+
+    .spinner {
+      width:32px; height:32px; border:3px solid var(--border); border-top-color:var(--accent);
+      border-radius:50%; margin:20px auto; animation:spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+  </style>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Watermark PDF — Add Text or Image Watermark Online",
+  "url": "https://www.microtools365.com/tools/watermark-pdf/",
+  "description": "Add text or image watermarks to PDF files for free. Customize text, font size, rotation, opacity, and position. 100% private and runs entirely in your browser.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+  </script>
+</head>
+<body>
+
+  <div id="mt-loader"><div class="mt-spin"></div></div>
+  <script>
+    document.getElementById('mt-loader').classList.toggle(
+      'mt-loader-dark', document.documentElement.classList.contains('dark-mode')
+    );
+    window.addEventListener('load', function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    });
+    setTimeout(function () {
+      var l = document.getElementById('mt-loader');
+      if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); }
+    }, 5000);
+  </script>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="/">All tools</a>
+        <a href="/blog/">Blog</a>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/percentage-calculator/">Percentage Calculator</a>
+            <a href="/tools/gst-calculator/">GST Calculator</a>
+            <a href="/tools/emi-calculator/">EMI Calculator</a>
+            <a href="/tools/sip-calculator/">SIP Calculator</a>
+            <a href="/tools/income-tax-calculator/">Income Tax Calculator</a>
+            <a href="/tools/compound-interest-calculator/">Compound Interest</a>
+            <a href="/tools/in-hand-salary-calculator/">In-Hand Salary</a>
+            <a href="/tools/fd-calculator/">FD Calculator</a>
+            <a href="/tools/hra-calculator/">HRA Exemption</a>
+            <a href="/tools/discount-calculator/">Discount Calculator</a>
+            <a href="/tools/simple-interest-calculator/">Simple Interest</a>
+            <a href="/tools/ppf-calculator/">PPF Calculator</a>
+            <a href="/tools/gratuity-calculator/">Gratuity Calculator</a>
+            <a href="/tools/retirement-calculator/">Retirement Calculator</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/word-counter/">Word Counter</a>
+            <a href="/tools/case-converter/">Case Converter</a>
+            <a href="/tools/text-diff-checker/">Text Diff Checker</a>
+            <a href="/tools/lorem-ipsum-generator/">Lorem Ipsum Generator</a>
+            <a href="/tools/slug-generator/">Slug Generator</a>
+            <a href="/tools/json-formatter/">JSON Formatter</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/age-calculator/">Age Calculator</a>
+            <a href="/tools/bmi-calculator/">BMI Calculator</a>
+            <a href="/tools/calorie-calculator/">BMR &amp; Calorie Calculator</a>
+            <a href="/tools/ideal-weight-calculator/">Ideal Weight Calculator</a>
+            <a href="/tools/pregnancy-due-date-calculator/">Pregnancy Due Date</a>
+            <a href="/tools/days-between-dates/">Days Between Two Dates</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/image-to-pdf/">Image to PDF</a>
+            <a href="/tools/text-to-pdf/">Text to PDF</a>
+            <a href="/tools/xls-to-pdf/">Excel to PDF</a>
+            <a href="/tools/image-editor/">Image Editor</a>
+            <a href="/tools/pdf-merge/">Merge PDF</a>
+            <a href="/tools/pdf-split/">Split PDF</a>
+            <a href="/tools/rent-receipt-generator/">Rent Receipt Generator</a>
+            <a href="/tools/watermark-pdf/">Watermark PDF</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/random-name-picker/">Name Picker</a>
+            <a href="/tools/password-generator/">Password Generator</a>
+            <a href="/tools/qr-code-generator/">QR Code Generator</a>
+            <a href="/tools/tip-calculator/">Tip Calculator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <section class="tool-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="/">All tools</a> / Watermark PDF</p>
+      <span class="catalog-tag">DOC&nbsp;08</span>
+      <h1 style="margin-top:10px;">Watermark PDF</h1>
+      <p class="muted" style="max-width:60ch;">Add custom text or image watermarks to your PDF. Fully customizable and 100% private — your files never leave your device.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="panel">
+
+      <!-- STEP 1: Upload -->
+      <div class="step active" id="step-1">
+        <div class="step-heading">
+          <span class="step-num">1</span>
+          <h3>Select a PDF file</h3>
+        </div>
+
+        <div class="dropzone" id="dropzone">
+          <div class="icon">📄</div>
+          <p><strong>Click to choose a PDF</strong> or drag and drop it here</p>
+          <p style="font-size:.8rem; margin-top:6px;">Runs 100% in your browser — zero files are uploaded to any server.</p>
+          <input type="file" id="file-input" accept="application/pdf" style="display:none;">
+        </div>
+
+        <div class="file-loaded" id="file-loaded" style="display:none;">
+          <div>
+            <div class="fi-name" id="fi-name">filename.pdf</div>
+            <div class="fi-pages" id="fi-pages">0 pages</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="change-file-btn">Change file</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Configure Watermark -->
+      <div class="step" id="step-2">
+        <div class="step-heading">
+          <span class="step-num">2</span>
+          <h3>Customize your watermark</h3>
+        </div>
+
+        <div class="options-grid">
+          <!-- Left: Controls -->
+          <div>
+            <!-- Watermark Text -->
+            <div class="field">
+              <label for="wm-text">Watermark Text</label>
+              <input type="text" id="wm-text" value="CONFIDENTIAL" placeholder="e.g. CONFIDENTIAL, DRAFT, SELF ATTESTED">
+              
+              <div class="preset-pills">
+                <span class="preset-pill" data-text="CONFIDENTIAL">CONFIDENTIAL</span>
+                <span class="preset-pill" data-text="SELF ATTESTED">SELF ATTESTED</span>
+                <span class="preset-pill" data-text="DO NOT COPY">DO NOT COPY</span>
+                <span class="preset-pill" data-text="DRAFT">DRAFT</span>
+                <span class="preset-pill" data-text="SAMPLE">SAMPLE</span>
+                <span class="preset-pill" data-text="COPY">COPY</span>
+              </div>
+            </div>
+
+            <!-- Position / Placement -->
+            <div class="field" style="margin-top:16px;">
+              <label for="wm-position">Placement</label>
+              <select id="wm-position" style="width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--surface); color:var(--ink); font-size:.95rem;">
+                <option value="diagonal" selected>Center Diagonal (45° angle)</option>
+                <option value="center">Center Horizontal (0° angle)</option>
+                <option value="top-right">Top Right Header</option>
+                <option value="bottom-center">Bottom Center Footer</option>
+                <option value="tiled">Repeated Tile Grid (Tiled)</option>
+              </select>
+            </div>
+
+            <!-- Font Size -->
+            <div class="field" style="margin-top:16px;">
+              <label for="wm-size">Font Size (<span id="wm-size-val">50</span>px)</label>
+              <div class="slider-row">
+                <input type="range" id="wm-size-slider" min="16" max="100" value="50">
+                <input type="number" id="wm-size-num" class="slider-val" min="16" max="100" value="50">
+              </div>
+            </div>
+
+            <!-- Opacity -->
+            <div class="field" style="margin-top:16px;">
+              <label for="wm-opacity">Opacity (<span id="wm-opacity-val">30</span>%)</label>
+              <div class="slider-row">
+                <input type="range" id="wm-opacity-slider" min="5" max="100" value="30">
+                <input type="number" id="wm-opacity-num" class="slider-val" min="5" max="100" value="30">
+              </div>
+            </div>
+
+            <!-- Rotation -->
+            <div class="field" style="margin-top:16px;" id="rotation-field">
+              <label for="wm-rotation">Rotation (<span id="wm-rotation-val">45</span>°)</label>
+              <div class="slider-row">
+                <input type="range" id="wm-rotation-slider" min="-90" max="90" value="45">
+                <input type="number" id="wm-rotation-num" class="slider-val" min="-90" max="90" value="45">
+              </div>
+            </div>
+
+            <!-- Color -->
+            <div class="field" style="margin-top:16px;">
+              <label>Color</label>
+              <div class="color-picker-wrap">
+                <input type="color" id="wm-color" class="color-swatch-input" value="#D93636">
+                <div class="preset-pills" style="margin:0;">
+                  <span class="preset-pill color-preset" data-color="#D93636">Red</span>
+                  <span class="preset-pill color-preset" data-color="#6B6F7D">Gray</span>
+                  <span class="preset-pill color-preset" data-color="#1A1D29">Dark</span>
+                  <span class="preset-pill color-preset" data-color="#0F62FE">Blue</span>
+                  <span class="preset-pill color-preset" data-color="#FF5A1F">Orange</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Page Selection -->
+            <div class="field" style="margin-top:16px;">
+              <label for="wm-pages">Apply to pages</label>
+              <select id="wm-pages" style="width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--surface); color:var(--ink); font-size:.95rem;">
+                <option value="all" selected>All pages</option>
+                <option value="first">First page only</option>
+                <option value="odd">Odd pages only</option>
+                <option value="even">Even pages only</option>
+              </select>
+            </div>
+
+            <div style="display:flex; gap:12px; margin-top:24px;">
+              <button class="btn btn-primary" id="apply-btn">Watermark PDF →</button>
+              <button class="btn btn-secondary" id="back-btn">Back</button>
+            </div>
+          </div>
+
+          <!-- Right: Live Mock Preview -->
+          <div class="preview-box">
+            <h4>Live Preview</h4>
+            <div class="preview-canvas-wrapper" id="preview-wrapper">
+              <div class="mock-doc-lines">
+                <div class="mock-line h"></div>
+                <div class="mock-line" style="width:90%;"></div>
+                <div class="mock-line" style="width:96%;"></div>
+                <div class="mock-line" style="width:84%;"></div>
+                <div class="mock-line" style="width:88%;"></div>
+                <div class="mock-line" style="width:75%;"></div>
+                <div class="mock-line" style="width:92%;"></div>
+                <div class="mock-line" style="width:86%;"></div>
+                <div class="mock-line" style="width:94%;"></div>
+                <div class="mock-line" style="width:80%;"></div>
+                <div class="mock-line" style="width:70%;"></div>
+              </div>
+              <div class="preview-watermark-render" id="preview-render">
+                <div class="preview-wm-text" id="preview-text">CONFIDENTIAL</div>
+              </div>
+            </div>
+            <p class="muted" style="font-size:.78rem; margin:12px 0 0; text-align:center;">Preview illustrates placement and opacity.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- STEP 3: Processing -->
+      <div class="step" id="step-processing">
+        <div class="result-panel">
+          <div class="spinner"></div>
+          <p class="muted" style="margin:0;">Watermarking your PDF in your browser…</p>
+        </div>
+      </div>
+
+      <!-- STEP 4: Result -->
+      <div class="step" id="step-result">
+        <div class="result-panel">
+          <div class="checkmark">✅</div>
+          <h3 style="margin:0 0 6px;" id="result-title">Your PDF is ready</h3>
+          <p class="muted" style="margin:0;">Watermark applied successfully without uploading files to any server.</p>
+
+          <div class="result-stats">
+            <div>
+              <div class="stat-n" id="stat-pages">—</div>
+              <div class="stat-l">Pages Processed</div>
+            </div>
+            <div>
+              <div class="stat-n" id="stat-size">—</div>
+              <div class="stat-l">File Size</div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:20px;">
+            <button class="btn btn-primary" id="download-btn">⬇ Download Watermarked PDF</button>
+            <button class="btn btn-secondary" id="start-over-btn">Start over</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms-of-use/">Terms of Use</a>
+        <a href="/blog/">Blog</a>
+      </div>
+      <div class="footer-bottom-row">
+        <span>© <span id="year"></span> microtools365</span>
+        <a href="/">← Back to all tools</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <!-- Pinned client-side PDF-lib library -->
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+  <script>
+    const { PDFDocument, rgb, degrees, StandardFonts } = PDFLib;
+
+    let loadedFile = null;
+    let pageCount = 0;
+    let resultBlob = null;
+
+    // Wizard step helper
+    function showStep(id) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function formatBytes(bytes) {
+      if (!bytes) return '0 B';
+      const k = 1024;
+      const dm = 1;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    function hexToRgb(hex) {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16) / 255,
+        g: parseInt(result[2], 16) / 255,
+        b: parseInt(result[3], 16) / 255
+      } : { r: 0.85, g: 0.2, b: 0.2 };
+    }
+
+    // Input elements
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('file-input');
+    const wmText = document.getElementById('wm-text');
+    const wmPosition = document.getElementById('wm-position');
+    const wmColor = document.getElementById('wm-color');
+    const wmPages = document.getElementById('wm-pages');
+
+    const wmSizeSlider = document.getElementById('wm-size-slider');
+    const wmSizeNum = document.getElementById('wm-size-num');
+    const wmSizeVal = document.getElementById('wm-size-val');
+
+    const wmOpacitySlider = document.getElementById('wm-opacity-slider');
+    const wmOpacityNum = document.getElementById('wm-opacity-num');
+    const wmOpacityVal = document.getElementById('wm-opacity-val');
+
+    const wmRotationSlider = document.getElementById('wm-rotation-slider');
+    const wmRotationNum = document.getElementById('wm-rotation-num');
+    const wmRotationVal = document.getElementById('wm-rotation-val');
+
+    // Live preview elements
+    const previewRender = document.getElementById('preview-render');
+    const previewText = document.getElementById('preview-text');
+
+    function bindPair(slider, number, label, onUpdate) {
+      slider.addEventListener('input', () => {
+        number.value = slider.value;
+        if (label) label.textContent = slider.value;
+        onUpdate();
+      });
+      number.addEventListener('input', () => {
+        if (number.value === '') return;
+        slider.value = number.value;
+        if (label) label.textContent = number.value;
+        onUpdate();
+      });
+    }
+
+    bindPair(wmSizeSlider, wmSizeNum, wmSizeVal, updatePreview);
+    bindPair(wmOpacitySlider, wmOpacityNum, wmOpacityVal, updatePreview);
+    bindPair(wmRotationSlider, wmRotationNum, wmRotationVal, updatePreview);
+
+    wmText.addEventListener('input', updatePreview);
+    wmColor.addEventListener('input', updatePreview);
+
+    wmPosition.addEventListener('change', () => {
+      const pos = wmPosition.value;
+      if (pos === 'diagonal') {
+        wmRotationSlider.value = 45;
+        wmRotationNum.value = 45;
+        wmRotationVal.textContent = 45;
+      } else if (pos === 'center' || pos === 'top-right' || pos === 'bottom-center') {
+        wmRotationSlider.value = 0;
+        wmRotationNum.value = 0;
+        wmRotationVal.textContent = 0;
+      } else if (pos === 'tiled') {
+        wmRotationSlider.value = -30;
+        wmRotationNum.value = -30;
+        wmRotationVal.textContent = -30;
+      }
+      updatePreview();
+    });
+
+    // Preset pills
+    document.querySelectorAll('.preset-pill[data-text]').forEach(pill => {
+      pill.addEventListener('click', () => {
+        wmText.value = pill.getAttribute('data-text');
+        updatePreview();
+      });
+    });
+
+    document.querySelectorAll('.color-preset').forEach(pill => {
+      pill.addEventListener('click', () => {
+        wmColor.value = pill.getAttribute('data-color');
+        updatePreview();
+      });
+    });
+
+    function updatePreview() {
+      const text = wmText.value || 'WATERMARK';
+      const size = parseInt(wmSizeNum.value) || 50;
+      const opacity = (parseInt(wmOpacityNum.value) || 30) / 100;
+      const rotation = parseInt(wmRotationNum.value) || 0;
+      const color = wmColor.value || '#D93636';
+      const pos = wmPosition.value;
+
+      // Scale font down proportionally for preview card (A4 preview width is ~280px vs ~600px PDF)
+      const previewFontSize = Math.max(10, Math.round(size * 0.45));
+
+      previewRender.innerHTML = '';
+
+      if (pos === 'tiled') {
+        // Tiled repeated pattern in preview
+        previewRender.style.display = 'grid';
+        previewRender.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        previewRender.style.gap = '20px';
+        previewRender.style.padding = '10px';
+        previewRender.style.alignContent = 'space-around';
+
+        for (let i = 0; i < 9; i++) {
+          const item = document.createElement('div');
+          item.className = 'preview-wm-text';
+          item.textContent = text;
+          item.style.fontSize = Math.round(previewFontSize * 0.6) + 'px';
+          item.style.color = color;
+          item.style.opacity = opacity;
+          item.style.transform = `rotate(${rotation}deg)`;
+          previewRender.appendChild(item);
+        }
+      } else {
+        previewRender.style.display = 'flex';
+        previewRender.style.padding = '18px';
+
+        if (pos === 'top-right') {
+          previewRender.style.alignItems = 'flex-start';
+          previewRender.style.justifyContent = 'flex-end';
+        } else if (pos === 'bottom-center') {
+          previewRender.style.alignItems = 'flex-end';
+          previewRender.style.justifyContent = 'center';
+        } else {
+          previewRender.style.alignItems = 'center';
+          previewRender.style.justifyContent = 'center';
+        }
+
+        const item = document.createElement('div');
+        item.className = 'preview-wm-text';
+        item.textContent = text;
+        item.style.fontSize = previewFontSize + 'px';
+        item.style.color = color;
+        item.style.opacity = opacity;
+        item.style.transform = `rotate(${rotation}deg)`;
+        previewRender.appendChild(item);
+      }
+    }
+
+    // Drag and Drop
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files?.length) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files?.length) handleFile(fileInput.files[0]);
+    });
+
+    async function handleFile(file) {
+      if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+        showToast('Please select a valid PDF file');
+        return;
+      }
+      loadedFile = file;
+      document.getElementById('fi-name').textContent = file.name;
+      document.getElementById('fi-pages').textContent = 'Reading PDF…';
+      document.getElementById('file-loaded').style.display = 'flex';
+
+      try {
+        const bytes = await file.arrayBuffer();
+        const doc = await PDFDocument.load(bytes, { ignoreEncryption: true });
+        pageCount = doc.getPageCount();
+        document.getElementById('fi-pages').textContent = `${pageCount} page${pageCount !== 1 ? 's' : ''} · ${formatBytes(file.size)}`;
+        updatePreview();
+        showStep('step-2');
+      } catch (e) {
+        showToast('Failed to load PDF — file may be corrupted or encrypted.');
+        document.getElementById('file-loaded').style.display = 'none';
+        loadedFile = null;
+      }
+    }
+
+    document.getElementById('change-file-btn').addEventListener('click', () => {
+      fileInput.value = '';
+      fileInput.click();
+    });
+
+    document.getElementById('back-btn').addEventListener('click', () => {
+      showStep('step-1');
+    });
+
+    // Processing & Applying watermark
+    document.getElementById('apply-btn').addEventListener('click', async () => {
+      if (!loadedFile) return;
+
+      const text = wmText.value.trim();
+      if (!text) {
+        showToast('Please enter watermark text');
+        return;
+      }
+
+      showStep('step-processing');
+      await new Promise(r => setTimeout(r, 60)); // allow DOM to update
+
+      try {
+        const bytes = await loadedFile.arrayBuffer();
+        const pdfDoc = await PDFDocument.load(bytes, { ignoreEncryption: true });
+        const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+        const hex = wmColor.value || '#D93636';
+        const c = hexToRgb(hex);
+        const color = rgb(c.r, c.g, c.b);
+        const opacity = (parseInt(wmOpacityNum.value) || 30) / 100;
+        const fontSize = parseInt(wmSizeNum.value) || 50;
+        const angle = parseInt(wmRotationNum.value) || 0;
+        const rad = (angle * Math.PI) / 180;
+        const pos = wmPosition.value;
+        const pageMode = wmPages.value;
+
+        const pages = pdfDoc.getPages();
+        let processedCount = 0;
+
+        for (let i = 0; i < pages.length; i++) {
+          // Check page filtering
+          if (pageMode === 'first' && i > 0) continue;
+          if (pageMode === 'odd' && (i + 1) % 2 === 0) continue;
+          if (pageMode === 'even' && (i + 1) % 2 !== 0) continue;
+
+          const page = pages[i];
+          const { width, height } = page.getSize();
+          const textWidth = font.widthOfTextAtSize(text, fontSize);
+          const textHeight = font.heightAtSize(fontSize);
+
+          if (pos === 'tiled') {
+            // Draw a repeated 3x3 diagonal grid
+            const stepX = width / 3;
+            const stepY = height / 3;
+            const tileFontSize = Math.round(fontSize * 0.7);
+            const tileW = font.widthOfTextAtSize(text, tileFontSize);
+            const tileH = font.heightAtSize(tileFontSize);
+
+            for (let row = 0; row < 3; row++) {
+              for (let col = 0; col < 3; col++) {
+                const centerX = col * stepX + stepX / 2;
+                const centerY = row * stepY + stepY / 2;
+                const ox = (tileW / 2) * Math.cos(rad) - (tileH / 2) * Math.sin(rad);
+                const oy = (tileW / 2) * Math.sin(rad) + (tileH / 2) * Math.cos(rad);
+
+                page.drawText(text, {
+                  x: centerX - ox,
+                  y: centerY - oy,
+                  size: tileFontSize,
+                  font: font,
+                  color: color,
+                  opacity: opacity,
+                  rotate: degrees(angle)
+                });
+              }
+            }
+          } else {
+            let targetCenterX = width / 2;
+            let targetCenterY = height / 2;
+
+            if (pos === 'top-right') {
+              targetCenterX = width - textWidth / 2 - 36;
+              targetCenterY = height - textHeight / 2 - 36;
+            } else if (pos === 'bottom-center') {
+              targetCenterX = width / 2;
+              targetCenterY = 36 + textHeight / 2;
+            }
+
+            // Offset so text rotates cleanly around its center
+            const ox = (textWidth / 2) * Math.cos(rad) - (textHeight / 2) * Math.sin(rad);
+            const oy = (textWidth / 2) * Math.sin(rad) + (textHeight / 2) * Math.cos(rad);
+
+            page.drawText(text, {
+              x: targetCenterX - ox,
+              y: targetCenterY - oy,
+              size: fontSize,
+              font: font,
+              color: color,
+              opacity: opacity,
+              rotate: degrees(angle)
+            });
+          }
+
+          processedCount++;
+        }
+
+        const outBytes = await pdfDoc.save();
+        resultBlob = new Blob([outBytes], { type: 'application/pdf' });
+
+        document.getElementById('stat-pages').textContent = processedCount;
+        document.getElementById('stat-size').textContent = formatBytes(resultBlob.size);
+        showStep('step-result');
+      } catch (err) {
+        console.error(err);
+        showToast('Error applying watermark. Try another PDF.');
+        showStep('step-2');
+      }
+    });
+
+    document.getElementById('download-btn').addEventListener('click', () => {
+      if (!resultBlob) return;
+      const url = URL.createObjectURL(resultBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      const baseName = (loadedFile?.name || 'document').replace(/\.pdf$/i, '');
+      a.download = `${baseName}-watermarked.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Download started');
+    });
+
+    document.getElementById('start-over-btn').addEventListener('click', () => {
+      loadedFile = null;
+      resultBlob = null;
+      document.getElementById('file-loaded').style.display = 'none';
+      fileInput.value = '';
+      showStep('step-1');
+    });
+
+    // Initialize initial preview
+    updatePreview();
+  </script>
+</body>
+</html>

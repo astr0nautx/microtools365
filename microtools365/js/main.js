@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------- Shared navigation and footer ----------
   // Keep site-wide links in one place even though this is a static site.
   const navigationGroups = [
-    ['Finance', [['percentage-calculator', 'Percentage Calculator'], ['gst-calculator', 'GST Calculator'], ['emi-calculator', 'EMI Calculator'], ['sip-calculator', 'SIP Calculator'], ['compound-interest-calculator', 'Compound Interest'], ['income-tax-calculator', 'Income Tax Calculator'], ['in-hand-salary-calculator', 'In-Hand Salary'], ['fd-calculator', 'FD Calculator'], ['hra-calculator', 'HRA Exemption'], ['simple-interest-calculator', 'Simple Interest'], ['discount-calculator', 'Discount Calculator'], ['ppf-calculator', 'PPF Calculator'], ['gratuity-calculator', 'Gratuity Calculator'], ['retirement-calculator', 'Retirement Calculator']]],
+    ['Finance', [['percentage-calculator', 'Percentage Calculator'], ['gst-calculator', 'GST Calculator'], ['emi-calculator', 'EMI Calculator'], ['sip-calculator', 'SIP Calculator'], ['income-tax-calculator', 'Income Tax Calculator'], ['compound-interest-calculator', 'Compound Interest'], ['in-hand-salary-calculator', 'In-Hand Salary'], ['fd-calculator', 'FD Calculator'], ['hra-calculator', 'HRA Exemption'], ['discount-calculator', 'Discount Calculator'], ['simple-interest-calculator', 'Simple Interest'], ['ppf-calculator', 'PPF Calculator'], ['gratuity-calculator', 'Gratuity Calculator'], ['retirement-calculator', 'Retirement Calculator']]],
     ['Text', [['word-counter', 'Word Counter'], ['case-converter', 'Case Converter'], ['text-diff-checker', 'Text Diff Checker'], ['lorem-ipsum-generator', 'Lorem Ipsum Generator'], ['slug-generator', 'Slug Generator'], ['json-formatter', 'JSON Formatter']]],
     ['Personal', [['age-calculator', 'Age Calculator'], ['bmi-calculator', 'BMI Calculator'], ['calorie-calculator', 'BMR & Calorie Calculator'], ['ideal-weight-calculator', 'Ideal Weight Calculator'], ['pregnancy-due-date-calculator', 'Pregnancy Due Date'], ['days-between-dates', 'Days Between Two Dates']]],
-    ['Documents', [['image-to-pdf', 'Image to PDF'], ['text-to-pdf', 'Text to PDF'], ['xls-to-pdf', 'Excel to PDF'], ['image-editor', 'Image Editor'], ['pdf-merge', 'Merge PDF'], ['pdf-split', 'Split PDF'], ['rent-receipt-generator', 'Rent Receipt Generator']]],
+    ['Documents', [['image-to-pdf', 'Image to PDF'], ['text-to-pdf', 'Text to PDF'], ['xls-to-pdf', 'Excel to PDF'], ['image-editor', 'Image Editor'], ['pdf-merge', 'Merge PDF'], ['pdf-split', 'Split PDF'], ['rent-receipt-generator', 'Rent Receipt Generator'], ['watermark-pdf', 'Watermark PDF']]],
     ['Generators', [['random-name-picker', 'Name Picker'], ['password-generator', 'Password Generator'], ['qr-code-generator', 'QR Code Generator'], ['tip-calculator', 'Tip Calculator']]]
   ];
   const sharedNav = document.querySelector('.site-header .nav');
@@ -80,13 +80,13 @@ document.addEventListener('DOMContentLoaded', () => {
       ['gst-calculator', 'GST Calculator'],
       ['emi-calculator', 'EMI Calculator'],
       ['sip-calculator', 'SIP Calculator'],
-      ['compound-interest-calculator', 'Compound Interest Calculator'],
       ['income-tax-calculator', 'Income Tax Calculator'],
+      ['compound-interest-calculator', 'Compound Interest Calculator'],
       ['in-hand-salary-calculator', 'In-Hand Salary Calculator'],
       ['fd-calculator', 'FD Calculator'],
       ['hra-calculator', 'HRA Exemption Calculator'],
-      ['simple-interest-calculator', 'Simple Interest Calculator'],
       ['discount-calculator', 'Discount Calculator'],
+      ['simple-interest-calculator', 'Simple Interest Calculator'],
       ['ppf-calculator', 'PPF Calculator'],
       ['gratuity-calculator', 'Gratuity Calculator'],
       ['retirement-calculator', 'Retirement Calculator']
@@ -114,7 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
       ['image-editor', 'Image Editor & Converter'],
       ['pdf-merge', 'Merge PDF'],
       ['pdf-split', 'Split PDF'],
-      ['rent-receipt-generator', 'Rent Receipt Generator']
+      ['rent-receipt-generator', 'Rent Receipt Generator'],
+      ['watermark-pdf', 'Watermark PDF']
     ],
     generators: [
       ['random-name-picker', 'Random Name Picker'],
