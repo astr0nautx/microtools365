@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request a Tool | microtools365</title>
+  <meta name="description" content="Suggest a new calculator, document utility, or online tool for microtools365. Free, privacy-friendly, and built for real everyday use.">
+  <link rel="canonical" href="https://www.microtools365.com/request-tool/">
+  <meta property="og:title" content="Request a Tool | microtools365">
+  <meta property="og:description" content="Suggest a new calculator, document utility, or online tool for microtools365. Free, privacy-friendly, and built for real everyday use.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.microtools365.com/request-tool/">
+  <meta property="og:image" content="https://www.microtools365.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.microtools365.com/og-image.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    #mt-loader { position: fixed; inset: 0; z-index: 9999; background: #FAFAF8; display: flex; align-items: center; justify-content: center; transition: opacity .25s ease; }
+    #mt-loader.mt-loader-dark { background: #14161C; }
+    #mt-loader .mt-spin { width: 34px; height: 34px; border: 3px solid #E5E3DC; border-top-color: #FF5A1F; border-radius: 50%; animation: mt-spin .7s linear infinite; }
+    #mt-loader.mt-loader-dark .mt-spin { border-color: #2C2F3A; border-top-color: #FF6B3D; }
+    @keyframes mt-spin { to { transform: rotate(360deg); } }
+    #mt-loader.mt-loader-hide { opacity: 0; pointer-events: none; }
+
+    .field select,
+    .field input[type="email"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--ink);
+      background: var(--bg);
+    }
+    .field select:focus,
+    .field input[type="email"]:focus {
+      border-color: var(--accent);
+      background: var(--surface);
+      outline: none;
+    }
+    .field textarea {
+      min-height: 140px;
+    }
+    .hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+    .status-box {
+      display: none;
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+    .status-box.success {
+      background: var(--success-soft);
+      border: 1px solid var(--success);
+      color: #084A38;
+      display: block;
+    }
+    html.dark-mode .status-box.success {
+      color: var(--success);
+    }
+    .status-box.error {
+      background: var(--danger-soft);
+      border: 1px solid var(--danger);
+      color: #7A1414;
+      display: block;
+    }
+    html.dark-mode .status-box.error {
+      color: var(--danger);
+    }
+    .guidelines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .guide-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+    }
+    .guide-card h4 {
+      margin: 0 0 6px;
+      font-size: 0.95rem;
+    }
+    .guide-card p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+  </style>
+  <script>
+    (function () { try { if (localStorage.getItem('mt365-theme') === 'dark') { document.documentElement.classList.add('dark-mode'); } } catch (e) {} })();
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-19PMSNFG2R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-19PMSNFG2R');
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Request a Tool | microtools365",
+  "url": "https://www.microtools365.com/request-tool/",
+  "description": "Suggest a new calculator, document utility, or online tool for microtools365. Free, privacy-friendly, and built for real everyday use.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "microtools365",
+    "url": "https://www.microtools365.com/"
+  }
+}
+  </script>
+</head>
+<body>
+  <div id="mt-loader"><div class="mt-spin"></div></div>
+  <script>
+    document.getElementById('mt-loader').classList.toggle('mt-loader-dark', document.documentElement.classList.contains('dark-mode'));
+    window.addEventListener('load', function () { var l = document.getElementById('mt-loader'); if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); } });
+    setTimeout(function () { var l = document.getElementById('mt-loader'); if (l) { l.classList.add('mt-loader-hide'); setTimeout(function () { l.remove(); }, 300); } }, 5000);
+  </script>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="/">All tools</a>
+        <a href="/blog/">Blog</a>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/percentage-calculator/">Percentage Calculator</a>
+            <a href="/tools/gst-calculator/">GST Calculator</a>
+            <a href="/tools/emi-calculator/">EMI Calculator</a>
+            <a href="/tools/sip-calculator/">SIP Calculator</a>
+            <a href="/tools/income-tax-calculator/">Income Tax Calculator</a>
+            <a href="/tools/compound-interest-calculator/">Compound Interest</a>
+            <a href="/tools/in-hand-salary-calculator/">In-Hand Salary</a>
+            <a href="/tools/fd-calculator/">FD Calculator</a>
+            <a href="/tools/hra-calculator/">HRA Exemption</a>
+            <a href="/tools/discount-calculator/">Discount Calculator</a>
+            <a href="/tools/simple-interest-calculator/">Simple Interest</a>
+            <a href="/tools/ppf-calculator/">PPF Calculator</a>
+            <a href="/tools/gratuity-calculator/">Gratuity Calculator</a>
+            <a href="/tools/retirement-calculator/">Retirement Calculator</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/word-counter/">Word Counter</a>
+            <a href="/tools/case-converter/">Case Converter</a>
+            <a href="/tools/text-diff-checker/">Text Diff Checker</a>
+            <a href="/tools/lorem-ipsum-generator/">Lorem Ipsum Generator</a>
+            <a href="/tools/slug-generator/">Slug Generator</a>
+            <a href="/tools/json-formatter/">JSON Formatter</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/age-calculator/">Age Calculator</a>
+            <a href="/tools/bmi-calculator/">BMI Calculator</a>
+            <a href="/tools/calorie-calculator/">BMR &amp; Calorie Calculator</a>
+            <a href="/tools/ideal-weight-calculator/">Ideal Weight Calculator</a>
+            <a href="/tools/pregnancy-due-date-calculator/">Pregnancy Due Date</a>
+            <a href="/tools/days-between-dates/">Days Between Two Dates</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/image-to-pdf/">Image to PDF</a>
+            <a href="/tools/text-to-pdf/">Text to PDF</a>
+            <a href="/tools/xls-to-pdf/">Excel to PDF</a>
+            <a href="/tools/image-editor/">Image Editor</a>
+            <a href="/tools/pdf-merge/">Merge PDF</a>
+            <a href="/tools/pdf-split/">Split PDF</a>
+            <a href="/tools/rent-receipt-generator/">Rent Receipt Generator</a>
+            <a href="/tools/watermark-pdf/">Watermark PDF</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/random-name-picker/">Name Picker</a>
+            <a href="/tools/password-generator/">Password Generator</a>
+            <a href="/tools/qr-code-generator/">QR Code Generator</a>
+            <a href="/tools/tip-calculator/">Tip Calculator</a>
+            <a href="/tools/uuid-generator/">UUID Generator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <main class="container" style="max-width:760px; padding-top:40px; padding-bottom:40px;">
+    <p class="breadcrumb"><a href="/">Home</a> / Request a Tool</p>
+    <h1 style="margin:8px 0 12px; font-size:2rem;">Request a Tool</h1>
+    <p style="color:var(--muted); font-size:1.05rem; line-height:1.5; margin:0 0 28px;">
+      Have a repetitive task you wish had a fast, ad-free online utility? Missing a specific calculator, document tool, or formatter? Submit your idea below without needing an email app.
+    </p>
+
+    <div id="status-container" class="status-box"></div>
+
+    <div class="panel" style="margin-top:0;">
+      <form id="request-tool-form">
+        <!-- Anti-bot honeypot -->
+        <input type="text" name="_gotcha" id="form-gotcha" style="display:none;" tabindex="-1" autocomplete="off">
+
+        <div class="field">
+          <label for="tool-name">Tool Name or Concept <span style="color:var(--accent);">*</span></label>
+          <input type="text" id="tool-name" name="tool_name" placeholder="e.g. EPF Interest Calculator, Markdown Table Generator, Image Resizer by KB" required>
+        </div>
+
+        <div class="field">
+          <label for="tool-category">Category</label>
+          <select id="tool-category" name="category">
+            <option value="Finance & Tax">Finance &amp; Tax</option>
+            <option value="Documents & PDFs">Documents &amp; PDFs</option>
+            <option value="Text & Formatting">Text &amp; Formatting</option>
+            <option value="Personal & Health">Personal &amp; Health</option>
+            <option value="Generators & Randomizers">Generators &amp; Utilities</option>
+            <option value="Other">Other / Unsure</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="tool-details">How should it work? What problem does it solve? <span style="color:var(--accent);">*</span></label>
+          <textarea id="tool-details" name="details" placeholder="Describe the inputs, expected calculations/outputs, or specific rules. What do you currently use, and what makes it frustrating?" required></textarea>
+          <p class="hint">The more specific you are about formulas, inputs, or edge cases, the faster it can be built.</p>
+        </div>
+
+        <div class="field">
+          <label for="user-email">Your Email <span style="font-weight:400; color:var(--muted);">(Optional)</span></label>
+          <input type="email" id="user-email" name="email" placeholder="name@example.com">
+          <p class="hint">Only if you'd like a notification when the tool goes live. We never send newsletters or marketing emails.</p>
+        </div>
+
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:24px;">
+          <button type="submit" id="submit-btn" class="btn btn-primary">Submit Tool Request →</button>
+          <span id="loading-spinner" style="display:none; color:var(--muted); font-size:0.9rem;">Submitting...</span>
+        </div>
+      </form>
+
+      <div id="fallback-container" style="display:none; margin-top:20px; padding-top:20px; border-top:1px solid var(--border);">
+        <p style="margin:0 0 10px; font-size:0.9rem; color:var(--muted);">Having trouble with the online form? You can also send this request directly via email:</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a id="email-client-link" href="#" class="btn btn-secondary btn-sm">Open in Email Client</a>
+          <button type="button" id="copy-details-btn" class="btn btn-secondary btn-sm">Copy Details to Clipboard</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="background:transparent; border:none; padding:0; margin-top:36px;">
+      <h3 style="margin:0 0 12px; font-size:1.15rem;">What makes a good microtools365 utility?</h3>
+      <div class="guidelines-grid">
+        <div class="guide-card">
+          <h4>🔒 100% Client-Side</h4>
+          <p>Document and file utilities run entirely in browser memory. Nothing sensitive ever touches a cloud server.</p>
+        </div>
+        <div class="guide-card">
+          <h4>⚡ Zero Signup &amp; Fast</h4>
+          <p>No logins, no paywalls, no unnecessary forms. Built to give answers or files in under 10 seconds.</p>
+        </div>
+        <div class="guide-card">
+          <h4>🎯 Everyday Practical</h4>
+          <p>Calculations, conversions, and helpers that solve real day-to-day problems without cluttered SEO fluff.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/request-tool/">Request a Tool</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms-of-use/">Terms of Use</a>
+        <a href="/blog/">Blog</a>
+      </div>
+      <div class="footer-bottom-row">
+        <span>© <span id="year"></span> microtools365</span>
+        <a href="/">← Back to all tools</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast">Details copied to clipboard!</div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    (function () {
+      var form = document.getElementById('request-tool-form');
+      var submitBtn = document.getElementById('submit-btn');
+      var loadingSpinner = document.getElementById('loading-spinner');
+      var statusContainer = document.getElementById('status-container');
+      var fallbackContainer = document.getElementById('fallback-container');
+      var emailClientLink = document.getElementById('email-client-link');
+      var copyDetailsBtn = document.getElementById('copy-details-btn');
+      var toast = document.getElementById('toast');
+
+      function showToast(msg) {
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(function () { toast.classList.remove('show'); }, 3000);
+      }
+
+      function getMailtoUrl(name, category, details, email) {
+        var subject = encodeURIComponent('Tool Request: ' + name);
+        var body = encodeURIComponent(
+          'Tool Name: ' + name + '\n' +
+          'Category: ' + category + '\n' +
+          'Contact Email: ' + (email || 'Not provided') + '\n\n' +
+          'Details / Use Case:\n' + details
+        );
+        return 'mailto:astronaut2328@gmail.com?subject=' + subject + '&body=' + body;
+      }
+
+      function updateFallback(name, category, details, email) {
+        var mailto = getMailtoUrl(name, category, details, email);
+        emailClientLink.setAttribute('href', mailto);
+        fallbackContainer.style.display = 'block';
+      }
+
+      copyDetailsBtn.addEventListener('click', function () {
+        var name = document.getElementById('tool-name').value.trim();
+        var category = document.getElementById('tool-category').value;
+        var details = document.getElementById('tool-details').value.trim();
+        var email = document.getElementById('user-email').value.trim();
+        var text = 'Tool Request: ' + name + '\nCategory: ' + category + '\nEmail: ' + (email || 'N/A') + '\n\nDetails:\n' + details;
+        navigator.clipboard.writeText(text).then(function () {
+          showToast('Request details copied to clipboard!');
+        }).catch(function () {
+          showToast('Could not copy automatically.');
+        });
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Bot honeypot check
+        var gotcha = document.getElementById('form-gotcha').value;
+        if (gotcha) {
+          statusContainer.className = 'status-box success';
+          statusContainer.textContent = 'Thank you! Your request has been recorded.';
+          form.style.display = 'none';
+          return;
+        }
+
+        var name = document.getElementById('tool-name').value.trim();
+        var category = document.getElementById('tool-category').value;
+        var details = document.getElementById('tool-details').value.trim();
+        var email = document.getElementById('user-email').value.trim();
+
+        if (!name || !details) {
+          statusContainer.className = 'status-box error';
+          statusContainer.textContent = 'Please fill in both the tool name and description.';
+          return;
+        }
+
+        submitBtn.disabled = true;
+        loadingSpinner.style.display = 'inline-block';
+        statusContainer.className = 'status-box';
+        statusContainer.style.display = 'none';
+
+        var payload = {
+          tool_name: name,
+          category: category,
+          description: details,
+          email: email || 'anonymous@microtools365.com',
+          _subject: '[microtools365] Tool Request: ' + name
+        };
+
+        fetch('https://formsubmit.co/ajax/astronaut2328@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+        .then(function (res) {
+          if (res.ok) {
+            return res.json();
+          }
+          throw new Error('Server returned ' + res.status);
+        })
+        .then(function (data) {
+          statusContainer.className = 'status-box success';
+          statusContainer.innerHTML = '<strong>🎉 Request received!</strong> Thank you for helping microtools365 grow. Every idea is reviewed, and if it is a good fit for fast client-side execution, we will build and publish it.';
+          form.style.display = 'none';
+          fallbackContainer.style.display = 'none';
+        })
+        .catch(function (err) {
+          statusContainer.className = 'status-box error';
+          statusContainer.innerHTML = '<strong>Could not send automatically.</strong> Your browser or an adblocker may have blocked the submission endpoint. You can send it directly using the buttons below:';
+          updateFallback(name, category, details, email);
+        })
+        .finally(function () {
+          submitBtn.disabled = false;
+          loadingSpinner.style.display = 'none';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
