@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logo) logo.setAttribute('href', '/');
   }
   document.querySelectorAll('.site-footer .footer-links').forEach(footerLinks => {
-    footerLinks.innerHTML = '<a href="/about/">About</a><a href="/privacy-policy/">Privacy Policy</a><a href="/terms-of-use/">Terms of Use</a><a href="/blog/">Blog</a>';
+    footerLinks.innerHTML = '<a href="/about/">About</a><a href="/request-tool/">Request a Tool</a><a href="/privacy-policy/">Privacy Policy</a><a href="/terms-of-use/">Terms of Use</a><a href="/blog/">Blog</a>';
   });
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.nav');
