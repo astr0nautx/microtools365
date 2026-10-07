@@ -5,8 +5,6 @@
    all live here so every new tool page automatically looks consistent.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap');
-
 :root {
   /* Color */
   --bg: #FAFAF8;
@@ -406,6 +404,12 @@ textarea { min-height: 220px; resize: vertical; line-height: 1.6; }
 .nav-dropdown-menu a:hover { background: var(--bg); }
 
 @media (max-width: 720px) {
+  .nav-dropdown-toggle {
+    min-height: 28px;
+    padding: 6px 0;
+    display: flex;
+    align-items: center;
+  }
   .nav-dropdown-menu {
     display: block;
     position: static;
