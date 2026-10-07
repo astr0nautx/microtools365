@@ -12,6 +12,13 @@
   } catch (e) { /* localStorage unavailable — silently default to light */ }
 })();
 
+// Cusdis Comments Configuration
+// To activate comments on all blog posts: create a website on https://cusdis.com and paste your App ID below.
+const CUSDIS_CONFIG = {
+  appId: 'YOUR_CUSDIS_APP_ID', // Replace with your Cusdis App ID from cusdis.com
+  host: 'https://cusdis.com'
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- Shared navigation and footer ----------
@@ -186,7 +193,32 @@ document.addEventListener('DOMContentLoaded', () => {
       themeBtn.textContent = isDark ? '☀️' : '🌙';
       try { localStorage.setItem('mt365-theme', isDark ? 'dark' : 'light'); }
       catch (e) { /* localStorage unavailable — theme won't persist, but toggle still works */ }
+
+      if (window.CUSDIS && typeof window.CUSDIS.setTheme === 'function') {
+        window.CUSDIS.setTheme(isDark ? 'dark' : 'light');
+      }
     });
+  }
+
+  // ---------- Blog Comments (Cusdis) ----------
+  const cusdisThread = document.getElementById('cusdis_thread');
+  if (cusdisThread) {
+    if (CUSDIS_CONFIG.appId && CUSDIS_CONFIG.appId !== 'YOUR_CUSDIS_APP_ID') {
+      cusdisThread.dataset.appId = CUSDIS_CONFIG.appId;
+      cusdisThread.dataset.host = CUSDIS_CONFIG.host;
+      if (document.documentElement.classList.contains('dark-mode')) {
+        cusdisThread.dataset.theme = 'dark';
+      }
+    } else {
+      window.CUSDIS_PREVENT_INITIAL_RENDER = true;
+      cusdisThread.innerHTML = `
+        <div style="padding: 24px 20px; border: 1px dashed var(--border); border-radius: var(--radius-sm); text-align: center; color: var(--muted); font-size: 0.95rem; background: var(--surface);">
+          <p style="margin: 0 0 6px; font-weight: 600; color: var(--ink);">💬 Discussion &amp; Feedback</p>
+          <p style="margin: 0 0 14px; font-size: 0.88rem; line-height: 1.5;">Have a question, feedback, or suggestion for this guide?</p>
+          <a href="/request-tool/" class="btn btn-secondary btn-sm" style="display:inline-flex;">Leave Feedback / Request a Tool →</a>
+        </div>
+      `;
+    }
   }
 });
 
