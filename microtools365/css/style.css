@@ -34,7 +34,11 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+  color-scheme: light;
+}
 
 body {
   margin: 0;
