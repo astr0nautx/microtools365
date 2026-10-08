@@ -40,13 +40,27 @@
 }
 </script>
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-19PMSNFG2R"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-19PMSNFG2R');
+
+    (function() {
+      function loadGtag() {
+        if (window._gtagLoaded) return;
+        window._gtagLoaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-19PMSNFG2R';
+        document.head.appendChild(s);
+      }
+      if ('requestIdleCallback' in window) {
+        window.addEventListener('load', function() { requestIdleCallback(loadGtag); });
+      } else {
+        window.addEventListener('load', function() { setTimeout(loadGtag, 1000); });
+      }
+    })();
   </script>
 </head>
 <body>
@@ -500,12 +514,5 @@
   </footer>
 
   <script src="js/main.js" defer></script>
-  <script>
-    document.getElementById('request-tool-link')?.addEventListener('click', () => {
-      navigator.clipboard.writeText('astronaut2328@gmail.com').then(() => {
-        showToast('Email copied: astronaut2328@gmail.com');
-      });
-    });
-  </script>
 </body>
 </html>

@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-19PMSNFG2R"></script>
+  <!-- Google tag (gtag.js) -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-19PMSNFG2R');
+
+    (function() {
+      function loadGtag() {
+        if (window._gtagLoaded) return;
+        window._gtagLoaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-19PMSNFG2R';
+        document.head.appendChild(s);
+      }
+      if ('requestIdleCallback' in window) {
+        window.addEventListener('load', function() { requestIdleCallback(loadGtag); });
+      } else {
+        window.addEventListener('load', function() { setTimeout(loadGtag, 1000); });
+      }
+    })();
   </script>
 
   <meta charset="UTF-8">
