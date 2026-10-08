@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Editor &amp; Annotator — Free Online PDF Editor (No Sign-Up) | microtools365</title>
+  <meta name="description" content="Free online PDF editor: add text, digital signatures, images, freehand drawings, highlights, and redact sensitive info on any PDF. 100% private, no watermark, no sign-up.">
+  <link rel="canonical" href="https://www.microtools365.com/tools/pdf-editor/">
+  <meta property="og:title" content="PDF Editor &amp; Annotator — Free Online PDF Editor | microtools365">
+  <meta property="og:description" content="Add text, signatures, highlights, images, and redact sensitive info on any PDF. 100% client-side &amp; private in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.microtools365.com/tools/pdf-editor/">
+  <meta property="og:image" content="https://www.microtools365.com/og-documents.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.microtools365.com/og-documents.png">
+
+  <style>html.dark-mode { background: #14161C; color-scheme: dark; }</style>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('mt365-theme') === 'dark') {
+          document.documentElement.classList.add('dark-mode');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap">
+  </noscript>
+  <link rel="stylesheet" href="../../css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "PDF Editor & Annotator — microtools365",
+    "url": "https://www.microtools365.com/tools/pdf-editor/",
+    "description": "Free, browser-based PDF editor to add text, digital signatures, images, shapes, and redact sensitive info without file uploads.",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-19PMSNFG2R');
+
+    (function() {
+      function loadGtag() {
+        if (window._gtagLoaded) return;
+        window._gtagLoaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-19PMSNFG2R';
+        document.head.appendChild(s);
+      }
+      if ('requestIdleCallback' in window) {
+        window.addEventListener('load', function() { requestIdleCallback(loadGtag); });
+      } else {
+        window.addEventListener('load', function() { setTimeout(loadGtag, 1000); });
+      }
+    })();
+  </script>
+
+  <!-- PDF.js and pdf-lib for 100% client-side PDF editing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+  <style>
+    .editor-section { display: none; }
+    .editor-section.active { display: block; }
+
+    .dropzone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 48px 24px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--surface);
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .dropzone .icon { font-size: 2.4rem; margin-bottom: 12px; }
+    .dropzone p { margin: 0; color: var(--muted); }
+    .dropzone strong { color: var(--ink); }
+
+    /* Top Controls & Status Bar */
+    .doc-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 12px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 14px;
+    }
+    .doc-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .9rem;
+      font-weight: 600;
+    }
+    .doc-info span.size {
+      color: var(--muted);
+      font-size: .8rem;
+      font-weight: normal;
+    }
+
+    /* Page Navigation & Zoom */
+    .pager-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pager-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      transition: border-color .15s ease;
+    }
+    .pager-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .pager-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .pager-text { font-size: .85rem; font-weight: 600; min-width: 85px; text-align: center; }
+
+    /* Workspace Toolbar */
+    .editor-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      padding: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      position: sticky;
+      top: 74px;
+      z-index: 40;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .tool-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg);
+      padding: 4px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+    .t-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      padding: 6px 10px;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background .12s ease, border-color .12s ease;
+    }
+    .t-btn:hover { background: var(--surface); }
+    .t-btn.active {
+      background: var(--surface);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    /* Contextual Options Bar */
+    .prop-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 10px 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+      font-size: .85rem;
+    }
+    .prop-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .prop-item label { color: var(--muted); font-size: .8rem; font-weight: 600; }
+    .prop-select, .prop-input {
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface);
+      color: var(--ink);
+      font-size: .85rem;
+    }
+    .color-swatch-wrap {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .swatch {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      display: inline-block;
+      transition: transform .1s ease, border-color .1s ease;
+    }
+    .swatch:hover, .swatch.active { transform: scale(1.15); border-color: var(--ink); }
+
+    /* Canvas Viewport */
+    .workspace-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    @media (min-width: 900px) {
+      .workspace-layout {
+        grid-template-columns: 180px 1fr;
+      }
+    }
+
+    .thumb-sidebar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 8px;
+      max-height: 700px;
+      overflow-y: auto;
+      display: none;
+    }
+    @media (min-width: 900px) {
+      .thumb-sidebar { display: flex; flex-direction: column; gap: 10px; }
+    }
+    .thumb-card {
+      border: 2px solid transparent;
+      border-radius: 6px;
+      padding: 4px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--bg);
+      transition: border-color .15s ease;
+    }
+    .thumb-card:hover { border-color: var(--border); }
+    .thumb-card.active { border-color: var(--accent); background: var(--accent-soft); }
+    .thumb-card canvas { width: 100%; height: auto; display: block; border-radius: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .thumb-card span { font-size: .75rem; font-weight: 600; color: var(--muted); margin-top: 4px; display: inline-block; }
+
+    .canvas-viewport {
+      background: #80808020;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 12px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow: auto;
+      min-height: 550px;
+    }
+    .canvas-stage {
+      position: relative;
+      background: #FFFFFF;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      border-radius: 2px;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    #pdf-canvas {
+      display: block;
+    }
+    #annot-canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 10;
+      cursor: crosshair;
+    }
+    .canvas-stage.tool-select #annot-canvas { cursor: default; }
+    .canvas-stage.tool-text #annot-canvas { cursor: text; }
+
+    /* Interactive Text Overlays */
+    .text-overlay-item {
+      position: absolute;
+      z-index: 20;
+      border: 1px dashed transparent;
+      cursor: move;
+      padding: 2px 4px;
+      line-height: 1.2;
+      outline: none;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .text-overlay-item:hover, .text-overlay-item.selected {
+      border-color: var(--accent);
+      background: rgba(255, 90, 31, 0.06);
+    }
+    .text-overlay-item .del-btn {
+      display: none;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: #D93636;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 11px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .text-overlay-item.selected .del-btn { display: flex; align-items: center; justify-content: center; }
+
+    /* Bottom Action Bar */
+    .download-bar {
+      margin-top: 20px;
+      padding: 16px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .download-bar .stat { font-size: .88rem; color: var(--muted); }
+
+    /* Loading overlay inside canvas area */
+    .loading-veil {
+      position: absolute; inset: 0; background: rgba(255,255,255,0.7);
+      display: none; align-items: center; justify-content: center; z-index: 100;
+      font-weight: 600; color: var(--ink); border-radius: var(--radius);
+    }
+    html.dark-mode .loading-veil { background: rgba(20,22,28,0.7); }
+    .loading-veil.active { display: flex; }
+
+    /* Hidden file inputs */
+    #image-input { display: none; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo">micro<span>tools</span>365</a>
+      <nav class="nav">
+        <a href="/">All tools</a>
+        <a href="/blog/">Blog</a>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Finance <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/percentage-calculator/">Percentage Calculator</a>
+            <a href="/tools/gst-calculator/">GST Calculator</a>
+            <a href="/tools/emi-calculator/">EMI Calculator</a>
+            <a href="/tools/sip-calculator/">SIP Calculator</a>
+            <a href="/tools/income-tax-calculator/">Income Tax Calculator</a>
+            <a href="/tools/compound-interest-calculator/">Compound Interest</a>
+            <a href="/tools/in-hand-salary-calculator/">In-Hand Salary</a>
+            <a href="/tools/fd-calculator/">FD Calculator</a>
+            <a href="/tools/hra-calculator/">HRA Exemption</a>
+            <a href="/tools/discount-calculator/">Discount Calculator</a>
+            <a href="/tools/simple-interest-calculator/">Simple Interest</a>
+            <a href="/tools/ppf-calculator/">PPF Calculator</a>
+            <a href="/tools/gratuity-calculator/">Gratuity Calculator</a>
+            <a href="/tools/retirement-calculator/">Retirement Calculator</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Text <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/word-counter/">Word Counter</a>
+            <a href="/tools/case-converter/">Case Converter</a>
+            <a href="/tools/text-diff-checker/">Text Diff Checker</a>
+            <a href="/tools/lorem-ipsum-generator/">Lorem Ipsum Generator</a>
+            <a href="/tools/slug-generator/">Slug Generator</a>
+            <a href="/tools/json-formatter/">JSON Formatter</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Personal <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/age-calculator/">Age Calculator</a>
+            <a href="/tools/bmi-calculator/">BMI Calculator</a>
+            <a href="/tools/calorie-calculator/">BMR &amp; Calorie Calculator</a>
+            <a href="/tools/ideal-weight-calculator/">Ideal Weight Calculator</a>
+            <a href="/tools/pregnancy-due-date-calculator/">Pregnancy Due Date</a>
+            <a href="/tools/days-between-dates/">Days Between Two Dates</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Documents <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/image-to-pdf/">Image to PDF</a>
+            <a href="/tools/text-to-pdf/">Text to PDF</a>
+            <a href="/tools/xls-to-pdf/">Excel to PDF</a>
+            <a href="/tools/image-editor/">Image Editor</a>
+            <a href="/tools/pdf-merge/">Merge PDF</a>
+            <a href="/tools/pdf-split/">Split PDF</a>
+            <a href="/tools/rent-receipt-generator/">Rent Receipt Generator</a>
+            <a href="/tools/watermark-pdf/">Watermark PDF</a>
+            <a href="/tools/pdf-editor/">PDF Editor</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-dropdown-toggle">Generators <span class="caret">▾</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/tools/random-name-picker/">Name Picker</a>
+            <a href="/tools/password-generator/">Password Generator</a>
+            <a href="/tools/qr-code-generator/">QR Code Generator</a>
+            <a href="/tools/tip-calculator/">Tip Calculator</a>
+            <a href="/tools/uuid-generator/">UUID Generator</a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="container">
+
+      <!-- Breadcrumbs & Header -->
+      <div class="tool-header">
+        <div class="breadcrumb">
+          <a href="/">Home</a> / <a href="/#documents">Documents</a> / <span>PDF Editor</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <span class="catalog-tag">DOC 09</span>
+          <span style="font-size:.85rem; color:var(--muted); font-weight:600;">100% Client-Side &amp; Private</span>
+        </div>
+        <h1>PDF Editor &amp; Annotator</h1>
+        <p class="lede">Add text, signatures, highlights, drawings, images, and redact sensitive info on any PDF. Runs entirely in your browser without uploading files.</p>
+      </div>
+
+      <!-- Main Editor Container -->
+      <div class="panel">
+
+        <!-- Step 1: Upload / Dropzone -->
+        <div id="upload-screen">
+          <div class="dropzone" id="dropzone">
+            <input type="file" id="file-input" accept="application/pdf" style="display:none;">
+            <div class="icon">📄</div>
+            <p><strong>Click to choose a PDF</strong> or drag and drop it here</p>
+            <p style="font-size:.82rem; margin-top:6px;">Works with contracts, forms, invoices, and scans. No file size limits.</p>
+          </div>
+
+          <div style="margin-top:20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+            <span style="font-size:.85rem; color:var(--muted);">🔒 Your PDF never leaves your computer. All processing happens in local browser memory.</span>
+            <button type="button" class="btn btn-secondary btn-sm" id="sample-pdf-btn">⚡ Try Sample Document</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Interactive Editor Workspace -->
+        <div id="editor-workspace" class="editor-section">
+
+          <!-- Document Top Bar -->
+          <div class="doc-bar">
+            <div class="doc-info">
+              <span id="doc-filename">document.pdf</span>
+              <span class="size" id="doc-filesize">(0 KB)</span>
+            </div>
+
+            <div class="pager-controls">
+              <button class="pager-btn" id="prev-page-btn" title="Previous Page">◀</button>
+              <span class="pager-text" id="page-indicator">Page 1 / 1</span>
+              <button class="pager-btn" id="next-page-btn" title="Next Page">▶</button>
+              <span style="color:var(--border);">|</span>
+              <button class="pager-btn" id="zoom-out-btn" title="Zoom Out">−</button>
+              <span style="font-size:.82rem; font-weight:600; min-width:44px; text-align:center;" id="zoom-level">100%</span>
+              <button class="pager-btn" id="zoom-in-btn" title="Zoom In">+</button>
+              <span style="color:var(--border);">|</span>
+              <button class="pager-btn" id="rotate-page-btn" title="Rotate Current Page 90° Clockwise">🔄 Rotate</button>
+              <button class="pager-btn" id="delete-page-btn" title="Delete Current Page" style="color:#D93636;">🗑 Delete</button>
+              <button class="pager-btn" id="change-file-btn" title="Upload a different PDF">Upload New</button>
+            </div>
+          </div>
+
+          <!-- Annotation Toolbar -->
+          <div class="editor-toolbar" role="toolbar" aria-label="PDF Annotation Tools">
+            <div class="tool-group">
+              <button class="t-btn active" data-tool="select" title="Select & Move">🖐 Select</button>
+              <button class="t-btn" data-tool="text" title="Click anywhere to add text">📝 Add Text</button>
+              <button class="t-btn" data-tool="draw" title="Freehand pen / Signature">✍️ Pen</button>
+              <button class="t-btn" data-tool="highlight" title="Highlighter marker">🖍️ Highlight</button>
+            </div>
+
+            <div class="tool-group">
+              <button class="t-btn" data-tool="whiteout" title="Cover old text with white box to replace or erase">⬜ Whiteout</button>
+              <button class="t-btn" data-tool="redact" title="Permanently black out sensitive numbers or names">⬛ Redact</button>
+              <button class="t-btn" data-tool="rect" title="Draw rectangle outline">⬜ Rectangle</button>
+            </div>
+
+            <div class="tool-group">
+              <button class="t-btn" id="add-image-btn" title="Add signature PNG, stamp or image">🖼️ Add Image</button>
+              <input type="file" id="image-input" accept="image/png,image/jpeg,image/webp">
+            </div>
+
+            <div style="margin-left:auto; display:flex; gap:6px;">
+              <button class="pager-btn" id="undo-btn" title="Undo last annotation">↩ Undo</button>
+              <button class="pager-btn" id="clear-page-btn" title="Clear annotations on this page" style="color:var(--muted);">Clear Page</button>
+            </div>
+          </div>
+
+          <!-- Contextual Properties Bar -->
+          <div class="prop-bar" id="prop-bar">
+            <!-- Text Options -->
+            <div class="prop-item" id="prop-font-size-wrap">
+              <label for="font-size-select">Size:</label>
+              <select id="font-size-select" class="prop-select">
+                <option value="12">12 pt</option>
+                <option value="14">14 pt</option>
+                <option value="16" selected>16 pt</option>
+                <option value="20">20 pt</option>
+                <option value="24">24 pt</option>
+                <option value="32">32 pt</option>
+              </select>
+            </div>
+
+            <div class="prop-item" id="prop-font-family-wrap">
+              <label for="font-family-select">Font:</label>
+              <select id="font-family-select" class="prop-select">
+                <option value="Helvetica" selected>Standard (Helvetica)</option>
+                <option value="TimesRoman">Serif (Times)</option>
+                <option value="Courier">Monospace (Courier)</option>
+              </select>
+            </div>
+
+            <!-- Stroke / Line Width -->
+            <div class="prop-item" id="prop-stroke-wrap">
+              <label for="stroke-width-select">Width:</label>
+              <select id="stroke-width-select" class="prop-select">
+                <option value="2">Thin (2px)</option>
+                <option value="4" selected>Medium (4px)</option>
+                <option value="8">Thick (8px)</option>
+                <option value="16">Marker (16px)</option>
+              </select>
+            </div>
+
+            <!-- Colors Palette -->
+            <div class="prop-item">
+              <label>Color:</label>
+              <div class="color-swatch-wrap">
+                <span class="swatch active" data-color="#1A1D29" style="background:#1A1D29;" title="Black / Dark"></span>
+                <span class="swatch" data-color="#D34509" style="background:#D34509;" title="Orange / Accent"></span>
+                <span class="swatch" data-color="#0C8C6B" style="background:#0C8C6B;" title="Green"></span>
+                <span class="swatch" data-color="#1976D2" style="background:#1976D2;" title="Blue"></span>
+                <span class="swatch" data-color="#D93636" style="background:#D93636;" title="Red"></span>
+                <span class="swatch" data-color="#FFEB3B" style="background:#FFEB3B;" title="Yellow"></span>
+              </div>
+            </div>
+
+            <span style="margin-left:auto; font-size:.8rem; color:var(--muted);" id="tool-instruction">Click anywhere on the document to place text</span>
+          </div>
+
+          <!-- Main Canvas Workspace Layout (Thumbnails + Active Page) -->
+          <div class="workspace-layout">
+            <!-- Sidebar Thumbnails -->
+            <div class="thumb-sidebar" id="thumb-sidebar" aria-label="Page Thumbnails"></div>
+
+            <!-- Main Canvas Viewport -->
+            <div class="canvas-viewport" id="canvas-viewport">
+              <div class="canvas-stage tool-select" id="canvas-stage">
+                <canvas id="pdf-canvas"></canvas>
+                <canvas id="annot-canvas"></canvas>
+                <div id="text-overlays-container"></div>
+                <div class="loading-veil" id="page-loading">Rendering page…</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Bar -->
+          <div class="download-bar">
+            <div>
+              <div style="font-weight:600; color:var(--ink); font-size:.95rem;">Ready to save your changes?</div>
+              <div class="stat" id="annotation-stats">0 annotations added across document</div>
+            </div>
+            <button class="btn btn-primary" id="download-pdf-btn">
+              <span>💾 Download Edited PDF</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Informational / FAQ Section for High SEO Authority -->
+      <section class="faq-section" style="margin-top:48px;">
+        <h2 style="font-size:1.35rem; margin-bottom:20px;">Frequently Asked Questions &amp; How-To Guide</h2>
+
+        <div class="faq-item">
+          <h3>How do I edit or replace existing text in a PDF?</h3>
+          <p>Because PDF files are fixed printing coordinate streams rather than reflowable documents, direct text replacement is handled using the <strong>Whiteout &amp; Add Text</strong> workflow: select the <strong>⬜ Whiteout</strong> tool to draw an opaque box over the outdated text, then switch to the <strong>📝 Add Text</strong> tool to type your new content directly on top. The result looks identical to native document editing.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Are my uploaded PDF files safe and confidential?</h3>
+          <p><strong>Yes, 100%.</strong> Unlike other PDF editors that upload your contracts, bank statements, or tax returns to external cloud servers, microtools365 processes everything <strong>locally in your browser runtime</strong> using WebAssembly and client-side JavaScript. Nothing is ever sent to or stored on our servers.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How do I add a signature or official stamp to a PDF?</h3>
+          <p>You have two simple options: choose the <strong>✍️ Pen</strong> tool to draw your handwritten signature directly on the document with your mouse or touchscreen, or click <strong>🖼️ Add Image</strong> to place a pre-saved PNG of your signature, initial, or company stamp.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How does redaction work? Will my hidden data be truly secure?</h3>
+          <p>When you use the <strong>⬛ Redact</strong> tool, a solid, non-transparent vector box is baked directly into the output PDF stream over the selected area. This physically obscures and blocks the underlying coordinate region in the exported document.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Does this tool add a watermark to my edited PDF?</h3>
+          <p><strong>No.</strong> Your exported PDF contains no watermarks, branding, or restrictions. It is completely clean and ready for legal, professional, or academic use.</p>
+        </div>
+      </section>
+
+      <!-- Related Document Tools -->
+      <section class="section related-tools" style="margin-top:40px;">
+        <h2 class="section-title">Related Document Tools</h2>
+        <div class="related-tools-list">
+          <a href="/tools/watermark-pdf/">Watermark PDF <span aria-hidden="true">→</span></a>
+          <a href="/tools/pdf-merge/">Merge PDF <span aria-hidden="true">→</span></a>
+          <a href="/tools/pdf-split/">Split PDF <span aria-hidden="true">→</span></a>
+          <a href="/tools/image-to-pdf/">Image to PDF <span aria-hidden="true">→</span></a>
+          <a href="/tools/rent-receipt-generator/">Rent Receipt Generator <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/request-tool/">Request a Tool</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms-of-use/">Terms of Use</a>
+        <a href="/blog/">Blog</a>
+      </div>
+      <div class="footer-bottom-row">
+        <span>© <span id="year"></span> microtools365 — Free online tools, no sign-up needed.</span>
+        <span>More tools coming soon.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js" defer></script>
+
+  <!-- PDF Editor Core JavaScript Application -->
+  <script>
+    // Initialize PDF.js worker
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+
+    (function () {
+      // Application State
+      let originalPdfBytes = null;
+      let pdfDocProxy = null; // pdf.js proxy
+      let currentFileName = 'document.pdf';
+      let totalPages = 0;
+      let currentPageNum = 1;
+      let currentZoom = 1.0;
+      let activeTool = 'select'; // 'select', 'text', 'draw', 'highlight', 'whiteout', 'redact', 'rect'
+      let currentColor = '#1A1D29';
+      let currentFontSize = 16;
+      let currentFontFamily = 'Helvetica';
+      let currentStrokeWidth = 4;
+      
+      // Page rotations and deletions
+      let pageRotations = {}; // { pageNum: degrees }
+      let deletedPages = new Set(); // Set of 1-based page numbers
+
+      // Per-page annotations storage: { [pageNum]: [ { type, ... } ] }
+      // Types: 'text', 'drawing', 'rect', 'image'
+      let annotationsByPage = {};
+
+      // Drawing state
+      let isDrawing = false;
+      let currentDrawPath = []; // array of {x, y} points
+
+      // Shape state
+      let shapeStartX = 0;
+      let shapeStartY = 0;
+      let isDrawingShape = false;
+
+      // DOM Elements
+      const uploadScreen = document.getElementById('upload-screen');
+      const editorWorkspace = document.getElementById('editor-workspace');
+      const dropzone = document.getElementById('dropzone');
+      const fileInput = document.getElementById('file-input');
+      const samplePdfBtn = document.getElementById('sample-pdf-btn');
+
+      const docFilename = document.getElementById('doc-filename');
+      const docFilesize = document.getElementById('doc-filesize');
+      const pageIndicator = document.getElementById('page-indicator');
+      const prevPageBtn = document.getElementById('prev-page-btn');
+      const nextPageBtn = document.getElementById('next-page-btn');
+      const zoomLevel = document.getElementById('zoom-level');
+      const zoomInBtn = document.getElementById('zoom-in-btn');
+      const zoomOutBtn = document.getElementById('zoom-out-btn');
+      const rotatePageBtn = document.getElementById('rotate-page-btn');
+      const deletePageBtn = document.getElementById('delete-page-btn');
+      const changeFileBtn = document.getElementById('change-file-btn');
+
+      const toolButtons = document.querySelectorAll('.editor-toolbar .t-btn[data-tool]');
+      const addImageBtn = document.getElementById('add-image-btn');
+      const imageInput = document.getElementById('image-input');
+      const undoBtn = document.getElementById('undo-btn');
+      const clearPageBtn = document.getElementById('clear-page-btn');
+      const downloadPdfBtn = document.getElementById('download-pdf-btn');
+      const annotationStats = document.getElementById('annotation-stats');
+      const toolInstruction = document.getElementById('tool-instruction');
+
+      const fontSizeSelect = document.getElementById('font-size-select');
+      const fontFamilySelect = document.getElementById('font-family-select');
+      const strokeWidthSelect = document.getElementById('stroke-width-select');
+      const colorSwatches = document.querySelectorAll('.color-swatch-wrap .swatch');
+
+      const thumbSidebar = document.getElementById('thumb-sidebar');
+      const canvasStage = document.getElementById('canvas-stage');
+      const pdfCanvas = document.getElementById('pdf-canvas');
+      const annotCanvas = document.getElementById('annot-canvas');
+      const textOverlaysContainer = document.getElementById('text-overlays-container');
+      const pageLoading = document.getElementById('page-loading');
+
+      // Helper: Format bytes
+      function formatBytes(bytes) {
+        if (!bytes) return '0 B';
+        const k = 1024, dm = 1;
+        const sizes = ['B', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+      }
+
+      // Initialize tool button clicks
+      toolButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          toolButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeTool = btn.dataset.tool;
+          canvasStage.className = 'canvas-stage tool-' + activeTool;
+          updateToolInstructions();
+        });
+      });
+
+      function updateToolInstructions() {
+        switch (activeTool) {
+          case 'select':
+            toolInstruction.textContent = 'Click to select and move existing text boxes';
+            break;
+          case 'text':
+            toolInstruction.textContent = 'Click anywhere on the document to place a text box';
+            break;
+          case 'draw':
+            toolInstruction.textContent = 'Drag with mouse or touch to draw a signature or note';
+            break;
+          case 'highlight':
+            toolInstruction.textContent = 'Drag over text to highlight with translucent marker';
+            break;
+          case 'whiteout':
+            toolInstruction.textContent = 'Drag a rectangle over text you wish to erase or replace';
+            break;
+          case 'redact':
+            toolInstruction.textContent = 'Drag a black box over sensitive numbers or personal data';
+            break;
+          case 'rect':
+            toolInstruction.textContent = 'Drag to draw a rectangle border';
+            break;
+        }
+      }
+
+      // Color swatch clicks
+      colorSwatches.forEach(swatch => {
+        swatch.addEventListener('click', () => {
+          colorSwatches.forEach(s => s.classList.remove('active'));
+          swatch.classList.add('active');
+          currentColor = swatch.dataset.color;
+        });
+      });
+
+      fontSizeSelect.addEventListener('change', () => {
+        currentFontSize = parseInt(fontSizeSelect.value, 10);
+      });
+      fontFamilySelect.addEventListener('change', () => {
+        currentFontFamily = fontFamilySelect.value;
+      });
+      strokeWidthSelect.addEventListener('change', () => {
+        currentStrokeWidth = parseInt(strokeWidthSelect.value, 10);
+      });
+
+      // Drag and drop setup
+      dropzone.addEventListener('click', () => fileInput.click());
+      dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+      dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('dragover');
+        if (e.dataTransfer.files.length > 0) {
+          handleFile(e.dataTransfer.files[0]);
+        }
+      });
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+          handleFile(e.target.files[0]);
+        }
+      });
+
+      changeFileBtn.addEventListener('click', () => {
+        editorWorkspace.classList.remove('active');
+        uploadScreen.style.display = 'block';
+        fileInput.value = '';
+      });
+
+      // Load sample PDF button
+      samplePdfBtn.addEventListener('click', async () => {
+        try {
+          samplePdfBtn.disabled = true;
+          samplePdfBtn.textContent = 'Generating sample…';
+          const sampleDoc = await PDFLib.PDFDocument.create();
+          const page1 = sampleDoc.addPage([600, 750]);
+          const font = await sampleDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+          const fontBody = await sampleDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+
+          page1.drawText('SAMPLE AGREEMENT & DOCUMENT', { x: 50, y: 700, size: 20, font, color: PDFLib.rgb(0.1, 0.1, 0.15) });
+          page1.drawText('microtools365 — Client-Side PDF Editor Test File', { x: 50, y: 675, size: 12, font: fontBody, color: PDFLib.rgb(0.7, 0.25, 0.05) });
+          
+          page1.drawText('This sample document is created in browser memory to test annotations:', { x: 50, y: 630, size: 11, font: fontBody, color: PDFLib.rgb(0.2, 0.2, 0.2) });
+          page1.drawText('1. Use the "Add Text" tool to fill in details or type anywhere.', { x: 60, y: 605, size: 11, font: fontBody, color: PDFLib.rgb(0.2, 0.2, 0.2) });
+          page1.drawText('2. Use the "Pen" tool to practice adding your digital signature below.', { x: 60, y: 585, size: 11, font: fontBody, color: PDFLib.rgb(0.2, 0.2, 0.2) });
+          page1.drawText('3. Use the "Whiteout" tool to erase any text you want to replace.', { x: 60, y: 565, size: 11, font: fontBody, color: PDFLib.rgb(0.2, 0.2, 0.2) });
+          page1.drawText('4. Use the "Redact" tool to permanently black out sensitive data like Account #9876543210.', { x: 60, y: 545, size: 11, font: fontBody, color: PDFLib.rgb(0.2, 0.2, 0.2) });
+
+          page1.drawRectangle({ x: 50, y: 440, width: 500, height: 75, borderColor: PDFLib.rgb(0.8, 0.8, 0.8), borderWidth: 1, color: PDFLib.rgb(0.98, 0.98, 0.97) });
+          page1.drawText('Signature of Signatory:', { x: 65, y: 495, size: 12, font, color: PDFLib.rgb(0.2, 0.2, 0.2) });
+          page1.drawText('Sign inside this box using the Pen or Add Image tool', { x: 65, y: 460, size: 10, font: fontBody, color: PDFLib.rgb(0.5, 0.5, 0.5) });
+
+          const page2 = sampleDoc.addPage([600, 750]);
+          page2.drawText('PAGE 2 — TERMS & CONDITIONS', { x: 50, y: 700, size: 18, font, color: PDFLib.rgb(0.1, 0.1, 0.15) });
+          page2.drawText('All editing, signing, and annotating occurs directly on your computer.', { x: 50, y: 660, size: 11, font: fontBody, color: PDFLib.rgb(0.2, 0.2, 0.2) });
+          page2.drawText('No files are uploaded to any server. Your privacy is 100% guaranteed.', { x: 50, y: 640, size: 11, font: fontBody, color: PDFLib.rgb(0.2, 0.2, 0.2) });
+
+          const bytes = await sampleDoc.save();
+          originalPdfBytes = bytes;
+          currentFileName = 'sample_document.pdf';
+          docFilename.textContent = currentFileName;
+          docFilesize.textContent = '(' + formatBytes(bytes.byteLength) + ')';
+          await loadPdfToViewer(bytes);
+        } catch (err) {
+          alert('Error generating sample PDF: ' + err.message);
+        } finally {
+          samplePdfBtn.disabled = false;
+          samplePdfBtn.textContent = '⚡ Try Sample Document';
+        }
+      });
+
+      // Handle user uploaded file
+      async function handleFile(file) {
+        if (!file || file.type !== 'application/pdf') {
+          alert('Please select a valid PDF file.');
+          return;
+        }
+        currentFileName = file.name;
+        docFilename.textContent = currentFileName;
+        docFilesize.textContent = '(' + formatBytes(file.size) + ')';
+        const arrayBuffer = await file.arrayBuffer();
+        originalPdfBytes = new Uint8Array(arrayBuffer);
+        await loadPdfToViewer(originalPdfBytes);
+      }
+
+      // Load PDF into PDF.js and initialize workspace
+      async function loadPdfToViewer(bytes) {
+        try {
+          pageLoading.classList.add('active');
+          uploadScreen.style.display = 'none';
+          editorWorkspace.classList.add('active');
+
+          // Reset annotations & page state
+          annotationsByPage = {};
+          pageRotations = {};
+          deletedPages.clear();
+          currentPageNum = 1;
+          currentZoom = 1.0;
+
+          // Load with PDF.js
+          const loadingTask = pdfjsLib.getDocument({ data: bytes });
+          pdfDocProxy = await loadingTask.promise;
+          totalPages = pdfDocProxy.numPages;
+
+          renderThumbnails();
+          await renderCurrentPage();
+          updateTotalAnnotationsCount();
+        } catch (err) {
+          alert('Failed to load PDF: ' + err.message);
+          uploadScreen.style.display = 'block';
+          editorWorkspace.classList.remove('active');
+        } finally {
+          pageLoading.classList.remove('active');
+        }
+      }
+
+      // Render thumbnails in left sidebar
+      async function renderThumbnails() {
+        thumbSidebar.innerHTML = '';
+        for (let p = 1; p <= totalPages; p++) {
+          if (deletedPages.has(p)) continue;
+          const card = document.createElement('div');
+          card.className = 'thumb-card' + (p === currentPageNum ? ' active' : '');
+          card.id = 'thumb-' + p;
+
+          const canvas = document.createElement('canvas');
+          const page = await pdfDocProxy.getPage(p);
+          const viewport = page.getViewport({ scale: 0.25 });
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+          await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+
+          const label = document.createElement('span');
+          label.textContent = 'Page ' + p;
+
+          card.appendChild(canvas);
+          card.appendChild(label);
+          card.addEventListener('click', () => {
+            if (currentPageNum !== p) {
+              currentPageNum = p;
+              renderCurrentPage();
+            }
+          });
+          thumbSidebar.appendChild(card);
+        }
+      }
+
+      function updateActiveThumbnail() {
+        document.querySelectorAll('.thumb-card').forEach(c => c.classList.remove('active'));
+        const activeCard = document.getElementById('thumb-' + currentPageNum);
+        if (activeCard) activeCard.classList.add('active');
+      }
+
+      // Render the active PDF page onto canvas
+      async function renderCurrentPage() {
+        if (!pdfDocProxy) return;
+        pageLoading.classList.add('active');
+
+        // Check if current page was deleted
+        if (deletedPages.has(currentPageNum)) {
+          // Find next available page
+          let found = false;
+          for (let p = 1; p <= totalPages; p++) {
+            if (!deletedPages.has(p)) {
+              currentPageNum = p;
+              found = true;
+              break;
+            }
+          }
+          if (!found) {
+            alert('All pages have been deleted.');
+            changeFileBtn.click();
+            return;
+          }
+        }
+
+        try {
+          const page = await pdfDocProxy.getPage(currentPageNum);
+          const rotation = (pageRotations[currentPageNum] || 0);
+          const viewport = page.getViewport({ scale: currentZoom, rotation: (page.rotate + rotation) % 360 });
+
+          pdfCanvas.width = viewport.width;
+          pdfCanvas.height = viewport.height;
+          annotCanvas.width = viewport.width;
+          annotCanvas.height = viewport.height;
+          canvasStage.style.width = viewport.width + 'px';
+          canvasStage.style.height = viewport.height + 'px';
+
+          const ctx = pdfCanvas.getContext('2d');
+          await page.render({ canvasContext: ctx, viewport }).promise;
+
+          // Redraw page annotations on top
+          redrawPageAnnotations();
+          renderTextOverlays();
+
+          // Update page counters
+          pageIndicator.textContent = 'Page ' + currentPageNum + ' / ' + totalPages;
+          prevPageBtn.disabled = (currentPageNum <= 1);
+          nextPageBtn.disabled = (currentPageNum >= totalPages);
+          zoomLevel.textContent = Math.round(currentZoom * 100) + '%';
+          updateActiveThumbnail();
+        } catch (err) {
+          console.error('Page render error:', err);
+        } finally {
+          pageLoading.classList.remove('active');
+        }
+      }
+
+      // Redraw vector annotations (drawings, whiteout, redact, rects) on annotCanvas
+      function redrawPageAnnotations() {
+        const ctx = annotCanvas.getContext('2d');
+        ctx.clearRect(0, 0, annotCanvas.width, annotCanvas.height);
+
+        const pageAnnots = annotationsByPage[currentPageNum] || [];
+        pageAnnots.forEach(ann => {
+          if (ann.type === 'drawing') {
+            if (ann.points.length < 2) return;
+            ctx.save();
+            ctx.beginPath();
+            ctx.strokeStyle = ann.color;
+            ctx.lineWidth = ann.width * currentZoom;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            if (ann.isHighlight) {
+              ctx.globalAlpha = 0.35;
+              ctx.lineWidth = Math.max(16, ann.width * 2) * currentZoom;
+            }
+            ctx.moveTo(ann.points[0].x * currentZoom, ann.points[0].y * currentZoom);
+            for (let i = 1; i < ann.points.length; i++) {
+              ctx.lineTo(ann.points[i].x * currentZoom, ann.points[i].y * currentZoom);
+            }
+            ctx.stroke();
+            ctx.restore();
+          } else if (ann.type === 'whiteout') {
+            ctx.save();
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(ann.x * currentZoom, ann.y * currentZoom, ann.w * currentZoom, ann.h * currentZoom);
+            ctx.restore();
+          } else if (ann.type === 'redact') {
+            ctx.save();
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(ann.x * currentZoom, ann.y * currentZoom, ann.w * currentZoom, ann.h * currentZoom);
+            ctx.restore();
+          } else if (ann.type === 'rect') {
+            ctx.save();
+            ctx.strokeStyle = ann.color;
+            ctx.lineWidth = ann.width * currentZoom;
+            ctx.strokeRect(ann.x * currentZoom, ann.y * currentZoom, ann.w * currentZoom, ann.h * currentZoom);
+            ctx.restore();
+          } else if (ann.type === 'image') {
+            if (ann.imgElement) {
+              ctx.drawImage(ann.imgElement, ann.x * currentZoom, ann.y * currentZoom, ann.w * currentZoom, ann.h * currentZoom);
+            }
+          }
+        });
+      }
+
+      // Render interactive draggable text elements
+      function renderTextOverlays() {
+        textOverlaysContainer.innerHTML = '';
+        const pageAnnots = annotationsByPage[currentPageNum] || [];
+        
+        pageAnnots.forEach((ann, index) => {
+          if (ann.type === 'text') {
+            const el = document.createElement('div');
+            el.className = 'text-overlay-item';
+            el.dataset.index = index;
+            el.style.left = (ann.x * currentZoom) + 'px';
+            el.style.top = (ann.y * currentZoom) + 'px';
+            el.style.fontSize = (ann.size * currentZoom) + 'px';
+            el.style.color = ann.color;
+            el.style.fontFamily = ann.font;
+            el.contentEditable = true;
+            el.textContent = ann.text;
+
+            const del = document.createElement('button');
+            del.className = 'del-btn';
+            del.innerHTML = '×';
+            del.title = 'Delete text';
+            del.addEventListener('click', (e) => {
+              e.stopPropagation();
+              pageAnnots.splice(index, 1);
+              renderTextOverlays();
+              updateTotalAnnotationsCount();
+            });
+            el.appendChild(del);
+
+            // Drag to reposition
+            el.addEventListener('mousedown', (e) => {
+              if (e.target === del) return;
+              selectTextElement(el);
+              let startX = e.clientX;
+              let startY = e.clientY;
+              let origLeft = ann.x * currentZoom;
+              let origTop = ann.y * currentZoom;
+
+              function onMouseMove(ev) {
+                const dx = ev.clientX - startX;
+                const dy = ev.clientY - startY;
+                const newLeft = origLeft + dx;
+                const newTop = origTop + dy;
+                el.style.left = newLeft + 'px';
+                el.style.top = newTop + 'px';
+                ann.x = newLeft / currentZoom;
+                ann.y = newTop / currentZoom;
+              }
+
+              function onMouseUp() {
+                window.removeEventListener('mousemove', onMouseMove);
+                window.removeEventListener('mouseup', onMouseUp);
+              }
+
+              window.addEventListener('mousemove', onMouseMove);
+              window.addEventListener('mouseup', onMouseUp);
+            });
+
+            // Update text on edit
+            el.addEventListener('input', () => {
+              ann.text = el.innerText.replace('×', '').trim();
+            });
+
+            textOverlaysContainer.appendChild(el);
+          }
+        });
+      }
+
+      function selectTextElement(el) {
+        document.querySelectorAll('.text-overlay-item').forEach(i => i.classList.remove('selected'));
+        if (el) el.classList.add('selected');
+      }
+
+      // Canvas Event Handlers (Drawing, Highlighting, Shapes, Text Creation)
+      function getCanvasCoordinates(e) {
+        const rect = annotCanvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+          x: (clientX - rect.left) / currentZoom,
+          y: (clientY - rect.top) / currentZoom
+        };
+      }
+
+      annotCanvas.addEventListener('mousedown', onPointerDown);
+      annotCanvas.addEventListener('touchstart', onPointerDown, { passive: false });
+
+      function onPointerDown(e) {
+        if (e.touches && e.touches.length > 1) return;
+        const coords = getCanvasCoordinates(e);
+
+        if (activeTool === 'select') {
+          selectTextElement(null);
+          return;
+        }
+
+        if (activeTool === 'text') {
+          // Prompt for text or place editable box
+          const text = prompt('Enter text to add:', 'Type text here');
+          if (text && text.trim()) {
+            if (!annotationsByPage[currentPageNum]) annotationsByPage[currentPageNum] = [];
+            annotationsByPage[currentPageNum].push({
+              type: 'text',
+              x: coords.x,
+              y: coords.y,
+              text: text.trim(),
+              size: currentFontSize,
+              font: currentFontFamily,
+              color: currentColor
+            });
+            renderTextOverlays();
+            updateTotalAnnotationsCount();
+          }
+          return;
+        }
+
+        if (activeTool === 'draw' || activeTool === 'highlight') {
+          isDrawing = true;
+          currentDrawPath = [{ x: coords.x, y: coords.y }];
+          return;
+        }
+
+        if (activeTool === 'whiteout' || activeTool === 'redact' || activeTool === 'rect') {
+          isDrawingShape = true;
+          shapeStartX = coords.x;
+          shapeStartY = coords.y;
+          return;
+        }
+      }
+
+      window.addEventListener('mousemove', onPointerMove);
+      window.addEventListener('touchmove', onPointerMove, { passive: false });
+
+      function onPointerMove(e) {
+        if (!isDrawing && !isDrawingShape) return;
+        if (e.cancelable) e.preventDefault();
+        const coords = getCanvasCoordinates(e);
+        const ctx = annotCanvas.getContext('2d');
+
+        if (isDrawing) {
+          currentDrawPath.push({ x: coords.x, y: coords.y });
+          // Live drawing preview
+          redrawPageAnnotations();
+          ctx.save();
+          ctx.beginPath();
+          ctx.strokeStyle = currentColor;
+          ctx.lineWidth = currentStrokeWidth * currentZoom;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          if (activeTool === 'highlight') {
+            ctx.globalAlpha = 0.35;
+            ctx.lineWidth = 18 * currentZoom;
+          }
+          ctx.moveTo(currentDrawPath[0].x * currentZoom, currentDrawPath[0].y * currentZoom);
+          for (let i = 1; i < currentDrawPath.length; i++) {
+            ctx.lineTo(currentDrawPath[i].x * currentZoom, currentDrawPath[i].y * currentZoom);
+          }
+          ctx.stroke();
+          ctx.restore();
+        } else if (isDrawingShape) {
+          // Live shape box preview
+          redrawPageAnnotations();
+          ctx.save();
+          const x = Math.min(shapeStartX, coords.x) * currentZoom;
+          const y = Math.min(shapeStartY, coords.y) * currentZoom;
+          const w = Math.abs(coords.x - shapeStartX) * currentZoom;
+          const h = Math.abs(coords.y - shapeStartY) * currentZoom;
+
+          if (activeTool === 'whiteout') {
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(x, y, w, h);
+            ctx.strokeStyle = '#CCCCCC';
+            ctx.strokeRect(x, y, w, h);
+          } else if (activeTool === 'redact') {
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(x, y, w, h);
+          } else if (activeTool === 'rect') {
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = currentStrokeWidth * currentZoom;
+            ctx.strokeRect(x, y, w, h);
+          }
+          ctx.restore();
+        }
+      }
+
+      window.addEventListener('mouseup', onPointerUp);
+      window.addEventListener('touchend', onPointerUp);
+
+      function onPointerUp(e) {
+        if (isDrawing) {
+          isDrawing = false;
+          if (currentDrawPath.length > 1) {
+            if (!annotationsByPage[currentPageNum]) annotationsByPage[currentPageNum] = [];
+            annotationsByPage[currentPageNum].push({
+              type: 'drawing',
+              points: [...currentDrawPath],
+              color: currentColor,
+              width: currentStrokeWidth,
+              isHighlight: (activeTool === 'highlight')
+            });
+            updateTotalAnnotationsCount();
+          }
+          currentDrawPath = [];
+          redrawPageAnnotations();
+        } else if (isDrawingShape) {
+          isDrawingShape = false;
+          const coords = getCanvasCoordinates(e.changedTouches ? e.changedTouches[0] : e);
+          const x = Math.min(shapeStartX, coords.x);
+          const y = Math.min(shapeStartY, coords.y);
+          const w = Math.abs(coords.x - shapeStartX);
+          const h = Math.abs(coords.y - shapeStartY);
+
+          if (w > 4 && h > 4) {
+            if (!annotationsByPage[currentPageNum]) annotationsByPage[currentPageNum] = [];
+            annotationsByPage[currentPageNum].push({
+              type: activeTool,
+              x, y, w, h,
+              color: currentColor,
+              width: currentStrokeWidth
+            });
+            updateTotalAnnotationsCount();
+          }
+          redrawPageAnnotations();
+        }
+      }
+
+      // Add image / stamp / signature
+      addImageBtn.addEventListener('click', () => imageInput.click());
+      imageInput.addEventListener('change', async (e) => {
+        if (e.target.files.length > 0) {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            const img = new Image();
+            img.onload = function() {
+              if (!annotationsByPage[currentPageNum]) annotationsByPage[currentPageNum] = [];
+              const maxDim = 150;
+              let w = img.width;
+              let h = img.height;
+              if (w > maxDim || h > maxDim) {
+                if (w > h) { h = (h / w) * maxDim; w = maxDim; }
+                else { w = (w / h) * maxDim; h = maxDim; }
+              }
+              annotationsByPage[currentPageNum].push({
+                type: 'image',
+                x: 50,
+                y: 50,
+                w: w,
+                h: h,
+                dataUrl: evt.target.result,
+                imgElement: img
+              });
+              redrawPageAnnotations();
+              updateTotalAnnotationsCount();
+            };
+            img.src = evt.target.result;
+          };
+          reader.readAsDataURL(file);
+          imageInput.value = '';
+        }
+      });
+
+      // Page Navigation buttons
+      prevPageBtn.addEventListener('click', () => {
+        if (currentPageNum > 1) {
+          currentPageNum--;
+          renderCurrentPage();
+        }
+      });
+      nextPageBtn.addEventListener('click', () => {
+        if (currentPageNum < totalPages) {
+          currentPageNum++;
+          renderCurrentPage();
+        }
+      });
+
+      // Zoom controls
+      zoomInBtn.addEventListener('click', () => {
+        if (currentZoom < 2.5) {
+          currentZoom = Math.min(2.5, currentZoom + 0.2);
+          renderCurrentPage();
+        }
+      });
+      zoomOutBtn.addEventListener('click', () => {
+        if (currentZoom > 0.6) {
+          currentZoom = Math.max(0.6, currentZoom - 0.2);
+          renderCurrentPage();
+        }
+      });
+
+      // Page rotation (90 degrees clockwise)
+      rotatePageBtn.addEventListener('click', () => {
+        pageRotations[currentPageNum] = ((pageRotations[currentPageNum] || 0) + 90) % 360;
+        renderCurrentPage();
+      });
+
+      // Delete current page
+      deletePageBtn.addEventListener('click', () => {
+        if (totalPages - deletedPages.size <= 1) {
+          alert('Cannot delete the last remaining page in the document.');
+          return;
+        }
+        if (confirm('Are you sure you want to delete page ' + currentPageNum + '?')) {
+          deletedPages.add(currentPageNum);
+          renderThumbnails();
+          renderCurrentPage();
+        }
+      });
+
+      // Undo button (removes last annotation on active page)
+      undoBtn.addEventListener('click', () => {
+        const pageAnnots = annotationsByPage[currentPageNum];
+        if (pageAnnots && pageAnnots.length > 0) {
+          pageAnnots.pop();
+          redrawPageAnnotations();
+          renderTextOverlays();
+          updateTotalAnnotationsCount();
+        }
+      });
+
+      // Clear all annotations on active page
+      clearPageBtn.addEventListener('click', () => {
+        if (annotationsByPage[currentPageNum] && annotationsByPage[currentPageNum].length > 0) {
+          if (confirm('Clear all annotations on Page ' + currentPageNum + '?')) {
+            annotationsByPage[currentPageNum] = [];
+            redrawPageAnnotations();
+            renderTextOverlays();
+            updateTotalAnnotationsCount();
+          }
+        }
+      });
+
+      function updateTotalAnnotationsCount() {
+        let count = 0;
+        Object.values(annotationsByPage).forEach(list => {
+          count += (list ? list.length : 0);
+        });
+        annotationStats.textContent = count + ' annotation' + (count === 1 ? '' : 's') + ' added across document';
+      }
+
+      // Convert Hex Color to PDF-Lib RGB
+      function hexToPdfRgb(hex) {
+        let clean = hex.replace('#', '');
+        if (clean.length === 3) clean = clean.split('').map(c => c + c).join('');
+        const num = parseInt(clean, 16);
+        const r = ((num >> 16) & 255) / 255;
+        const g = ((num >> 8) & 255) / 255;
+        const b = (num & 255) / 255;
+        return PDFLib.rgb(r, g, b);
+      }
+
+      // Export and Download PDF via PDF-Lib
+      downloadPdfBtn.addEventListener('click', async () => {
+        if (!originalPdfBytes) return;
+
+        try {
+          downloadPdfBtn.disabled = true;
+          downloadPdfBtn.innerHTML = '<span>⏳ Exporting PDF…</span>';
+
+          // Load original document
+          const pdfDoc = await PDFLib.PDFDocument.load(originalPdfBytes);
+
+          // Handle page deletions (in reverse order to preserve indexes)
+          const pagesToDelete = Array.from(deletedPages).sort((a, b) => b - a);
+          pagesToDelete.forEach(pNum => {
+            pdfDoc.removePage(pNum - 1);
+          });
+
+          // Embed standard fonts for vector text
+          const helveticaFont = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+          const timesFont = await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRoman);
+          const courierFont = await pdfDoc.embedFont(PDFLib.StandardFonts.Courier);
+
+          const fontMap = {
+            'Helvetica': helveticaFont,
+            'TimesRoman': timesFont,
+            'Courier': courierFont
+          };
+
+          // Apply rotations and draw annotations
+          const remainingPages = pdfDoc.getPages();
+          let pageCounter = 0;
+
+          for (let origPageNum = 1; origPageNum <= totalPages; origPageNum++) {
+            if (deletedPages.has(origPageNum)) continue;
+
+            const page = remainingPages[pageCounter];
+            pageCounter++;
+
+            // Rotation
+            if (pageRotations[origPageNum]) {
+              const currentAngle = page.getRotation().angle;
+              page.setRotation(PDFLib.degrees((currentAngle + pageRotations[origPageNum]) % 360));
+            }
+
+            const { width: pageWidth, height: pageHeight } = page.getSize();
+            const pageAnnots = annotationsByPage[origPageNum] || [];
+
+            // Draw each annotation
+            for (const ann of pageAnnots) {
+              // Convert canvas coords to PDF coords (PDF origin is bottom-left, canvas is top-left)
+              if (ann.type === 'text') {
+                const font = fontMap[ann.font] || helveticaFont;
+                const pdfColor = hexToPdfRgb(ann.color);
+                // Adjust Y coordinate: pageHeight - y - size
+                const pdfY = pageHeight - ann.y - (ann.size * 0.85);
+                page.drawText(ann.text, {
+                  x: ann.x,
+                  y: Math.max(0, pdfY),
+                  size: ann.size,
+                  font,
+                  color: pdfColor
+                });
+              } else if (ann.type === 'whiteout') {
+                page.drawRectangle({
+                  x: ann.x,
+                  y: pageHeight - ann.y - ann.h,
+                  width: ann.w,
+                  height: ann.h,
+                  color: PDFLib.rgb(1, 1, 1)
+                });
+              } else if (ann.type === 'redact') {
+                page.drawRectangle({
+                  x: ann.x,
+                  y: pageHeight - ann.y - ann.h,
+                  width: ann.w,
+                  height: ann.h,
+                  color: PDFLib.rgb(0, 0, 0)
+                });
+              } else if (ann.type === 'rect') {
+                page.drawRectangle({
+                  x: ann.x,
+                  y: pageHeight - ann.y - ann.h,
+                  width: ann.w,
+                  height: ann.h,
+                  borderColor: hexToPdfRgb(ann.color),
+                  borderWidth: ann.width
+                });
+              } else if (ann.type === 'image') {
+                try {
+                  let embeddedImg;
+                  if (ann.dataUrl.startsWith('data:image/png')) {
+                    embeddedImg = await pdfDoc.embedPng(ann.dataUrl);
+                  } else {
+                    embeddedImg = await pdfDoc.embedJpg(ann.dataUrl);
+                  }
+                  page.drawImage(embeddedImg, {
+                    x: ann.x,
+                    y: pageHeight - ann.y - ann.h,
+                    width: ann.w,
+                    height: ann.h
+                  });
+                } catch (imgErr) {
+                  console.warn('Image embed error:', imgErr);
+                }
+              } else if (ann.type === 'drawing') {
+                // Draw lines or freehand signature
+                if (ann.points && ann.points.length > 1) {
+                  const pdfColor = hexToPdfRgb(ann.color);
+                  for (let i = 0; i < ann.points.length - 1; i++) {
+                    const p1 = ann.points[i];
+                    const p2 = ann.points[i + 1];
+                    page.drawLine({
+                      start: { x: p1.x, y: pageHeight - p1.y },
+                      end: { x: p2.x, y: pageHeight - p2.y },
+                      thickness: ann.width,
+                      color: pdfColor,
+                      opacity: ann.isHighlight ? 0.35 : 1.0
+                    });
+                  }
+                }
+              }
+            }
+          }
+
+          // Save and trigger file download
+          const modifiedPdfBytes = await pdfDoc.save();
+          const blob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          const outName = currentFileName.replace(/\.pdf$/i, '') + '-edited.pdf';
+          a.href = url;
+          a.download = outName;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+
+          if (typeof showToast === 'function') {
+            showToast('Edited PDF downloaded successfully!');
+          }
+        } catch (err) {
+          alert('Error exporting PDF: ' + err.message);
+        } finally {
+          downloadPdfBtn.disabled = false;
+          downloadPdfBtn.innerHTML = '<span>💾 Download Edited PDF</span>';
+        }
+      });
+
+    })();
+  </script>
+
+</body>
+</html>

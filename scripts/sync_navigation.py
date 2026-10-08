@@ -62,6 +62,7 @@ NAV_TEMPLATE_DEFAULT = """      <nav class="nav">
             <a href="/tools/pdf-split/">Split PDF</a>
             <a href="/tools/rent-receipt-generator/">Rent Receipt Generator</a>
             <a href="/tools/watermark-pdf/">Watermark PDF</a>
+            <a href="/tools/pdf-editor/">PDF Editor</a>
           </div>
         </div>
 
