@@ -14,8 +14,8 @@ TARGET_CSS_FONTS_REGEX = re.compile(
     re.DOTALL
 )
 
-REPLACEMENT_CSS_FONTS = """  <link rel="preload" href="/css/style.css" as="style">
-  <link rel="stylesheet" href="/css/style.css">
+REPLACEMENT_CSS_FONTS = """  <link rel="preload" href="/css/style.css?v=2.1" as="style">
+  <link rel="stylesheet" href="/css/style.css?v=2.1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" media="print" onload="this.onload=null;this.media='all'">
@@ -70,10 +70,12 @@ for p in paths:
     orig_content = content
     content = TARGET_CSS_FONTS_REGEX.sub(REPLACEMENT_CSS_FONTS, content, count=1)
     content = OLD_GTAG_REGEX.sub(NEW_GTAG, content, count=1)
+    content = re.sub(r'href="/css/style\.css(?:\?[^"]*)?"', 'href="/css/style.css?v=2.1"', content)
+    content = re.sub(r'<script[^>]+main\.js[^>]*>(?:</script>)?', '<script src="/js/main.js?v=2.1" defer></script>', content)
 
     if content != orig_content:
         with open(p, 'w', encoding='utf-8') as f:
             f.write(content)
         updated_count += 1
 
-print(f"Updated {updated_count} files with prioritized CSS and lazy-loaded Gtag.")
+print(f"Updated {updated_count} files with cache-busted CSS/JS and lazy-loaded Gtag.")

@@ -2,6 +2,33 @@
    microtools365 — shared site behavior
    ========================================================================== */
 
+// Force-clear stale client cache, cookies, and storage for returning users
+(function () {
+  try {
+    const CURRENT_CACHE_VERSION = '20261010';
+    if (localStorage.getItem('mt365_v') !== CURRENT_CACHE_VERSION) {
+      // Clear client-accessible cookies
+      document.cookie.split(';').forEach(c => {
+        const eqPos = c.indexOf('=');
+        const name = eqPos > -1 ? c.substring(0, eqPos).trim() : c.trim();
+        if (name) {
+          document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;';
+          document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=' + location.hostname + ';';
+        }
+      });
+      // Clear CacheStorage API if any
+      if (window.caches && typeof caches.keys === 'function') {
+        caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
+      }
+      // Preserve theme preference while clearing stale storage keys
+      const theme = localStorage.getItem('mt365-theme');
+      localStorage.clear();
+      if (theme) localStorage.setItem('mt365-theme', theme);
+      localStorage.setItem('mt365_v', CURRENT_CACHE_VERSION);
+    }
+  } catch (e) {}
+})();
+
 // Apply saved dark mode preference as early as possible (before
 // DOMContentLoaded) to minimize the flash of light mode on load.
 (function () {
