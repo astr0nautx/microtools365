@@ -14,14 +14,18 @@ This document defines the permanent engineering, performance, SEO, accessibility
 ## 2. Mobile Performance & Core Web Vitals (Target: 95+ Score)
 Every HTML page must adhere to these performance practices:
 
-### ① Google Fonts (Zero Render-Blocking)
+### ① Critical CSS & Google Fonts Priority
+- Always prioritize the core stylesheet before external font links:
+  ```html
+  <link rel="preload" href="/css/style.css" as="style">
+  <link rel="stylesheet" href="/css/style.css">
+  ```
 - **Never use `@import url(...)` in CSS files.**
 - In `<head>`, always include DNS preconnects and the non-blocking font pattern:
   ```html
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" media="print" onload="this.onload=null;this.media='all'">
   <noscript>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap">
   </noscript>
@@ -35,14 +39,17 @@ Place `<meta charset="UTF-8">` and `<meta name="viewport" ...>` on lines 1 & 2 o
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>...</title>
   ...
+  <link rel="preload" href="/css/style.css" as="style">
+  <link rel="stylesheet" href="/css/style.css">
+  ...
 ```
 
-### ③ Script Loading
+### ③ Script Loading & Telemetry
 - Always add `defer` to the shared script:
   ```html
   <script src="../../js/main.js" defer></script>
   ```
-- Keep Google Analytics (`gtag.js`) asynchronous and placed after primary document metadata.
+- Lazy-load Google Analytics (`gtag.js`) on first user interaction (`pointerdown`, `touchstart`, `scroll`, `keydown`) with a 4-second idle fallback to keep TBT at 0ms and avoid forced reflows during initial paint.
 
 ### ④ Semantic `<main>` Landmark & Touch Targets (Accessibility 100%)
 - Always wrap the core page content between `<header>` and `<footer>` inside `<main id="main-content"> ... </main>`.

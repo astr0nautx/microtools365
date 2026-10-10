@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ['Generators', [['random-name-picker', 'Name Picker'], ['password-generator', 'Password Generator'], ['qr-code-generator', 'QR Code Generator'], ['tip-calculator', 'Tip Calculator'], ['uuid-generator', 'UUID Generator']]]
   ];
   const sharedNav = document.querySelector('.site-header .nav');
-  if (sharedNav) {
+  if (sharedNav && sharedNav.children.length === 0) {
     sharedNav.innerHTML = [
       '<a href="/">All tools</a>',
       '<a href="/blog/">Blog</a>',
@@ -41,7 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logo) logo.setAttribute('href', '/');
   }
   document.querySelectorAll('.site-footer .footer-links').forEach(footerLinks => {
-    footerLinks.innerHTML = '<a href="/about/">About</a><a href="/request-tool/">Request a Tool</a><a href="/privacy-policy/">Privacy Policy</a><a href="/terms-of-use/">Terms of Use</a><a href="/blog/">Blog</a>';
+    if (footerLinks.children.length === 0) {
+      footerLinks.innerHTML = '<a href="/about/">About</a><a href="/request-tool/">Request a Tool</a><a href="/privacy-policy/">Privacy Policy</a><a href="/terms-of-use/">Terms of Use</a><a href="/blog/">Blog</a>';
+    }
   });
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.nav');
@@ -178,17 +180,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ---------- Dark mode toggle ----------
-  // Injected into every page's header automatically, right before the
-  // mobile hamburger button, so no individual page HTML needs editing.
-  const headerContainer = document.querySelector('.site-header .container');
-  const navToggleBtn = document.querySelector('.nav-toggle');
-  if (headerContainer && navToggleBtn && !document.querySelector('.theme-toggle')) {
-    const themeBtn = document.createElement('button');
-    themeBtn.className = 'theme-toggle';
-    themeBtn.setAttribute('aria-label', 'Toggle dark mode');
-    themeBtn.textContent = document.documentElement.classList.contains('dark-mode') ? '☀️' : '🌙';
-    headerContainer.insertBefore(themeBtn, navToggleBtn);
+  let themeBtn = document.querySelector('.theme-toggle');
+  if (!themeBtn) {
+    const headerContainer = document.querySelector('.site-header .container');
+    const navToggleBtn = document.querySelector('.nav-toggle');
+    if (headerContainer && navToggleBtn) {
+      themeBtn = document.createElement('button');
+      themeBtn.className = 'theme-toggle';
+      themeBtn.setAttribute('aria-label', 'Toggle dark mode');
+      headerContainer.insertBefore(themeBtn, navToggleBtn);
+    }
+  }
 
+  if (themeBtn) {
+    themeBtn.textContent = document.documentElement.classList.contains('dark-mode') ? '☀️' : '🌙';
     themeBtn.addEventListener('click', () => {
       const isDark = document.documentElement.classList.toggle('dark-mode');
       themeBtn.textContent = isDark ? '☀️' : '🌙';

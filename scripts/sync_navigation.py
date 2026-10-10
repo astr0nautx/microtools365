@@ -106,6 +106,13 @@ def process_file(file_path):
     content = re.sub(r'[ \t]*<nav class=["\']nav["\']>.*?</nav>', target_nav, content, flags=re.DOTALL)
     content = re.sub(r'[ \t]*<div class=["\']footer-links["\']>.*?</div>', FOOTER_LINKS_TEMPLATE, content, flags=re.DOTALL)
 
+    if '<button class="theme-toggle"' not in content:
+        content = re.sub(
+            r'([ \t]*<button class=["\']nav-toggle["\'])',
+            r'      <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>\n\1',
+            content
+        )
+
     if content != orig_content:
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(content)
