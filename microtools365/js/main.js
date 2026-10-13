@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ['Finance', [['percentage-calculator', 'Percentage Calculator'], ['gst-calculator', 'GST Calculator'], ['emi-calculator', 'EMI Calculator'], ['sip-calculator', 'SIP Calculator'], ['income-tax-calculator', 'Income Tax Calculator'], ['compound-interest-calculator', 'Compound Interest'], ['in-hand-salary-calculator', 'In-Hand Salary'], ['fd-calculator', 'FD Calculator'], ['hra-calculator', 'HRA Exemption'], ['discount-calculator', 'Discount Calculator'], ['simple-interest-calculator', 'Simple Interest'], ['ppf-calculator', 'PPF Calculator'], ['gratuity-calculator', 'Gratuity Calculator'], ['retirement-calculator', 'Retirement Calculator']]],
     ['Text', [['word-counter', 'Word Counter'], ['case-converter', 'Case Converter'], ['text-diff-checker', 'Text Diff Checker'], ['lorem-ipsum-generator', 'Lorem Ipsum Generator'], ['slug-generator', 'Slug Generator'], ['json-formatter', 'JSON Formatter']]],
     ['Personal', [['age-calculator', 'Age Calculator'], ['bmi-calculator', 'BMI Calculator'], ['calorie-calculator', 'BMR & Calorie Calculator'], ['ideal-weight-calculator', 'Ideal Weight Calculator'], ['pregnancy-due-date-calculator', 'Pregnancy Due Date'], ['days-between-dates', 'Days Between Two Dates']]],
-    ['Documents', [['image-to-pdf', 'Image to PDF'], ['text-to-pdf', 'Text to PDF'], ['xls-to-pdf', 'Excel to PDF'], ['image-editor', 'Image Editor'], ['pdf-merge', 'Merge PDF'], ['pdf-split', 'Split PDF'], ['rent-receipt-generator', 'Rent Receipt Generator'], ['watermark-pdf', 'Watermark PDF'], ['pdf-editor', 'PDF Editor']]],
+    ['Documents', [['image-to-pdf', 'Image to PDF'], ['text-to-pdf', 'Text to PDF'], ['xls-to-pdf', 'Excel to PDF'], ['image-editor', 'Image Editor'], ['pdf-merge', 'Merge PDF'], ['pdf-split', 'Split PDF'], ['rent-receipt-generator', 'Rent Receipt Generator'], ['watermark-pdf', 'Watermark PDF'], ['pdf-editor', 'PDF Editor'], ['pdf-to-image', 'PDF to Image']]],
     ['Generators', [['random-name-picker', 'Name Picker'], ['password-generator', 'Password Generator'], ['qr-code-generator', 'QR Code Generator'], ['tip-calculator', 'Tip Calculator'], ['uuid-generator', 'UUID Generator']]]
   ];
   const sharedNav = document.querySelector('.site-header .nav');
@@ -152,7 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
       ['pdf-split', 'Split PDF'],
       ['rent-receipt-generator', 'Rent Receipt Generator'],
       ['watermark-pdf', 'Watermark PDF'],
-      ['pdf-editor', 'PDF Editor & Annotator']
+      ['pdf-editor', 'PDF Editor & Annotator'],
+      ['pdf-to-image', 'PDF to Image Converter']
     ],
     generators: [
       ['random-name-picker', 'Random Name Picker'],
