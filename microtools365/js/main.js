@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ['Text', [['word-counter', 'Word Counter'], ['case-converter', 'Case Converter'], ['text-diff-checker', 'Text Diff Checker'], ['lorem-ipsum-generator', 'Lorem Ipsum Generator'], ['slug-generator', 'Slug Generator'], ['json-formatter', 'JSON Formatter']]],
     ['Personal', [['age-calculator', 'Age Calculator'], ['bmi-calculator', 'BMI Calculator'], ['calorie-calculator', 'BMR & Calorie Calculator'], ['ideal-weight-calculator', 'Ideal Weight Calculator'], ['pregnancy-due-date-calculator', 'Pregnancy Due Date'], ['days-between-dates', 'Days Between Two Dates']]],
     ['Documents', [['image-to-pdf', 'Image to PDF'], ['text-to-pdf', 'Text to PDF'], ['xls-to-pdf', 'Excel to PDF'], ['image-editor', 'Image Editor'], ['pdf-merge', 'Merge PDF'], ['pdf-split', 'Split PDF'], ['rent-receipt-generator', 'Rent Receipt Generator'], ['watermark-pdf', 'Watermark PDF'], ['pdf-editor', 'PDF Editor'], ['pdf-to-image', 'PDF to Image'], ['image-compressor', 'Image Compressor']]],
-    ['Generators', [['random-name-picker', 'Name Picker'], ['password-generator', 'Password Generator'], ['qr-code-generator', 'QR Code Generator'], ['tip-calculator', 'Tip Calculator'], ['uuid-generator', 'UUID Generator']]]
+    ['Generators', [['random-name-picker', 'Name Picker'], ['password-generator', 'Password Generator'], ['qr-code-generator', 'QR Code Generator'], ['tip-calculator', 'Tip Calculator'], ['uuid-generator', 'UUID Generator'], ['base64-encoder-decoder', 'Base64 Tool']]]
   ];
   const sharedNav = document.querySelector('.site-header .nav');
   if (sharedNav && sharedNav.children.length === 0) {
@@ -161,7 +161,8 @@ document.addEventListener('DOMContentLoaded', () => {
       ['password-generator', 'Password Generator'],
       ['qr-code-generator', 'QR Code Generator'],
       ['tip-calculator', 'Tip Calculator'],
-      ['uuid-generator', 'UUID Generator']
+      ['uuid-generator', 'UUID Generator'],
+      ['base64-encoder-decoder', 'Base64 Encoder & Decoder']
     ]
   };
 

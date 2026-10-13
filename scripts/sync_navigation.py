@@ -76,6 +76,7 @@ NAV_TEMPLATE_DEFAULT = """      <nav class="nav">
             <a href="/tools/qr-code-generator/">QR Code Generator</a>
             <a href="/tools/tip-calculator/">Tip Calculator</a>
             <a href="/tools/uuid-generator/">UUID Generator</a>
+            <a href="/tools/base64-encoder-decoder/">Base64 Tool</a>
           </div>
         </div>
       </nav>"""
