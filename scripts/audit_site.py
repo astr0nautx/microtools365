@@ -66,13 +66,13 @@ for file in html_files:
     for h in hrefs:
         if 'index.html' in h:
             index_html_links[rel_path].append(h)
-        # Check link resolution
+        clean_h = h.split('?')[0]
         # resolve relative to current file's directory
         cur_dir = os.path.dirname(file)
-        if h.startswith('/'):
-            target_file = os.path.normpath(os.path.join(site_dir, h.lstrip('/')))
+        if clean_h.startswith('/'):
+            target_file = os.path.normpath(os.path.join(site_dir, clean_h.lstrip('/')))
         else:
-            target_file = os.path.normpath(os.path.join(cur_dir, h))
+            target_file = os.path.normpath(os.path.join(cur_dir, clean_h))
         
         # If target is directory, look for index.html
         if os.path.isdir(target_file):

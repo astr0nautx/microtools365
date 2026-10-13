@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#FF5A1F">
+  <link rel="apple-touch-icon" href="/icon-192.png">
   <title>Smart Image Compressor &amp; WebP Converter — Reduce Image Size Online | microtools365</title>
   <meta name="description" content="Compress JPG, PNG, and WebP images online for free without losing quality. Batch image compression, custom quality sliders, resolution scaling, and instant ZIP download. 100% private in-browser.">
   <link rel="canonical" href="https://www.microtools365.com/tools/image-compressor/">
@@ -741,10 +744,20 @@
               <span class="size-saved">${savedPercent >= 0 ? `-${savedPercent}%` : `+${Math.abs(savedPercent)}%`}</span>
             </div>
             <div class="item-actions">
-              <a class="btn btn-secondary btn-sm dl-single-btn" href="${item.compUrl}" download="${outputName}">⬇ Download</a>
+              <button class="btn btn-secondary btn-sm dl-single-btn">⬇ Download</button>
               <button class="btn btn-sm btn-remove" data-id="${item.id}" style="padding:6px 10px; background:none; border:none; cursor:pointer; color:var(--muted); font-size:1.1rem;" title="Remove">✕</button>
             </div>
           `;
+
+          const dlBtn = card.querySelector('.dl-single-btn');
+          dlBtn.addEventListener('click', () => {
+            const a = document.createElement('a');
+            a.href = item.compUrl;
+            a.download = outputName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          });
 
           const removeBtn = card.querySelector('.btn-remove');
           removeBtn.addEventListener('click', () => {
