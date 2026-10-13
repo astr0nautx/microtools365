@@ -6,8 +6,590 @@
     <loc>https://www.microtools365.com/</loc>
     <image:image>
       <image:loc>https://www.microtools365.com/logo.svg</image:loc>
-      <image:title>microtools365 logo</image:title>
-      <image:caption>microtools365 — Free Online Tools</image:caption>
+      <image:title>microtools365 Brand Logo</image:title>
+      <image:caption>Official vector logo for microtools365</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.microtools365.com/icon-512.png</image:loc>
+      <image:title>microtools365 High-Res Icon (512x512)</image:title>
+      <image:caption>High-resolution application icon for microtools365</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.microtools365.com/icon-192.png</image:loc>
+      <image:title>microtools365 PWA Icon (192x192)</image:title>
+      <image:caption>Progressive Web App icon for microtools365</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-image.png</image:loc>
+      <image:title>microtools365 — Free Productivity Utilities</image:title>
+      <image:caption>Free in-browser tools for finance, documents, text, and calculations</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/about/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-image.png</image:loc>
+      <image:title>About</image:title>
+      <image:caption>Why microtools365 exists, and what it is (and isn't) trying to be.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/bmi-explained/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>BMI Explained: What Your Number Actually Means (and What It Doesn't)</image:title>
+      <image:caption>What BMI actually measures, why it was never designed to judge individual health, and what it genuinely is useful for.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/convert-text-to-pdf-guide/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>How to Convert Text to PDF Without Losing Formatting</image:title>
+      <image:caption>Why plain text files cause problems when you need a PDF, what actually goes wrong during conversion, and how to get a clean result every time.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/emi-amortization-explained/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>How to Actually Read Your Loan's Amortization Schedule</image:title>
+      <image:caption>Why your early EMIs feel like they barely reduce your loan, and how to read a year-by-year amortization schedule to see what's really happening.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/how-much-to-retire-india/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>How Much Do You Actually Need to Retire in India?</image:title>
+      <image:caption>There's no single magic number for retirement — here's the actual framework for working out your number, and why inflation matters more than most people realize.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/how-to-calculate-gst-india/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>How to Calculate GST in India (With Examples)</image:title>
+      <image:caption>The exact formulas for adding GST to a price and removing GST from an inclusive total, plus common mistakes people make when calculating it by hand.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/how-to-compare-two-texts-online/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>How to Compare Two Texts Online (And Actually Read the Differences)</image:title>
+      <image:caption>A practical guide to comparing two blocks of text online — what a diff actually shows, real use cases, and how to avoid the most common mistake people make.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/how-to-edit-annotate-pdf-free/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-documents.png</image:loc>
+      <image:title>How to Edit, Annotate &amp;amp; Redact PDFs Online for Free (Zero Uploads)</image:title>
+      <image:caption>Learn how to add text, insert digital signatures, highlight passages, and permanently redact sensitive information in PDF files — 100% in your browser with zero cloud uploads.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>Blog</image:title>
+      <image:caption>Practical guides on GST, taxes, investing and more — written to actually help, not pad word count.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/old-vs-new-tax-regime/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>Old vs New Tax Regime: Which Saves You More in FY 2026-27?</image:title>
+      <image:caption>A plain-English comparison of the old and new income tax regimes in India for FY 2026-27, with real examples at different income levels.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/passport-photo-size-india/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>Passport &amp; Document Photo Sizes in India: A Practical Guide</image:title>
+      <image:caption>Common photo and signature size requirements for Indian passport, exam and job applications, and how to resize your photo correctly without a studio visit.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/ppf-vs-fixed-deposit/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>PPF vs Fixed Deposit: Where Should You Park Your Long-Term Savings?</image:title>
+      <image:caption>PPF and FDs look similar on the surface — both are safe, government-backed-ish options. Here's how they actually differ on returns, taxes, and access to your money.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/prepay-loan-or-invest/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>Should You Prepay Your Loan or Invest the Money? (EMI vs SIP)</image:title>
+      <image:caption>Got a bonus or windfall? Here's the actual math behind prepaying a loan versus investing it — and why the mathematically 'correct' answer isn't always the right one for you.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/rent-receipt-hra-guide/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>How to Generate Rent Receipts for HRA Claims (Step-by-Step)</image:title>
+      <image:caption>What your rent receipts need to include for a valid HRA claim, common mistakes that get claims rejected, and how to generate them in seconds.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/simple-vs-compound-interest/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>Simple Interest vs Compound Interest: What's the Real Difference?</image:title>
+      <image:caption>Simple interest and compound interest can look almost identical for a year or two, then diverge dramatically. Here's exactly why, with real numbers.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/sip-vs-lump-sum/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>SIP vs Lump Sum: Which Should You Choose?</image:title>
+      <image:caption>What actually determines whether SIP or lump sum investing wins — it's not as simple as SIP always being the safer choice.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/blog/watermark-pdf-kyc-guide/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-blog.png</image:loc>
+      <image:title>How to Watermark PDFs for Online KYC and Document Verification in India</image:title>
+      <image:caption>Learn why and how to watermark Aadhaar, PAN, and bank statement PDFs before submitting them for online KYC in India to prevent identity theft and unauthorized misuse.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/privacy-policy/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-image.png</image:loc>
+      <image:title>Privacy Policy</image:title>
+      <image:caption>What data microtools365 collects, what it doesn't, and how the tools handle your files and information.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/request-tool/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-image.png</image:loc>
+      <image:title>Request a Tool</image:title>
+      <image:caption>Suggest a new calculator, document utility, or online tool for microtools365. Free, privacy-friendly, and built for real everyday use.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/terms-of-use/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-image.png</image:loc>
+      <image:title>Terms of Use</image:title>
+      <image:caption>Terms for using microtools365's free tools, calculators and content.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/age-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-personal.png</image:loc>
+      <image:title>Age Calculator</image:title>
+      <image:caption>Free age calculator. Enter your date of birth and instantly find out your exact age in years, months and days — plus days until your next birthday.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/base64-encoder-decoder/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-generators.png</image:loc>
+      <image:title>Base64 Encoder &amp;amp; Decoder</image:title>
+      <image:caption>Encode and decode Base64 strings, convert files and images to Base64 Data URIs, and inspect byte lengths online for free. URL-safe mode, live conversion, 100% client-side privacy.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/bmi-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-personal.png</image:loc>
+      <image:title>BMI Calculator</image:title>
+      <image:caption>Free BMI calculator. Enter your height and weight in metric or imperial units to instantly find your Body Mass Index and weight category.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/calorie-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-personal.png</image:loc>
+      <image:title>BMR &amp; Calorie Calculator</image:title>
+      <image:caption>Free BMR and daily calorie calculator. Find your Basal Metabolic Rate and daily calorie targets for weight loss, maintenance, or weight gain.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/case-converter/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-text.png</image:loc>
+      <image:title>Case Converter</image:title>
+      <image:caption>Free online case converter. Instantly convert text to UPPERCASE, lowercase, Title Case, Sentence case, camelCase or snake_case. One click to copy.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/compound-interest-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>Compound Interest Calculator</image:title>
+      <image:caption>Free compound interest calculator. Calculate how your investment grows over time with monthly, quarterly, or yearly compounding.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/days-between-dates/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-personal.png</image:loc>
+      <image:title>Days Between Two Dates</image:title>
+      <image:caption>Free days-between-dates calculator. Find the exact number of days, weeks, months and business days between any two dates.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/discount-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>Discount Calculator</image:title>
+      <image:caption>Free discount calculator. Find the final price after a percentage discount, and see exactly how much you're saving.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/emi-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>EMI Calculator</image:title>
+      <image:caption>Free EMI calculator for home loans, car loans, and personal loans. Enter loan amount, interest rate and tenure to instantly get your monthly EMI, total interest and total payment.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/fd-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>FD Calculator</image:title>
+      <image:caption>Free FD calculator for India. Calculate the maturity value and interest earned on your fixed deposit, for both cumulative and non-cumulative FDs.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/gratuity-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>Gratuity Calculator</image:title>
+      <image:caption>Free gratuity calculator for India. Calculate your gratuity using the standard 15/26 formula and see how much is tax-exempt under Section 10(10).</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/gst-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>GST Calculator India</image:title>
+      <image:caption>Free GST calculator for India. Add GST to get the final price, or reverse-calculate to remove GST from a total. Supports 5%, 12%, 18% and 28% GST rates.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/hra-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>HRA Exemption Calculator</image:title>
+      <image:caption>Free HRA exemption calculator for India. Find out how much of your House Rent Allowance is tax-exempt under the old tax regime.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/ideal-weight-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-personal.png</image:loc>
+      <image:title>Ideal Weight Calculator</image:title>
+      <image:caption>Free ideal weight calculator. See your estimated ideal body weight using several well-known formulas, based on your height and gender.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/image-compressor/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-documents.png</image:loc>
+      <image:title>Smart Image Compressor &amp;amp; WebP Converter</image:title>
+      <image:caption>Compress JPG, PNG, and WebP images online for free without losing quality. Batch image compression, custom quality sliders, resolution scaling, and instant ZIP download. 100% private in-browser.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/image-editor/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-documents.png</image:loc>
+      <image:title>Image Editor &amp; Converter</image:title>
+      <image:caption>Crop, resize and convert images for free — perfect for passport photos, signatures, and job or exam application uploads. Convert to JPG, PNG or WEBP. Nothing is uploaded anywhere.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/image-to-pdf/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-documents.png</image:loc>
+      <image:title>Image to PDF Converter</image:title>
+      <image:caption>Convert JPG or PNG images into a single PDF file for free. Choose a compression level and see the final file size before you download — all in your browser.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/in-hand-salary-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>In-Hand Salary Calculator</image:title>
+      <image:caption>Free in-hand salary calculator for India. Convert your CTC to monthly take-home pay, with a full breakdown of PF, professional tax and income tax deductions.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/income-tax-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>Income Tax Calculator India</image:title>
+      <image:caption>Free income tax calculator for India. Compare old vs new tax regime for FY 2026-27 side by side and see which one saves you more.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/json-formatter/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-text.png</image:loc>
+      <image:title>JSON Formatter &amp; Validator</image:title>
+      <image:caption>Free JSON formatter and validator. Paste your JSON to instantly format, validate, and minify it, with clear error messages if something's wrong.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/lorem-ipsum-generator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-text.png</image:loc>
+      <image:title>Lorem Ipsum Generator</image:title>
+      <image:caption>Free Lorem Ipsum generator. Create placeholder text by paragraph, sentence, or word count for mockups and designs.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/password-generator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-generators.png</image:loc>
+      <image:title>Password Generator</image:title>
+      <image:caption>Generate strong, random passwords instantly. Customize length and character types, and check password strength — all done in your browser, nothing stored.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/pdf-editor/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-documents.png</image:loc>
+      <image:title>PDF Editor &amp;amp; Annotator</image:title>
+      <image:caption>Free online PDF editor: add text, digital signatures, images, freehand drawings, highlights, and redact sensitive info on any PDF. 100% private, no watermark, no sign-up.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/pdf-merge/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-documents.png</image:loc>
+      <image:title>Merge PDF Files</image:title>
+      <image:caption>Combine multiple PDF files into one for free. Reorder pages before merging — everything happens in your browser, nothing is uploaded.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/pdf-split/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-documents.png</image:loc>
+      <image:title>Split PDF</image:title>
+      <image:caption>Split a PDF for free — extract specific pages into a new PDF, or split every page into separate files. Everything happens in your browser.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/pdf-to-image/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-documents.png</image:loc>
+      <image:title>PDF to Image Converter</image:title>
+      <image:caption>Convert PDF pages to high-resolution PNG, JPG, or WebP images online for free. Download individual pages or all pages as a ZIP file. 100% in-browser, zero uploads.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/percentage-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>Percentage Calculator</image:title>
+      <image:caption>Free percentage calculator. Find what X% of a number is, what percent one number is of another, or the percent increase or decrease between two numbers.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/ppf-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>PPF Calculator</image:title>
+      <image:caption>Free PPF calculator for India. Estimate your Public Provident Fund maturity value at the current 7.1% interest rate, with the standard 15-year tenure or extended terms.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/pregnancy-due-date-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-personal.png</image:loc>
+      <image:title>Pregnancy Due Date Calculator</image:title>
+      <image:caption>Free pregnancy due date calculator. Estimate your due date and current week of pregnancy based on your last menstrual period.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/qr-code-generator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-generators.png</image:loc>
+      <image:title>QR Code Generator</image:title>
+      <image:caption>Generate free QR codes for text, URLs, Wi-Fi networks or contact cards. Customize size and colors, then download as PNG. No sign-up, no watermark.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/random-name-picker/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-generators.png</image:loc>
+      <image:title>Random Name Picker</image:title>
+      <image:caption>Free random name picker. Enter a list of names and pick a random winner — perfect for giveaways, classroom selection, raffles and team assignments.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/rent-receipt-generator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-documents.png</image:loc>
+      <image:title>Rent Receipt Generator</image:title>
+      <image:caption>Generate rent receipts for HRA tax claims, free. Create receipts for multiple months at once, download as PDF, no sign-up needed.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/retirement-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>Retirement Calculator</image:title>
+      <image:caption>Free retirement calculator. Estimate the corpus you'll need at retirement based on your expenses and inflation, and the monthly SIP required to get there.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/simple-interest-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>Simple Interest Calculator</image:title>
+      <image:caption>Free simple interest calculator. Calculate interest and total amount using the simple interest formula — principal, rate, and time.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/sip-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-finance.png</image:loc>
+      <image:title>SIP Calculator</image:title>
+      <image:caption>Free SIP calculator. Estimate the future value of your monthly mutual fund SIP investment based on expected return rate and investment duration.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/slug-generator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-text.png</image:loc>
+      <image:title>Slug Generator</image:title>
+      <image:caption>Free slug generator. Convert any text into a clean, URL-friendly slug — perfect for blog posts, product pages, and file names.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/text-diff-checker/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-text.png</image:loc>
+      <image:title>Text Diff Checker</image:title>
+      <image:caption>Free text diff checker. Compare two blocks of text and instantly see what's been added, removed, or changed, line by line.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/text-to-pdf/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-documents.png</image:loc>
+      <image:title>Text to PDF Converter</image:title>
+      <image:caption>Convert plain text into a formatted PDF file for free. Paste text or upload a .txt file, then see the page count and file size before you download.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/tip-calculator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-generators.png</image:loc>
+      <image:title>Tip Calculator</image:title>
+      <image:caption>Free tip calculator. Calculate the tip amount and split the total bill between any number of people.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/uuid-generator/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-generators.png</image:loc>
+      <image:title>UUID Generator</image:title>
+      <image:caption>Generate random UUID v4 and GUIDs instantly for free. Bulk generation up to 500, with uppercase, no-hyphen, braces, and JSON options. 100% client-side.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/watermark-pdf/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-documents.png</image:loc>
+      <image:title>Watermark PDF</image:title>
+      <image:caption>Add text or image watermarks to PDF files for free. Customize text, font size, rotation, opacity, and position. 100% private and runs entirely in your browser.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/word-counter/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-text.png</image:loc>
+      <image:title>Word &amp; Character Counter</image:title>
+      <image:caption>Free word counter and character counter. See live word count, character count, sentence count and reading time, plus limits for Twitter/X, Instagram, YouTube and SMS.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.microtools365.com/tools/xls-to-pdf/</loc>
+    <image:image>
+      <image:loc>https://www.microtools365.com/og-documents.png</image:loc>
+      <image:title>Excel to PDF Converter</image:title>
+      <image:caption>Convert Excel (.xls, .xlsx) or CSV files to PDF for free. Preview your data, then see the file size before you download — everything in your browser.</image:caption>
     </image:image>
   </url>
 
